@@ -5,9 +5,14 @@ import Catalog from "@/src/components/sections/Catalog";
 import About from "@/src/components/sections/About";
 import Faq from "@/src/components/sections/Faq";
 import Footer from "@/src/components/layout/Footer";
+import { obtenerPerfumes } from "@/src/services/perfumes";
+import type { Perfume } from "@/src/types/perfume";
 
 // Portada con Hero, catálogo, nosotros, preguntas y contacto.
-export default function Home(): React.JSX.Element {
+export default async function Home(): Promise<React.JSX.Element> {
+  // Catálogo remoto con respaldo estático ante fallos de red.
+  const perfumes: Perfume[] = await obtenerPerfumes();
+
   return (
     <main className="bg-[#fffff4]">
       {/* Hero actual con ancla para la navegación */}
@@ -27,7 +32,7 @@ export default function Home(): React.JSX.Element {
       </section>
 
       {/* Catálogo interactivo debajo del Hero */}
-      <Catalog />
+      <Catalog perfumesIniciales={perfumes} />
 
       {/* Historia y propuesta de valor */}
       <About />

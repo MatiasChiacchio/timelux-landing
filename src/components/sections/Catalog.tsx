@@ -5,9 +5,14 @@
 
 import { useMemo, useState } from "react";
 import { MessageCircle, Search, SearchX } from "lucide-react";
-import { perfumes } from "@/src/data/perfumes";
+import ImagenPerfume from "@/src/components/ui/ImagenPerfume";
 import { getWhatsAppLink } from "@/src/config/site";
 import type { CategoriaPerfume, Perfume } from "@/src/types/perfume";
+
+// Propiedades del catálogo: lista inicial provista por el Server Component.
+interface PropiedadesCatalogo {
+  perfumesIniciales: Perfume[];
+}
 
 // Pestaña de filtro con valor y etiqueta visible.
 interface PestanaCategoria {
@@ -37,8 +42,11 @@ function formatearPrecio(precio: number): string {
 }
 
 // Catálogo con buscador reactivo, filtros y consulta individual por WhatsApp.
-export default function Catalog(): React.JSX.Element {
-  // Categoría activa y texto de búsqueda.
+export default function Catalog({
+  perfumesIniciales,
+}: PropiedadesCatalogo): React.JSX.Element {
+  // Lista base provista por el servidor y controles de filtrado.
+  const [perfumes] = useState<Perfume[]>(perfumesIniciales);
   const [categoria, setCategoria] = useState<CategoriaPerfume>("todos");
   const [busqueda, setBusqueda] = useState<string>("");
 
@@ -72,7 +80,7 @@ export default function Catalog(): React.JSX.Element {
         notasUnidas.includes(texto)
       );
     });
-  }, [categoria, busqueda]);
+  }, [perfumes, categoria, busqueda]);
 
   // Restablece búsqueda y categoría al estado inicial.
   function limpiarFiltros(): void {
@@ -153,8 +161,14 @@ export default function Catalog(): React.JSX.Element {
           <ul className="mt-8 grid grid-cols-1 gap-6 sm:grid-cols-2 md:gap-8 lg:grid-cols-3">
             {fraganciasFiltradas.map((perfume: Perfume) => (
               <li key={perfume.id} className="h-full">
-                <article className="flex h-full flex-col justify-between rounded-2xl border border-[#a6caeb]/30 bg-white/90 p-5 shadow-sm transition-all duration-300 hover:border-[#c40a0a]/40 hover:shadow-xl">
+                <article className="group flex h-full flex-col justify-between rounded-2xl border border-[#a6caeb]/30 bg-white/90 p-5 shadow-sm transition-all duration-300 hover:border-[#c40a0a]/40 hover:shadow-xl">
                   <div>
+                    {/* Frasco con dimensiones propias y respaldo local */}
+                    <ImagenPerfume
+                      src={perfume.imagenUrl}
+                      alt={`Frasco de ${perfume.nombre} de ${perfume.marca}`}
+                    />
+
                     {/* Insignias de categoría y bestseller */}
                     <div className="flex flex-wrap items-center gap-2">
                       <span className="rounded-full bg-[#a6caeb]/30 px-2.5 py-1 text-xs font-semibold text-[#141416]">

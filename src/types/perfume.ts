@@ -2,7 +2,7 @@
 // Tipos estrictos para categorías, notas olfativas y perfumes.
 
 // Filtro de categoría usado por las pestañas del catálogo.
-export type CategoriaPerfume = "todos" | "arabe" | "disenador" | "bestseller";
+export type CategoriaPerfume = "todos" | "arabe" | "disenador";
 
 // Pirámide olfativa de cada fragancia.
 export interface NotasOlfativas {

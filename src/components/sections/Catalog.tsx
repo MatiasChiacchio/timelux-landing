@@ -20,7 +20,6 @@ const pestanas: PestanaCategoria[] = [
   { valor: "todos", etiqueta: "Todos" },
   { valor: "arabe", etiqueta: "Árabes" },
   { valor: "disenador", etiqueta: "Diseñador" },
-  { valor: "bestseller", etiqueta: "Bestsellers" },
 ];
 
 // Etiqueta legible del tipo de perfume.
@@ -40,11 +39,7 @@ export default function Catalog(): React.JSX.Element {
 
     return perfumes.filter((perfume: Perfume) => {
       const coincideCategoria: boolean =
-        categoria === "todos"
-          ? true
-          : categoria === "bestseller"
-            ? perfume.bestseller === true
-            : perfume.tipo === categoria;
+        categoria === "todos" ? true : perfume.tipo === categoria;
 
       if (!coincideCategoria) {
         return false;

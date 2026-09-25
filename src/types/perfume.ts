@@ -18,6 +18,7 @@ export interface Perfume {
   marca: string;
   tipo: "arabe" | "disenador";
   mililitros: number;
+  precio: number;
   bestseller?: boolean;
   descripcionCorta: string;
   notas: NotasOlfativas;

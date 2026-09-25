@@ -11,6 +11,7 @@ export const perfumes: Perfume[] = [
     marca: "Lattafa",
     tipo: "arabe",
     mililitros: 100,
+    precio: 68000,
     bestseller: true,
     descripcionCorta:
       "Cálido y especiado con dátiles y vainilla, ideal para noches memorables.",
@@ -27,6 +28,7 @@ export const perfumes: Perfume[] = [
     marca: "Armaf",
     tipo: "arabe",
     mililitros: 105,
+    precio: 95000,
     bestseller: true,
     descripcionCorta:
       "Ahumado y magnético con piña y abedul, estela intensa de larga duración.",
@@ -43,6 +45,7 @@ export const perfumes: Perfume[] = [
     marca: "Afnan",
     tipo: "arabe",
     mililitros: 100,
+    precio: 72000,
     descripcionCorta:
       "Dulce nocturno de manzana y vainilla, perfecto para salidas y eventos.",
     notas: {
@@ -58,6 +61,7 @@ export const perfumes: Perfume[] = [
     marca: "Dior",
     tipo: "disenador",
     mililitros: 100,
+    precio: 185000,
     bestseller: true,
     descripcionCorta:
       "Fresco y salvaje con bergamota y ambroxan, el clásico versátil de diario.",
@@ -74,6 +78,7 @@ export const perfumes: Perfume[] = [
     marca: "Tom Ford",
     tipo: "disenador",
     mililitros: 100,
+    precio: 460000,
     descripcionCorta:
       "Opulento tabaco con vainilla y maderas, lujo cálido para climas frescos.",
     notas: {
@@ -89,6 +94,7 @@ export const perfumes: Perfume[] = [
     marca: "Chanel",
     tipo: "disenador",
     mililitros: 100,
+    precio: 215000,
     descripcionCorta:
       "Elegante cítrico amaderado con incienso, sofisticación para todo el día.",
     notas: {

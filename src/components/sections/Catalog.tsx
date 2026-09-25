@@ -27,6 +27,15 @@ function etiquetaTipo(tipo: Perfume["tipo"]): string {
   return tipo === "arabe" ? "Árabe" : "Diseñador";
 }
 
+// Formatea el precio en pesos argentinos sin decimales (ej.: $ 68.000).
+function formatearPrecio(precio: number): string {
+  return new Intl.NumberFormat("es-AR", {
+    style: "currency",
+    currency: "ARS",
+    maximumFractionDigits: 0,
+  }).format(precio);
+}
+
 // Catálogo con buscador reactivo, filtros y consulta individual por WhatsApp.
 export default function Catalog(): React.JSX.Element {
   // Categoría activa y texto de búsqueda.
@@ -172,6 +181,11 @@ export default function Catalog(): React.JSX.Element {
                       {perfume.descripcionCorta}
                     </p>
 
+                    {/* Precio destacado en pesos */}
+                    <p className="mt-3 text-2xl font-extrabold tracking-tight text-[#141416]">
+                      {formatearPrecio(perfume.precio)}
+                    </p>
+
                     {/* Notas olfativas clave */}
                     <ul
                       aria-label={`Notas de salida de ${perfume.nombre}`}
@@ -193,7 +207,7 @@ export default function Catalog(): React.JSX.Element {
                   {/* Consulta individual por WhatsApp */}
                   <a
                     href={getWhatsAppLink(
-                      `¡Hola Timelux! Me interesa el perfume ${perfume.nombre} de ${perfume.marca}. ¿Tienen disponibilidad y precio?`,
+                      `¡Hola Timelux! Me interesa el perfume ${perfume.nombre} de ${perfume.marca} (${formatearPrecio(perfume.precio)}). ¿Sigue vigente el precio y tienen disponibilidad?`,
                     )}
                     target="_blank"
                     rel="noopener noreferrer"

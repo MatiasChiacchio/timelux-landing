@@ -1,9 +1,12 @@
 // Página principal de Timelux.
-// Server Component: Hero estático + catálogo interactivo (Client Component).
+// Server Component: compone el Hero estático y las secciones de la landing.
 
 import Catalog from "@/src/components/sections/Catalog";
+import About from "@/src/components/sections/About";
+import Faq from "@/src/components/sections/Faq";
+import Footer from "@/src/components/layout/Footer";
 
-// Portada con Hero existente y catálogo debajo.
+// Portada con Hero, catálogo, nosotros, preguntas y contacto.
 export default function Home(): React.JSX.Element {
   return (
     <main className="bg-[#fffff4]">
@@ -25,6 +28,15 @@ export default function Home(): React.JSX.Element {
 
       {/* Catálogo interactivo debajo del Hero */}
       <Catalog />
+
+      {/* Historia y propuesta de valor */}
+      <About />
+
+      {/* Preguntas frecuentes */}
+      <Faq />
+
+      {/* Pie de página con contacto */}
+      <Footer />
     </main>
   );
 }

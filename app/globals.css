@@ -1,26 +1,17 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --color-timelux-bg: #fffff4;
+  --color-timelux-red: #c40a0a;
+  --color-timelux-red-hover: #a30808;
+  --color-timelux-sky: #a6caeb;
+  --color-timelux-dark: #141416;
+  --color-timelux-muted: #5e626e;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: var(--color-timelux-bg);
+  color: var(--color-timelux-dark);
+  font-family: inherit;
+  min-height: 100vh;
 }

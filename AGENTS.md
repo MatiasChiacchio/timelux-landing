@@ -1,9 +1,44 @@
-<!-- BEGIN:nextjs-agent-rules -->
+## 📌 Contexto del Proyecto y Negocio
 
-# This is NOT the Next.js you know
+- **Marca:** Timelux (emprendimiento de perfumería árabe y de diseñador).
+- **Objetivo Principal:** Landing page y vitrina digital interactiva. **No cuenta con checkout ni pasarela de pagos integrada.**
+- **Mecanismo de Conversión:** Todos los botones de llamada a la acción (CTA) y consultas de producto deben redirigir a **WhatsApp** mediante enlaces codificados dinámicamente (`wa.me/NUMERO?text=MENSAJE`).
+- **Idioma del Entorno:** Todo el código fuente, componentes, comentarios, documentación (`README.md`) y mensajes de commit en Git deben redactarse estrictamente en **español**.
 
-This version has breaking changes — APIs, conventions, and file structure may all differ from your training data. Read the relevant guide in `node_modules/next/dist/docs/` (resolved from this file's directory; in monorepos the `next` package may not be visible from the repo root) before writing any code. Heed deprecation notices.
+---
 
-This block is written and re-added by `next dev` — verify at `node_modules/next/dist/server/lib/generate-agent-files.js`. Removing it from a diff only re-creates the uncommitted change; committing it with your work keeps the tree clean.
+## 🛠️ Stack Tecnológico y Reglas del Framework
 
-<!-- END:nextjs-agent-rules -->
+1. **Framework:** Next.js (App Router, React Server Components por defecto).
+2. **Lenguaje:** TypeScript con tipado estricto (no utilizar `any`).
+3. **Estilos:** Tailwind CSS (diseño responsivo Mobile-First).
+4. **Iconos:** `lucide-react`.
+5. **División de Componentes:**
+   - Mantener componentes estáticos como **Server Components** para optimizar el rendimiento y el SEO.
+   - Declarar `'use client'` únicamente en componentes que gestionen estado (`useState`, `useEffect`) o eventos del usuario (filtros interactivos, menú móvil desplegable).
+
+---
+
+## 🎨 Principios de Diseño Visual (Dark Luxury)
+
+- **Atmósfera:** Fondos oscuros profundos, estética sobria y sofisticada inspirada en perfumería de alta gama.
+- **Microinteracciones:** Uso de efectos de cristal esmerilado (`backdrop-blur`), bordes sutiles con opacidad y transiciones suaves (`duration-300 ease-in-out`).
+- **Optimización de Medios:** Utilizar siempre el componente `<Image />` de Next.js (`next/image`) con dimensiones y atributos de accesibilidad definidos.
+
+---
+
+## 📋 Estándar de Commits (Conventional Commits en Español)
+
+Todo commit generado debe seguir esta estructura:
+- `feat:` Nueva funcionalidad o componente visual.
+- `fix:` Corrección de errores o enlaces caídos.
+- `estilo:` Modificaciones de estilos, espaciados o colores.
+- `docs:` Actualización de documentación técnica.
+- `refactor:` Mejoras en la arquitectura de código sin alterar su comportamiento visual.
+
+## 🧠 Uso Obligatorio de Skills
+
+Antes de escribir código o proponer cambios, consulta y respeta las pautas definidas en el directorio `.agents/skills/`:
+- **`nextjs-app-router-patterns`**: Seguir la estructura estricta de carpetas de Next.js App Router, división de Server/Client Components y renderizado con `next/image`.
+- **`tailwind-design-system` / `tailwind-4-docs`**: Aplicar convenciones de Tailwind CSS con enfoque Mobile-First estricto y touch targets adecuados para celulares.
+- **Directrices de marca**: Respetar siempre la paleta oficial de Timelux (marfil `#fffff4`, rojo vívido `#c40a0a`, celeste pastel `#a6caeb`).

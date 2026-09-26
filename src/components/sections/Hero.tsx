@@ -21,7 +21,7 @@ const puntosConfianza: PuntoConfianza[] = [
 // Hero nocturno de alta gama con aura luminosa y contenido editorial.
 export default function Hero(): React.JSX.Element {
   return (
-    <section id="hero" className="relative overflow-hidden bg-[#fffff4]">
+    <section id="hero" className="relative scroll-mt-20 overflow-hidden bg-[#fffff4] md:scroll-mt-24">
       {/* Resplandores de luz suave sobre marfil */}
       <div
         aria-hidden="true"

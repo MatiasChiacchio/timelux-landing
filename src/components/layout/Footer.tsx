@@ -22,7 +22,7 @@ export default function Footer(): React.JSX.Element {
   return (
     <footer
       id="contacto"
-      className="mt-12 border-t border-[#a6caeb]/20 bg-[#141416] px-4 py-14 text-[#fffff4] sm:px-6 lg:px-8"
+      className="mt-12 scroll-mt-20 border-t border-[#a6caeb]/20 bg-[#141416] px-4 py-14 text-[#fffff4] sm:px-6 md:scroll-mt-24 lg:px-8"
     >
       <div className="mx-auto max-w-7xl">
         <div className="grid gap-10 md:grid-cols-3">

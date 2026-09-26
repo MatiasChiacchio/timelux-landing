@@ -43,8 +43,8 @@ const preguntas: PreguntaFrecuente[] = [
 
 // Acordeón de preguntas frecuentes con apertura múltiple.
 export default function Faq(): React.JSX.Element {
-  // Índices de las preguntas actualmente abiertas.
-  const [abiertas, setAbiertas] = useState<number[]>([0]);
+  // Índices de las preguntas actualmente abiertas (inicia todo cerrado).
+  const [abiertas, setAbiertas] = useState<number[]>([]);
 
   // Alterna la visibilidad de una respuesta sin cerrar las demás.
   function alternarPregunta(indice: number): void {
@@ -56,8 +56,11 @@ export default function Faq(): React.JSX.Element {
   }
 
   return (
-    <section id="faq" className="bg-[#fffff4]">
-      <div className="mx-auto max-w-4xl px-4 py-16 sm:px-6 md:py-24 lg:px-8">
+    <section
+      id="faq"
+      className="flex min-h-[calc(100vh-5rem)] scroll-mt-20 items-center bg-[#fffff4] py-16 md:scroll-mt-24 md:py-24"
+    >
+      <div className="mx-auto w-full max-w-4xl px-4 sm:px-6 lg:px-8">
         {/* Encabezado centrado */}
         <p className="text-center text-sm font-semibold uppercase tracking-widest text-[#a6caeb]">
           Preguntas frecuentes

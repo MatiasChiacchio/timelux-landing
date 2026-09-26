@@ -89,7 +89,7 @@ export default function Catalog({
   }
 
   return (
-    <section id="catalogo" className="bg-[#fffff4]">
+    <section id="catalogo" className="scroll-mt-20 bg-[#fffff4] md:scroll-mt-24">
       <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 md:py-24 lg:px-8">
         {/* Encabezado editorial */}
         <p className="text-sm font-semibold uppercase tracking-widest text-[#a6caeb]">

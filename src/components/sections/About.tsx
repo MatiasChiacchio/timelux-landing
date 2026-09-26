@@ -43,7 +43,7 @@ const notasDestacadas: string[] = [
 // Historia, propuesta de valor y vitrina editorial de la marca.
 export default function About(): React.JSX.Element {
   return (
-    <section id="nosotros" className="bg-[#fffff4]">
+    <section id="nosotros" className="scroll-mt-20 bg-[#fffff4] md:scroll-mt-24">
       <div className="mx-auto grid max-w-7xl items-center gap-10 px-4 py-16 sm:px-6 md:py-24 lg:grid-cols-2 lg:gap-14 lg:px-8">
         {/* Columna editorial: relato y pilares */}
         <div>

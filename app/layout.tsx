@@ -16,9 +16,62 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Timelux | Perfumería árabe y de diseñador",
+  metadataBase: new URL(
+    process.env.NEXT_PUBLIC_SITE_URL || "https://timelux.vercel.app",
+  ),
+  title: {
+    default: "Timelux | Alta Perfumería Árabe & Diseñador",
+    template: "%s | Timelux",
+  },
   description:
-    "Timelux: vitrina digital de perfumería árabe y fragancias de diseñador. Consulta por WhatsApp.",
+    "Descubrí fragancias árabes y de diseñador 100% originales. Curaduría exclusiva de dupes icónicos y perfumes de autor con fijación duradera y envíos a todo el país.",
+  keywords: [
+    "perfumes árabes",
+    "alta perfumería",
+    "Lattafa",
+    "Afnan",
+    "Armaf",
+    "dupes de perfumes",
+    "fragancias originales",
+    "perfumería de autor",
+    "Timelux",
+    "Argentina",
+  ],
+  authors: [{ name: "Timelux Perfumes" }],
+  creator: "Timelux",
+  icons: {
+    icon: "/logo.png",
+    shortcut: "/logo.png",
+    apple: "/logo.png",
+  },
+  openGraph: {
+    type: "website",
+    locale: "es_AR",
+    url: "/",
+    siteName: "Timelux Perfumería",
+    title: "Timelux | Alta Perfumería Árabe & Diseñador",
+    description:
+      "Fragancias árabes y de diseñador 100% originales. Fijación duradera y asesoría personalizada para encontrar tu firma olfativa.",
+    images: [
+      {
+        url: "/logo.png",
+        width: 480,
+        height: 480,
+        alt: "Timelux Perfumería - El arte de dejar una huella inolvidable",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Timelux | Alta Perfumería Árabe & Diseñador",
+    description:
+      "Fragancias árabes y de diseñador 100% originales con fijación duradera y envíos a todo el país.",
+    images: ["/logo.png"],
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {

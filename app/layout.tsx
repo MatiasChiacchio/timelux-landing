@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import Navbar from "@/src/components/layout/Navbar";
 import WhatsAppFloatingButton from "@/src/components/common/WhatsAppFloatingButton";
+import Preloader from "@/src/components/ui/Preloader";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -28,6 +29,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
+        <Preloader />
         <Navbar />
         {children}
         <WhatsAppFloatingButton />

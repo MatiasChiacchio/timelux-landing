@@ -1,7 +1,7 @@
 // Tarjeta de fragancia con diseño de alta gama.
 // Server Component presentacional: se reutiliza en la Home y en /perfumes.
 
-import { BadgeCheck, MessageCircle } from "lucide-react";
+import { MessageCircle } from "lucide-react";
 import ImagenPerfume from "@/src/components/ui/ImagenPerfume";
 import {
   enlaceWhatsAppPerfume,
@@ -77,12 +77,6 @@ export default function TarjetaPerfume({
             </li>
           ))}
         </ul>
-
-        {/* Garantía de originalidad */}
-        <p className="mt-3 inline-flex items-center gap-1.5 text-xs font-medium text-[#5e626e]">
-          <BadgeCheck size={14} aria-hidden="true" className="text-[#7bb4e3]" />
-          100% original · Sellado en origen
-        </p>
       </div>
 
       {/* Consulta individual por WhatsApp */}

@@ -4,12 +4,12 @@
 import Image from "next/image";
 import Link from "next/link";
 import {
-  AtSign,
   Clock,
   MessageCircle,
   ShieldCheck,
   Truck,
 } from "lucide-react";
+import IconoInstagram from "@/src/components/ui/IconoInstagram";
 import {
   getWhatsAppLink,
   mensajePredeterminadoWhatsApp,
@@ -17,9 +17,8 @@ import {
   navLinks,
 } from "@/src/config/site";
 
-// Teléfono visible y enlace tel: con el número saneado.
+// Teléfono visible en la línea principal de WhatsApp.
 const telefonoVisible: string = "+54 370 4772001";
-const telefonoEnlace: string = "tel:+5493704772001";
 
 // Contacto, navegación y cierre institucional de la landing.
 export default function Footer(): React.JSX.Element {
@@ -79,28 +78,21 @@ export default function Footer(): React.JSX.Element {
             <p className="text-sm font-semibold uppercase tracking-widest">
               Atención &amp; Ventas
             </p>
-            <ul className="mt-4 space-y-3 text-sm">
+            <ul className="mt-4 space-y-4 text-sm">
               <li>
                 <a
                   href={getWhatsAppLink(mensajePredeterminadoWhatsApp)}
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="Contactar a Timelux por WhatsApp"
-                  className="inline-flex min-h-[44px] items-center gap-2 font-semibold text-white transition-opacity hover:opacity-75"
+                  className="inline-flex min-h-[44px] items-center gap-3 font-semibold leading-snug text-white transition-opacity hover:opacity-75"
                 >
-                  <MessageCircle size={16} aria-hidden="true" />
+                  <MessageCircle
+                    size={16}
+                    aria-hidden="true"
+                    className="shrink-0"
+                  />
                   WhatsApp: {telefonoVisible}
-                </a>
-              </li>
-              <li>
-                <a
-                  href={telefonoEnlace}
-                  className="inline-flex min-h-[44px] items-center gap-2 text-white/90 transition-opacity hover:opacity-75"
-                >
-                  <Clock size={16} aria-hidden="true" />
-                  <span>
-                    Atención por WhatsApp de lunes a sábado, de 9 a 20 h.
-                  </span>
                 </a>
               </li>
               <li>
@@ -109,11 +101,21 @@ export default function Footer(): React.JSX.Element {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="Timelux en Instagram"
-                  className="inline-flex min-h-[44px] items-center gap-2 text-white/90 transition-opacity hover:opacity-75"
+                  className="inline-flex min-h-[44px] items-center gap-3 leading-snug text-white/90 transition-opacity hover:opacity-75"
                 >
-                  <AtSign size={16} aria-hidden="true" />
+                  <IconoInstagram size={16} className="shrink-0" />
                   @timelux.perfumes
                 </a>
+              </li>
+              <li className="flex items-start gap-3 leading-snug text-white/90">
+                <Clock
+                  size={16}
+                  aria-hidden="true"
+                  className="mt-0.5 shrink-0"
+                />
+                <p>
+                  Atención por WhatsApp de lunes a sábado, de 9 a 20 h.
+                </p>
               </li>
             </ul>
           </div>

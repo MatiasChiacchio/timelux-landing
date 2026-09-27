@@ -58,12 +58,12 @@ export default function Hero(): React.JSX.Element {
 
         {/* Encabezado de lujo */}
         <h1
-          className="animacion-hero mt-6 max-w-3xl font-serif text-4xl leading-tight tracking-tight text-[#111827] sm:text-5xl lg:text-6xl"
+          className="animacion-hero mb-6 mt-6 max-w-3xl font-serif text-4xl leading-[1.15] tracking-tight text-[#1a1a1a] sm:text-5xl md:text-6xl lg:text-7xl"
           style={{ animationDelay: "240ms" }}
         >
-          El arte de dejar una{" "}
-          <span className="bg-gradient-to-r from-[#7bb4e3] to-[#a6caeb] bg-clip-text font-serif italic text-transparent drop-shadow-sm">
-            huella inolvidable
+          Más que una fragancia,{" "}
+          <span className="block font-normal italic text-[#7ba7d1] sm:inline sm:text-[#6a9ecb]">
+            tu esencia
           </span>
         </h1>
 

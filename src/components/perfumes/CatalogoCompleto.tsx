@@ -4,7 +4,8 @@
 // Client Component porque gestiona búsqueda, filtros y carga progresiva.
 
 import { useMemo, useState } from "react";
-import { ChevronDown, Search, SearchX } from "lucide-react";
+import { Search, SearchX } from "lucide-react";
+import ComboboxMarcas from "@/src/components/perfumes/ComboboxMarcas";
 import TarjetaPerfume from "@/src/components/perfumes/TarjetaPerfume";
 import type { GeneroPerfume, Perfume } from "@/src/types/perfume";
 
@@ -119,8 +120,8 @@ export default function CatalogoCompleto({
             onChange={(
               evento: React.ChangeEvent<HTMLInputElement>,
             ): void => actualizarBusqueda(evento.target.value)}
-            placeholder="Buscar por nombre o marca…"
-            aria-label="Buscar perfumes por nombre o marca"
+            placeholder="Buscar por nombre…"
+            aria-label="Buscar perfumes por nombre"
             className="min-h-[44px] w-full rounded-full border border-[#a6caeb]/40 bg-white/90 py-3 pl-11 pr-4 text-sm text-[#141416] placeholder:text-[#5e626e] focus:border-[#c40a0a]/50 focus:outline-none focus:ring-2 focus:ring-[#c40a0a]/20"
           />
         </div>
@@ -152,27 +153,11 @@ export default function CatalogoCompleto({
             })}
           </div>
 
-          <div className="relative sm:w-56 sm:shrink-0">
-            <select
-              value={marca}
-              onChange={(
-                evento: React.ChangeEvent<HTMLSelectElement>,
-              ): void => actualizarMarca(evento.target.value)}
-              aria-label="Filtrar perfumes por marca"
-              className="min-h-[44px] w-full appearance-none rounded-full border border-[#a6caeb]/40 bg-white/90 py-2 pl-4 pr-10 text-sm font-medium text-[#141416] focus:border-[#c40a0a]/50 focus:outline-none focus:ring-2 focus:ring-[#c40a0a]/20"
-            >
-              <option value="todas">Todas las marcas</option>
-              {marcas.map((nombreMarca: string) => (
-                <option key={nombreMarca} value={nombreMarca}>
-                  {nombreMarca}
-                </option>
-              ))}
-            </select>
-            <ChevronDown
-              aria-hidden="true"
-              className="pointer-events-none absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-[#5e626e]"
-            />
-          </div>
+          <ComboboxMarcas
+            marcas={marcas}
+            marcaSeleccionada={marca}
+            alSeleccionarMarca={actualizarMarca}
+          />
         </div>
 
         <p aria-live="polite" className="text-sm text-[#5e626e]">

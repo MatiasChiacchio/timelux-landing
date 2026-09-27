@@ -47,3 +47,22 @@ html {
     animation: none;
   }
 }
+
+/* Scrollbar delgado y discreto del desplegable de marcas. */
+.desplegable-marcas {
+  scrollbar-width: thin;
+  scrollbar-color: #a6caeb transparent;
+}
+
+.desplegable-marcas::-webkit-scrollbar {
+  width: 6px;
+}
+
+.desplegable-marcas::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.desplegable-marcas::-webkit-scrollbar-thumb {
+  background: #a6caeb;
+  border-radius: 9999px;
+}

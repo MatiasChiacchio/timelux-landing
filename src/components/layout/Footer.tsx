@@ -2,6 +2,7 @@
 // Server Component: contenido estático con enlaces y contacto.
 
 import Image from "next/image";
+import Link from "next/link";
 import {
   AtSign,
   Clock,
@@ -34,7 +35,7 @@ export default function Footer(): React.JSX.Element {
         <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
           {/* Columna 1: marca con logo blanco */}
           <div>
-            <a href="#hero" aria-label={`${name} - Volver al inicio`}>
+            <Link href="/#hero" aria-label={`${name} - Volver al inicio`}>
               <Image
                 src="/Timelux_Blanco-sinFondo.png"
                 alt={`Logotipo de ${name}`}
@@ -42,7 +43,7 @@ export default function Footer(): React.JSX.Element {
                 height={48}
                 className="mb-4 h-auto w-36 object-contain md:w-40"
               />
-            </a>
+            </Link>
             <p className="text-base font-semibold italic">
               Más que una fragancia, tu esencia.
             </p>
@@ -59,7 +60,7 @@ export default function Footer(): React.JSX.Element {
             </p>
             <ul className="mt-4 space-y-1">
               {navLinks
-                .filter((enlace) => enlace.href !== "#contacto")
+                .filter((enlace) => enlace.href !== "/#contacto")
                 .map((enlace) => (
                   <li key={enlace.href}>
                     <a

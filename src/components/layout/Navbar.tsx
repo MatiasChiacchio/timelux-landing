@@ -63,12 +63,12 @@ export default function Navbar(): React.JSX.Element {
         <ul className="hidden items-center gap-7 text-sm font-medium tracking-wide text-white md:flex lg:gap-9 lg:text-base">
           {navLinks.map((enlace) => (
             <li key={enlace.href}>
-              <a
+              <Link
                 href={enlace.href}
                 className="transition-opacity hover:opacity-80"
               >
                 {enlace.label}
-              </a>
+              </Link>
             </li>
           ))}
         </ul>
@@ -99,13 +99,13 @@ export default function Navbar(): React.JSX.Element {
           <ul className="space-y-1 px-4 pb-6 pt-3">
             {navLinks.map((enlace) => (
               <li key={enlace.href}>
-                <a
+                <Link
                   href={enlace.href}
                   onClick={cerrarMenu}
                   className="block rounded-xl px-4 py-3 text-base font-medium text-white transition-colors duration-200 hover:bg-white/10 hover:text-white/80"
                 >
                   {enlace.label}
-                </a>
+                </Link>
               </li>
             ))}
           </ul>

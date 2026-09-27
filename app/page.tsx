@@ -19,8 +19,8 @@ export default async function Home(): Promise<React.JSX.Element> {
       {/* Portada principal con ancla para la navegación */}
       <Hero />
 
-      {/* Catálogo interactivo debajo del Hero */}
-      <Catalog perfumesIniciales={perfumes} />
+      {/* Selección de destacados con enlace al catálogo completo */}
+      <Catalog perfumesIniciales={perfumes} limite={12} mostrarEnlaceCatalogo />
 
       {/* Historia y propuesta de valor */}
       <About />

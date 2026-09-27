@@ -13,13 +13,14 @@ export interface EnlaceNavegacion {
   href: string;
 }
 
-// Lista de navegación principal por secciones de la landing.
+// Lista de navegación principal: combina la ruta del catálogo completo
+// con anclas absolutas para funcionar desde la Home y desde /perfumes.
 export const navLinks: EnlaceNavegacion[] = [
-  { label: "Inicio", href: "#hero" },
-  { label: "Perfumes", href: "#catalogo" },
-  { label: "Nosotros", href: "#nosotros" },
-  { label: "Preguntas", href: "#faq" },
-  { label: "Contacto", href: "#contacto" },
+  { label: "Inicio", href: "/#hero" },
+  { label: "Perfumes", href: "/perfumes" },
+  { label: "Nosotros", href: "/#nosotros" },
+  { label: "Preguntas", href: "/#faq" },
+  { label: "Contacto", href: "/#contacto" },
 ];
 
 // Mensaje genérico de asesoramiento para el CTA principal.

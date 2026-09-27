@@ -1,17 +1,19 @@
 'use client';
 
-// Sección interactiva del catálogo de fragancias Timelux.
+// Sección de fragancias destacadas de Timelux para la portada.
 // Client Component porque gestiona búsqueda y filtros por categoría.
 
 import { useMemo, useState } from "react";
-import { MessageCircle, Search, SearchX } from "lucide-react";
-import ImagenPerfume from "@/src/components/ui/ImagenPerfume";
-import { getWhatsAppLink } from "@/src/config/site";
+import Link from "next/link";
+import { Search, SearchX } from "lucide-react";
+import TarjetaPerfume from "@/src/components/perfumes/TarjetaPerfume";
 import type { CategoriaPerfume, Perfume } from "@/src/types/perfume";
 
-// Propiedades del catálogo: lista inicial provista por el Server Component.
+// Propiedades del catálogo: lista inicial y modo de destacados.
 interface PropiedadesCatalogo {
   perfumesIniciales: Perfume[];
+  limite?: number;
+  mostrarEnlaceCatalogo?: boolean;
 }
 
 // Pestaña de filtro con valor y etiqueta visible.
@@ -27,23 +29,11 @@ const pestanas: PestanaCategoria[] = [
   { valor: "disenador", etiqueta: "Diseñador" },
 ];
 
-// Etiqueta legible del tipo de perfume.
-function etiquetaTipo(tipo: Perfume["tipo"]): string {
-  return tipo === "arabe" ? "Árabe" : "Diseñador";
-}
-
-// Formatea el precio en pesos argentinos sin decimales (ej.: $ 68.000).
-function formatearPrecio(precio: number): string {
-  return new Intl.NumberFormat("es-AR", {
-    style: "currency",
-    currency: "ARS",
-    maximumFractionDigits: 0,
-  }).format(precio);
-}
-
-// Catálogo con buscador reactivo, filtros y consulta individual por WhatsApp.
+// Catálogo con buscador reactivo, filtros y enlace al catálogo completo.
 export default function Catalog({
   perfumesIniciales,
+  limite,
+  mostrarEnlaceCatalogo = false,
 }: PropiedadesCatalogo): React.JSX.Element {
   // Lista base provista por el servidor y controles de filtrado.
   const [perfumes] = useState<Perfume[]>(perfumesIniciales);
@@ -51,10 +41,11 @@ export default function Catalog({
   const [busqueda, setBusqueda] = useState<string>("");
 
   // Fragancias filtradas por categoría y búsqueda (nombre, marca o notas).
+  // En modo destacados, los bestsellers van primero y se aplica el límite.
   const fraganciasFiltradas: Perfume[] = useMemo(() => {
     const texto: string = busqueda.toLowerCase().trim();
 
-    return perfumes.filter((perfume: Perfume) => {
+    const filtradas: Perfume[] = perfumes.filter((perfume: Perfume) => {
       const coincideCategoria: boolean =
         categoria === "todos" ? true : perfume.tipo === categoria;
 
@@ -80,7 +71,18 @@ export default function Catalog({
         notasUnidas.includes(texto)
       );
     });
-  }, [perfumes, categoria, busqueda]);
+
+    if (limite === undefined) {
+      return filtradas;
+    }
+
+    const ordenadas: Perfume[] = [...filtradas].sort(
+      (a: Perfume, b: Perfume) =>
+        Number(b.bestseller === true) - Number(a.bestseller === true),
+    );
+
+    return ordenadas.slice(0, limite);
+  }, [perfumes, categoria, busqueda, limite]);
 
   // Restablece búsqueda y categoría al estado inicial.
   function limpiarFiltros(): void {
@@ -150,9 +152,8 @@ export default function Catalog({
           </div>
 
           <p aria-live="polite" className="text-sm text-[#5e626e]">
-            {fraganciasFiltradas.length === 1
-              ? "1 fragancia disponible"
-              : `${fraganciasFiltradas.length} fragancias disponibles`}
+            Mostrando {fraganciasFiltradas.length} de {perfumes.length}{" "}
+            {perfumes.length === 1 ? "fragancia" : "fragancias"}
           </p>
         </div>
 
@@ -161,77 +162,7 @@ export default function Catalog({
           <ul className="mt-8 grid grid-cols-1 gap-6 sm:grid-cols-2 md:gap-8 lg:grid-cols-3">
             {fraganciasFiltradas.map((perfume: Perfume) => (
               <li key={perfume.id} className="h-full">
-                <article className="group flex h-full flex-col justify-between rounded-2xl border border-[#a6caeb]/30 bg-white/90 p-5 shadow-sm transition-all duration-300 hover:border-[#c40a0a]/40 hover:shadow-xl">
-                  <div>
-                    {/* Frasco con dimensiones propias y respaldo local */}
-                    <ImagenPerfume
-                      src={perfume.imagenUrl}
-                      alt={`Frasco de ${perfume.nombre} de ${perfume.marca}`}
-                    />
-
-                    {/* Insignias de categoría y bestseller */}
-                    <div className="flex flex-wrap items-center gap-2">
-                      <span className="rounded-full bg-[#a6caeb]/30 px-2.5 py-1 text-xs font-semibold text-[#141416]">
-                        {etiquetaTipo(perfume.tipo)}
-                      </span>
-                      {perfume.bestseller === true && (
-                        <span className="rounded-full bg-[#a6caeb]/30 px-2.5 py-1 text-xs font-semibold text-[#141416]">
-                          Bestseller
-                        </span>
-                      )}
-                      <span className="rounded-full bg-[#a6caeb]/30 px-2.5 py-1 text-xs font-semibold text-[#141416]">
-                        {perfume.mililitros} ml
-                      </span>
-                    </div>
-
-                    {/* Nombre y marca */}
-                    <h3 className="mt-4 text-lg font-bold text-[#141416]">
-                      {perfume.nombre}
-                    </h3>
-                    <p className="mt-1 text-xs font-medium uppercase tracking-widest text-[#5e626e]">
-                      {perfume.marca}
-                    </p>
-                    <p className="mt-2 text-sm leading-relaxed text-[#5e626e]">
-                      {perfume.descripcionCorta}
-                    </p>
-
-                    {/* Precio destacado en pesos */}
-                    <p className="mt-3 text-2xl font-extrabold tracking-tight text-[#141416]">
-                      {formatearPrecio(perfume.precio)}
-                    </p>
-
-                    {/* Notas olfativas clave */}
-                    <ul
-                      aria-label={`Notas de salida de ${perfume.nombre}`}
-                      className="mt-3 flex flex-wrap gap-1.5"
-                    >
-                      {perfume.notas.salida
-                        .slice(0, 3)
-                        .map((nota: string) => (
-                          <li
-                            key={nota}
-                            className="rounded-md border border-[#a6caeb]/30 bg-[#a6caeb]/15 px-2 py-0.5 text-xs uppercase tracking-wider text-[#141416]"
-                          >
-                            {nota}
-                          </li>
-                        ))}
-                    </ul>
-                  </div>
-
-                  {/* Consulta individual por WhatsApp */}
-                  <a
-                    href={getWhatsAppLink(
-                      `¡Hola Timelux! Me interesa el perfume ${perfume.nombre} de ${perfume.marca} (${formatearPrecio(perfume.precio)}). ¿Sigue vigente el precio y tienen disponibilidad?`,
-                    )}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label={`Consultar ${perfume.nombre} de ${perfume.marca} por WhatsApp`}
-                    className="mt-4 flex w-full items-center justify-center gap-2 rounded-xl bg-[#c40a0a] px-4 py-2.5 text-sm font-medium text-[#fffff4] transition-colors hover:bg-[#a30808]"
-                  >
-                    <MessageCircle size={16} aria-hidden="true" />
-                    Consultar
-                  </a>
-                </article>
+                <TarjetaPerfume perfume={perfume} />
               </li>
             ))}
           </ul>
@@ -257,6 +188,19 @@ export default function Catalog({
             >
               Limpiar filtros
             </button>
+          </div>
+        )}
+
+        {/* Enlace destacado al catálogo completo */}
+        {mostrarEnlaceCatalogo && (
+          <div className="mt-10 flex justify-center">
+            <Link
+              className="inline-flex min-h-[44px] items-center gap-2 rounded-full bg-[#c40a0a] px-8 py-3.5 font-medium text-white shadow-md transition-all duration-300 hover:bg-[#a30808] hover:shadow-lg"
+              href="/perfumes"
+            >
+              Explorar catálogo completo ({perfumes.length} fragancias)
+              <span aria-hidden="true">&rarr;</span>
+            </Link>
           </div>
         )}
       </div>

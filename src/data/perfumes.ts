@@ -10,6 +10,7 @@ export const perfumes: Perfume[] = [
     nombre: "Khamrah",
     marca: "Lattafa",
     tipo: "arabe",
+    genero: "unisex",
     mililitros: 100,
     precio: 68000,
     bestseller: true,
@@ -27,6 +28,7 @@ export const perfumes: Perfume[] = [
     nombre: "Club de Nuit Intense Man",
     marca: "Armaf",
     tipo: "arabe",
+    genero: "hombre",
     mililitros: 105,
     precio: 95000,
     bestseller: true,
@@ -44,6 +46,7 @@ export const perfumes: Perfume[] = [
     nombre: "9PM",
     marca: "Afnan",
     tipo: "arabe",
+    genero: "hombre",
     mililitros: 100,
     precio: 72000,
     descripcionCorta:
@@ -60,6 +63,7 @@ export const perfumes: Perfume[] = [
     nombre: "Sauvage",
     marca: "Dior",
     tipo: "disenador",
+    genero: "hombre",
     mililitros: 100,
     precio: 185000,
     bestseller: true,
@@ -77,6 +81,7 @@ export const perfumes: Perfume[] = [
     nombre: "Tobacco Vanille",
     marca: "Tom Ford",
     tipo: "disenador",
+    genero: "unisex",
     mililitros: 100,
     precio: 460000,
     descripcionCorta:
@@ -93,6 +98,7 @@ export const perfumes: Perfume[] = [
     nombre: "Bleu de Chanel",
     marca: "Chanel",
     tipo: "disenador",
+    genero: "hombre",
     mililitros: 100,
     precio: 215000,
     descripcionCorta:

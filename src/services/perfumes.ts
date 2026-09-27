@@ -3,7 +3,7 @@
 // el catálogo estático como respaldo resiliente ante fallos de red.
 
 import { perfumes as perfumesRespaldo } from "@/src/data/perfumes";
-import type { NotasOlfativas, Perfume } from "@/src/types/perfume";
+import type { GeneroPerfume, NotasOlfativas, Perfume } from "@/src/types/perfume";
 
 // URL directa al CSV publicado (respaldo si la variable de entorno falta).
 const URL_CSV_RESPALDO: string =
@@ -143,6 +143,34 @@ function resolverNotas(fila: Record<string, string>): NotasOlfativas {
     fondo: dividirNotas(fila["notas_fondo"] ?? ""),
   };
 }
+// Resuelve el género desde la columna `genero` (acepta alias con tilde).
+// Normaliza variantes ("masculino", "femenino") y usa "unisex" por defecto.
+function resolverGenero(fila: Record<string, string>): GeneroPerfume {
+  const crudo: string = leerColumna(fila, "genero", "género", "sexo")
+    .toLowerCase()
+    .trim();
+
+  if (
+    crudo === "hombre" ||
+    crudo === "masculino" ||
+    crudo === "caballero" ||
+    crudo === "para hombre"
+  ) {
+    return "hombre";
+  }
+
+  if (
+    crudo === "mujer" ||
+    crudo === "femenino" ||
+    crudo === "dama" ||
+    crudo === "para mujer"
+  ) {
+    return "mujer";
+  }
+
+  return "unisex";
+}
+
 // Convierte el CSV en la lista de perfumes disponibles.
 function mapearCsvAPerfumes(contenido: string): Perfume[] {
   const filas: string[][] = parsearCsv(contenido);
@@ -181,6 +209,7 @@ function mapearCsvAPerfumes(contenido: string): Perfume[] {
       nombre,
       marca: limpiarCelda(fila["marca"] ?? ""),
       tipo,
+      genero: resolverGenero(fila),
       mililitros: Number(fila["mililitros"]) || 100,
       precio: sanearPrecio(fila["precio"] ?? ""),
       bestseller: (fila["bestseller"] ?? "").toUpperCase() === "TRUE",

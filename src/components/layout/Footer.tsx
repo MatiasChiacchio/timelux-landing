@@ -149,7 +149,7 @@ export default function Footer(): React.JSX.Element {
         {/* Barra inferior con derechos */}
         <div className="mt-12 flex flex-col items-center justify-between gap-2 border-t border-white/15 pt-8 text-center text-xs text-white/70 sm:flex-row sm:text-left">
           <p>© {anioActual} Timelux. Todos los derechos reservados.</p>
-          <p>Alta Perfumería Árabe &amp; Diseñador</p>
+          <p>Perfumería Árabe &amp; Diseñador</p>
         </div>
       </div>
     </footer>

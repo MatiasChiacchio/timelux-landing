@@ -91,7 +91,7 @@ export default function TarjetaPerfume({
         target="_blank"
         rel="noopener noreferrer"
         aria-label={`Consultar ${perfume.nombre} de ${perfume.marca} por WhatsApp`}
-        className="mt-4 flex min-h-[44px] w-full items-center justify-center gap-2 rounded-xl bg-[#c40a0a] px-4 py-2.5 text-sm font-medium text-[#fffff4] transition-colors hover:bg-[#a30808]"
+        className="mt-4 flex min-h-[44px] w-full items-center justify-center gap-2 rounded-xl bg-[#c40a0a] px-4 py-2.5 text-sm font-medium text-[#fffff4] transition-all duration-300 hover:bg-[#a30808] hover:shadow-md active:scale-95"
       >
         <MessageCircle size={16} aria-hidden="true" />
         Consultar

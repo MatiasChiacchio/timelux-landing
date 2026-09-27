@@ -140,7 +140,7 @@ export default function CatalogoCompleto({
                   role="tab"
                   aria-selected={activo}
                   onClick={(): void => actualizarGenero(filtro.valor)}
-                  className={`min-h-[44px] whitespace-nowrap rounded-full px-4 py-2 text-sm font-medium transition-colors ${
+                  className={`min-h-[44px] whitespace-nowrap rounded-full px-4 py-2 text-sm font-medium transition-all duration-200 active:scale-95 ${
                     activo
                       ? "bg-[#c40a0a] text-[#fffff4]"
                       : "border border-[#a6caeb]/40 bg-[#a6caeb]/20 text-[#141416] hover:bg-[#a6caeb]/40"

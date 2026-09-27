@@ -20,7 +20,7 @@ export const metadata: Metadata = {
     process.env.NEXT_PUBLIC_SITE_URL || "https://timelux.vercel.app",
   ),
   title: {
-    default: "Timelux | Alta Perfumería Árabe & Diseñador",
+    default: "Timelux | Perfumería Árabe & Diseñador",
     template: "%s | Timelux",
   },
   description:
@@ -49,7 +49,7 @@ export const metadata: Metadata = {
     locale: "es_AR",
     url: "/",
     siteName: "Timelux Perfumería",
-    title: "Timelux | Alta Perfumería Árabe & Diseñador",
+    title: "Timelux | Perfumería Árabe & Diseñador",
     description:
       "Fragancias árabes y de diseñador 100% originales. Fijación duradera y asesoría personalizada para encontrar tu firma olfativa.",
     images: [
@@ -63,7 +63,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Timelux | Alta Perfumería Árabe & Diseñador",
+    title: "Timelux | Perfumería Árabe & Diseñador",
     description:
       "Fragancias árabes y de diseñador 100% originales con fijación duradera y envíos a todo el país.",
     images: ["/logo.png"],

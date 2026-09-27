@@ -40,7 +40,7 @@ export default function ImagenPerfume({
         sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
         unoptimized
         onError={usarRespaldo}
-        className="object-contain p-2 transition-transform duration-500 group-hover:scale-105"
+        className="object-contain p-2 transition-transform duration-500 ease-out group-hover:scale-105"
       />
     </div>
   );

@@ -3,6 +3,7 @@
 
 import { ArrowDown, BadgeCheck, HeartHandshake, MessageCircle, Truck } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
+import { FadeIn } from "@/src/components/ui/FadeIn";
 import { getWhatsAppLink } from "@/src/config/site";
 
 // Micro-beneficio con icono minimalista.
@@ -53,7 +54,7 @@ export default function Hero(): React.JSX.Element {
           className="animacion-hero mt-4 rounded-full border border-[#a6caeb]/60 bg-white/80 px-4 py-1.5 text-xs font-semibold uppercase tracking-widest text-[#1e3a5f]"
           style={{ animationDelay: "120ms" }}
         >
-          Alta perfumería árabe &amp; diseñador
+          Perfumería árabe &amp; diseñador
         </p>
 
         {/* Encabezado de lujo */}
@@ -103,24 +104,26 @@ export default function Hero(): React.JSX.Element {
           </a>
         </div>
 
-        {/* Bloque de confianza */}
-        <ul
-          className="animacion-hero mt-12 grid w-full max-w-3xl grid-cols-1 gap-3 sm:grid-cols-3"
-          style={{ animationDelay: "600ms" }}
-        >
-          {puntosConfianza.map((punto: PuntoConfianza) => (
+        {/* Bloque de confianza con entrada escalonada al hacer scroll */}
+        <ul className="mt-12 grid w-full max-w-3xl grid-cols-1 gap-3 sm:grid-cols-3">
+          {puntosConfianza.map((punto: PuntoConfianza, indice: number) => (
             <li
               key={punto.texto}
-              className="group flex items-center justify-center gap-2.5 rounded-2xl border border-[#a6caeb]/60 bg-white/70 px-4 py-3 shadow-sm backdrop-blur-sm"
+              className="group rounded-2xl border border-[#a6caeb]/60 bg-white/70 px-4 py-3 shadow-sm backdrop-blur-sm"
             >
-              <punto.icono
-                size={18}
-                aria-hidden="true"
-                className="shrink-0 text-[#7bb4e3] group-hover:text-[#a6caeb]"
-              />
-              <span className="text-xs font-medium text-[#1f2937] sm:text-sm">
-                {punto.texto}
-              </span>
+              <FadeIn
+                delay={indice * 90}
+                className="flex items-center justify-center gap-2.5"
+              >
+                <punto.icono
+                  size={18}
+                  aria-hidden="true"
+                  className="shrink-0 text-[#7bb4e3] group-hover:text-[#a6caeb]"
+                />
+                <span className="text-xs font-medium text-[#1f2937] sm:text-sm">
+                  {punto.texto}
+                </span>
+              </FadeIn>
             </li>
           ))}
         </ul>

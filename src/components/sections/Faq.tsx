@@ -5,6 +5,7 @@
 
 import { useState } from "react";
 import { ChevronDown } from "lucide-react";
+import { FadeIn } from "@/src/components/ui/FadeIn";
 
 // Pregunta con su respuesta explicativa.
 interface PreguntaFrecuente {
@@ -78,10 +79,12 @@ export default function Faq(): React.JSX.Element {
           {preguntas.map((item: PreguntaFrecuente, indice: number) => {
             const abierta: boolean = abiertas.includes(indice);
             return (
-              <div
+              <FadeIn
                 key={item.pregunta}
-                className="mb-4 overflow-hidden rounded-2xl border border-[#a6caeb]/40 bg-white/70"
+                delay={indice * 70}
+                className="mb-4"
               >
+                <div className="overflow-hidden rounded-2xl border border-[#a6caeb]/40 bg-white/70">
                 <h3>
                   <button
                     type="button"
@@ -109,7 +112,8 @@ export default function Faq(): React.JSX.Element {
                     </p>
                   </div>
                 )}
-              </div>
+                </div>
+              </FadeIn>
             );
           })}
         </div>

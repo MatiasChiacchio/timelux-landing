@@ -3,6 +3,7 @@
 
 import { Gem, HeartHandshake, ShieldCheck } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
+import { FadeIn } from "@/src/components/ui/FadeIn";
 
 // Pilar de valor con icono, título y descripción.
 interface PilarTimelux {
@@ -46,7 +47,8 @@ export default function About(): React.JSX.Element {
     <section id="nosotros" className="scroll-mt-20 bg-[#fffff4] md:scroll-mt-24">
       <div className="mx-auto grid max-w-7xl items-center gap-10 px-4 py-16 sm:px-6 md:py-24 lg:grid-cols-2 lg:gap-14 lg:px-8">
         {/* Columna editorial: relato y pilares */}
-        <div>
+        <FadeIn>
+          <div>
           <p className="text-sm font-semibold uppercase tracking-widest text-[#a6caeb]">
             Nosotros · Timelux
           </p>
@@ -87,10 +89,12 @@ export default function About(): React.JSX.Element {
               </li>
             ))}
           </ul>
-        </div>
+          </div>
+        </FadeIn>
 
         {/* Columna visual: vitrina con estética de revista de lujo */}
-        <div className="relative">
+        <FadeIn delay={120}>
+          <div className="relative">
           <div
             aria-hidden="true"
             className="absolute -inset-3 rounded-[2rem] bg-[#a6caeb]/20 blur-2xl"
@@ -143,7 +147,8 @@ export default function About(): React.JSX.Element {
               </p>
             </div>
           </article>
-        </div>
+          </div>
+        </FadeIn>
       </div>
     </section>
   );

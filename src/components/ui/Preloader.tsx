@@ -66,7 +66,7 @@ export default function Preloader(): React.JSX.Element | null {
 
         {/* Subtexto en blanco */}
         <p className="mb-4 text-xs font-medium uppercase tracking-[0.4em] text-white/90 sm:text-sm">
-          Alta Perfumería
+          Perfumería
         </p>
 
         {/* Barra de progreso en blanco */}

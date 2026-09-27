@@ -36,10 +36,10 @@ export default function Footer(): React.JSX.Element {
           <div>
             <Link href="/#hero" aria-label={`${name} - Volver al inicio`}>
               <Image
-                src="/Timelux_Blanco-sinFondo.png"
+                src="/logo-sinFondo.png"
                 alt={`Logotipo de ${name}`}
-                width={160}
-                height={48}
+                width={400}
+                height={120}
                 className="mb-4 h-auto w-36 object-contain md:w-40"
               />
             </Link>

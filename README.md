@@ -30,8 +30,8 @@ Plataforma de curaduría y vitrina digital de **perfumería árabe y fragancias 
 
 | Entorno | URL |
 |---|---|
-| Producción (Vercel) | [https://timelux.vercel.app](https://timelux.vercel.app) |
-| Catálogo completo | [https://timelux.vercel.app/perfumes](https://timelux.vercel.app/perfumes) |
+| Producción (Vercel) | [https://timelux-perfumes.vercel.app](https://timelux-perfumes.vercel.app) |
+| Catálogo completo | [https://timelux-perfumes.vercel.app/perfumes](https://timelux-perfumes.vercel.app/perfumes) |
 
 > La URL canónica se configura con `NEXT_PUBLIC_SITE_URL` y alimenta `metadataBase` para SEO y Open Graph.
 
@@ -192,8 +192,8 @@ Crear un archivo `.env.local` en la raíz (no se versiona):
 # URL pública del catálogo (Google Sheets publicado como CSV).
 NEXT_PUBLIC_CATALOG_CSV_URL="https://docs.google.com/spreadsheets/d/e/<ID>/pub?output=csv"
 
-# URL canónica del sitio para SEO y Open Graph (opcional; por defecto timelux.vercel.app).
-NEXT_PUBLIC_SITE_URL="https://timelux.vercel.app"
+# URL canónica del sitio para SEO y Open Graph (opcional; por defecto timelux-perfumes.vercel.app).
+NEXT_PUBLIC_SITE_URL="https://timelux-perfumes.vercel.app"
 ```
 
 > Si el CSV remoto no responde, el sitio utiliza automáticamente el catálogo local de `src/data/perfumes.ts`.

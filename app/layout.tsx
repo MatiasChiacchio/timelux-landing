@@ -17,7 +17,7 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   metadataBase: new URL(
-    process.env.NEXT_PUBLIC_SITE_URL || "https://timelux.vercel.app",
+    process.env.NEXT_PUBLIC_SITE_URL || "https://timelux-perfumes.vercel.app",
   ),
   title: {
     default: "Timelux | Perfumería Árabe & Diseñador",

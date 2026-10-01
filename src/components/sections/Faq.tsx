@@ -52,7 +52,7 @@ const preguntas: PreguntaFrecuente[] = [
       {
         titulo: "Medios",
         descripcion:
-          "Transferencia, link de pago (Mercado Pago) y efectivo.",
+          "Transferencia, Mercado Pago y efectivo.",
       },
     ],
   },
@@ -68,7 +68,7 @@ const preguntas: PreguntaFrecuente[] = [
       {
         titulo: "Pago con seña",
         descripcion:
-          "70% al encargar y el 30% restante al llegar el producto.",
+          "70% al encargar y el 30% restante al llegar el producto (Exclusivamente en Formosa, Formosa). ",
       },
     ],
     aclaracion:

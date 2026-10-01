@@ -7,38 +7,87 @@ import { useState } from "react";
 import { ChevronDown } from "lucide-react";
 import { FadeIn } from "@/src/components/ui/FadeIn";
 
-// Pregunta con su respuesta explicativa.
-interface PreguntaFrecuente {
-  pregunta: string;
-  respuesta: string;
+// Punto destacado dentro de una respuesta (etiqueta con énfasis + descripción).
+interface PuntoFaq {
+  titulo: string;
+  descripcion: string;
 }
 
-// Preguntas y respuestas sobre autenticidad, pedidos, pagos y envíos.
+// Pregunta con introducción, detalle en lista y aclaración opcional.
+interface PreguntaFrecuente {
+  pregunta: string;
+  introduccion: string;
+  puntos: PuntoFaq[];
+  aclaracion?: string;
+}
+
+// Preguntas y respuestas sobre pedidos, pagos y envíos.
 const preguntas: PreguntaFrecuente[] = [
   {
-    pregunta: "¿Son fragancias originales y dupes de alta calidad?",
-    respuesta:
-      "Sí. Trabajamos con casas consagradas como Lattafa, Afnan y Armaf, además de perfumería de diseñador. Todas las piezas son originales, con presentación sellada y la calidad de fijación que caracteriza a la alta perfumería árabe.",
+    pregunta: "¿Cómo se realizan los pedidos?",
+    introduccion:
+      "Una vez seleccionado el perfume, gestionamos tu pedido de forma directa y personalizada por WhatsApp.",
+    puntos: [
+      {
+        titulo: "Asesoramiento personalizado",
+        descripcion:
+          "Si necesitás ayuda para elegir, escribinos por WhatsApp y te acompañamos en todo el proceso.",
+      },
+      {
+        titulo: "Perfumes a pedido",
+        descripcion:
+          "Si buscás un perfume que no está en el catálogo, podemos conseguirlo especialmente para vos.",
+      },
+    ],
   },
   {
-    pregunta: "¿Cómo realizo un pedido o consulta?",
-    respuesta:
-      "Todo el proceso es directo por WhatsApp: elegís tu fragancia en el catálogo, tocás Consultar y te atendemos al momento con asesoramiento inmediato, disponibilidad y precio actualizado.",
+    pregunta: "¿Qué métodos y monedas de pago aceptan?",
+    introduccion:
+      "Trabajamos con opciones flexibles para que puedas comprar con comodidad.",
+    puntos: [
+      {
+        titulo: "Monedas",
+        descripcion: "Pesos argentinos y USDT.",
+      },
+      {
+        titulo: "Medios",
+        descripcion:
+          "Transferencia, link de pago (Mercado Pago) y efectivo.",
+      },
+    ],
   },
   {
-    pregunta: "¿Cuáles son los medios de pago disponibles?",
-    respuesta:
-      "Aceptamos transferencias, efectivo y medios digitales que se convienen por chat al momento de confirmar tu pedido. Siempre coordinamos la opción más cómoda para vos antes de cerrar la compra.",
+    pregunta: "¿Cuáles son las formas de pago disponibles?",
+    introduccion:
+      "Podés elegir la modalidad que te resulte más cómoda al confirmar tu pedido:",
+    puntos: [
+      {
+        titulo: "Pago total anticipado",
+        descripcion: "100% al momento del pedido.",
+      },
+      {
+        titulo: "Pago con seña",
+        descripcion:
+          "70% al encargar y el 30% restante al llegar el producto.",
+      },
+    ],
+    aclaracion:
+      "El cliente cuenta con 15 días tras ser notificado para retirar o coordinar el envío; caso contrario, la seña no es reembolsable.",
   },
   {
-    pregunta: "¿Hacen envíos a todo el país?",
-    respuesta:
-      "Sí, realizamos envíos a todo el país con empaques protegidos para que tu fragancia llegue en perfectas condiciones. Escribinos por WhatsApp con tu localidad y te detallamos tiempos y costos de la logística.",
-  },
-  {
-    pregunta: "¿Cómo elijo si no conozco las notas olfativas?",
-    respuesta:
-      "No necesitás saber de notas: contanos por WhatsApp qué perfumes usaste antes o cuáles te gustan, y te recomendamos opciones según tus gustos y la ocasión en la que querés usarlos.",
+    pregunta: "¿Cuáles son los tiempos y modalidades de envío?",
+    introduccion:
+      "Realizamos envíos a todo el país con empaque protegido para que tu fragancia llegue en perfectas condiciones.",
+    puntos: [
+      {
+        titulo: "Correo Argentino",
+        descripcion: "Envíos a todo el país vía Correo Argentino.",
+      },
+      {
+        titulo: "Demora estimada",
+        descripcion: "Entre 1 y 2 semanas.",
+      },
+    ],
   },
 ];
 
@@ -70,8 +119,8 @@ export default function Faq(): React.JSX.Element {
           Todo lo que querés saber
         </h2>
         <p className="mx-auto mt-3 max-w-2xl text-center text-sm text-[#5e626e] sm:text-base">
-          Resolvemos las dudas más comunes sobre autenticidad, pedidos, pagos y
-          envíos. Si te queda alguna pregunta, escribinos por WhatsApp.
+          Resolvemos las dudas más comunes sobre pedidos, pagos y envíos.
+          Si te queda alguna pregunta, escribinos por WhatsApp.
         </p>
 
         {/* Acordeón de preguntas */}
@@ -107,9 +156,38 @@ export default function Faq(): React.JSX.Element {
                 </h3>
                 {abierta && (
                   <div id={`faq-respuesta-${indice}`} role="region">
-                    <p className="px-5 pb-5 text-sm leading-relaxed text-[#5e626e]">
-                      {item.respuesta}
-                    </p>
+                    <div className="px-5 pb-5">
+                      <p className="text-sm leading-relaxed text-[#5e626e]">
+                        {item.introduccion}
+                      </p>
+                      <ul className="mt-3 space-y-2.5">
+                        {item.puntos.map((punto: PuntoFaq) => (
+                          <li
+                            key={punto.titulo}
+                            className="flex gap-2 text-sm leading-relaxed text-[#5e626e]"
+                          >
+                            <span
+                              aria-hidden="true"
+                              className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-[#c40a0a]/70"
+                            />
+                            <span>
+                              <strong className="font-semibold text-[#141416]">
+                                {`${punto.titulo}: `}
+                              </strong>
+                              {punto.descripcion}
+                            </span>
+                          </li>
+                        ))}
+                      </ul>
+                      {item.aclaracion && (
+                        <p className="mt-3 rounded-xl border border-[#c40a0a]/20 bg-[#c40a0a]/5 px-4 py-3 text-sm leading-relaxed text-[#5e626e]">
+                          <strong className="font-semibold text-[#c40a0a]">
+                            Importante:{` `}
+                          </strong>
+                          {item.aclaracion}
+                        </p>
+                      )}
+                    </div>
                   </div>
                 )}
                 </div>

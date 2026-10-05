@@ -246,4 +246,4 @@ interface Perfume {
 El código fuente de este repositorio se distribuye únicamente con fines de operación y mantenimiento del sitio oficial. Queda prohibida su reproducción, redistribución o uso comercial sin autorización expresa de Timelux.
 
 - WhatsApp: +54 370 4772001 (lunes a sábado, de 9 a 20 h).
-- Instagram: [@timelux_](https://www.instagram.com/timelux_).
+- Instagram: [@timelux.perfumes](https://www.instagram.com/timelux.perfumes/).

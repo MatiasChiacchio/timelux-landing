@@ -32,6 +32,17 @@ yarn-error.log*
 
 # env files (can opt-in for committing if needed)
 .env*
+.env.local.bak
+
+# credenciales y cuentas de servicio (no versionar)
+credentials.json
+service-account*.json
+*service-account*.json
+
+# planillas internas con costos (no versionar)
+*.csv
+*.xlsx
+*.xls
 
 # vercel
 .vercel

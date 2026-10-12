@@ -47,6 +47,9 @@ export const metadata: Metadata = {
   ],
   authors: [{ name: "Timelux Perfumes" }],
   creator: "Timelux",
+  verification: {
+    google: "qGfM7SnqQXd5gn86wZJdQywMKQerXBTElA_lk37N6Vg", 
+  },
   openGraph: {
     type: "website",
     locale: "es_AR",

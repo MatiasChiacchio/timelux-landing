@@ -96,11 +96,16 @@ Experiencia de usuario:
 
 | Token | Hex | Uso |
 |---|---|---|
-| Marfil | `#fffff4` | Fondos base |
+| Marfil | `#fffff4` | Fondo base y texto sobre rojo |
 | Rojo vívido | `#c40a0a` | Marca, CTAs, Navbar, Footer |
-| Rojo profundo | `#a30808` | Bordes y estados hover |
-| Celeste pastel | `#a6caeb` | Acentos y degradados |
-| Celeste medio | `#7bb4e3` | Acentos secundarios |
+| Rojo profundo | `#a30808` | Estados hover |
+| Celeste pastel | `#a6caeb` | Bordes, fondos translúcidos, insignias e iconos decorativos |
+| Celeste medio | `#7bb4e3` | Solo detalles decorativos |
+| Tinta | `#141416` | Títulos, precios y texto principal |
+| Gris texto | `#5e626e` | Descripciones, metadatos y placeholders |
+| Azul tinta | `#1e3a5f` | Eyebrows, enlaces y acentos de texto accesibles |
+
+> La interfaz oficial es clara (Warm Ivory / Light Luxury). El celeste se reserva para superficies y detalles decorativos; el texto de acento usa azul tinta para garantizar contraste.
 
 ---
 

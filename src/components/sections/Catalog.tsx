@@ -95,7 +95,7 @@ export default function Catalog({
     <section id="catalogo" className="scroll-mt-20 bg-[#fffff4] md:scroll-mt-24">
       <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 md:py-24 lg:px-8">
         {/* Encabezado editorial */}
-        <p className="text-sm font-semibold uppercase tracking-widest text-[#a6caeb]">
+        <p className="text-sm font-semibold uppercase tracking-widest text-[#1e3a5f]">
           Catálogo Timelux
         </p>
         <h2 className="mt-2 font-serif text-3xl text-[#141416] sm:text-4xl">
@@ -122,14 +122,14 @@ export default function Catalog({
               }
               placeholder="Buscar por nombre, marca o nota…"
               aria-label="Buscar perfumes por nombre, marca o nota olfativa"
-              className="min-h-[44px] w-full rounded-full border border-[#a6caeb]/40 bg-white/90 py-3 pl-11 pr-4 text-sm text-[#141416] placeholder:text-[#5e626e] focus:border-[#c40a0a]/50 focus:outline-none focus:ring-2 focus:ring-[#c40a0a]/20"
+              className="min-h-[44px] w-full rounded-full border border-[#a6caeb]/40 bg-white/90 py-3 pl-11 pr-4 text-sm text-[#141416] placeholder:text-[#5e626e] focus:border-[#c40a0a] focus:outline-none focus:ring-2 focus:ring-[#c40a0a]/60"
             />
           </div>
 
           <div
             role="tablist"
             aria-label="Filtrar perfumes por categoría"
-            className="flex gap-2 overflow-x-auto pb-2"
+            className="flex gap-2 overflow-x-auto px-1 pb-2 pt-1"
           >
             {pestanas.map((pestana: PestanaCategoria) => {
               const activa: boolean = categoria === pestana.valor;
@@ -140,7 +140,7 @@ export default function Catalog({
                   role="tab"
                   aria-selected={activa}
                   onClick={(): void => setCategoria(pestana.valor)}
-                  className={`min-h-[44px] whitespace-nowrap rounded-full px-4 py-2 text-sm font-medium transition-colors ${
+                  className={`min-h-[44px] whitespace-nowrap rounded-full px-4 py-2 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1e3a5f] focus-visible:ring-offset-2 focus-visible:ring-offset-[#fffff4] ${
                     activa
                       ? "bg-[#c40a0a] text-[#fffff4]"
                       : "border border-[#a6caeb]/40 bg-[#a6caeb]/20 text-[#141416] hover:bg-[#a6caeb]/40"
@@ -175,7 +175,7 @@ export default function Catalog({
           <div className="mt-8 flex flex-col items-center rounded-2xl border border-[#a6caeb]/30 bg-white/90 px-6 py-12 text-center">
             <SearchX
               aria-hidden="true"
-              className="h-10 w-10 text-[#a6caeb]"
+              className="h-10 w-10 text-[#1e3a5f]"
             />
             <h3 className="mt-4 text-lg font-bold text-[#141416]">
               Sin coincidencias por ahora
@@ -188,7 +188,7 @@ export default function Catalog({
             <button
               type="button"
               onClick={limpiarFiltros}
-              className="mt-6 min-h-[44px] rounded-full bg-[#c40a0a] px-5 py-2.5 text-sm font-medium text-[#fffff4] transition-colors hover:bg-[#a30808]"
+              className="mt-6 min-h-[44px] rounded-full bg-[#c40a0a] px-5 py-2.5 text-sm font-medium text-[#fffff4] transition-colors hover:bg-[#a30808] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1e3a5f] focus-visible:ring-offset-2 focus-visible:ring-offset-[#fffff4]"
             >
               Limpiar filtros
             </button>
@@ -199,7 +199,7 @@ export default function Catalog({
         {mostrarEnlaceCatalogo && (
           <div className="mt-10 flex justify-center">
             <Link
-              className="inline-flex min-h-[44px] items-center gap-2 rounded-full bg-[#c40a0a] px-8 py-3.5 font-medium text-white shadow-md transition-all duration-300 hover:bg-[#a30808] hover:shadow-lg"
+              className="inline-flex min-h-[44px] items-center gap-2 rounded-full bg-[#c40a0a] px-8 py-3.5 font-medium text-[#fffff4] shadow-md transition-all duration-300 hover:bg-[#a30808] hover:shadow-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1e3a5f] focus-visible:ring-offset-2 focus-visible:ring-offset-[#fffff4]"
               href="/perfumes"
             >
               Explorar catálogo completo ({perfumes.length} fragancias)

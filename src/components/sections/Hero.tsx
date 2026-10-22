@@ -42,7 +42,7 @@ export default function Hero(): React.JSX.Element {
       <div className="relative mx-auto flex min-h-[88vh] w-full max-w-5xl flex-col items-center justify-center px-4 py-20 text-center sm:px-6">
         {/* Isotipo distintivo */}
         <p
-          className="animacion-hero text-xs font-semibold uppercase tracking-[0.5em] text-[#7bb4e3]"
+          className="animacion-hero text-xs font-semibold uppercase tracking-[0.5em] text-[#1e3a5f]"
           style={{ animationDelay: "0ms" }}
         >
           Timelux
@@ -59,7 +59,7 @@ export default function Hero(): React.JSX.Element {
         {/* Encabezado de lujo */}
         <h1 className="mb-6 mt-6 max-w-3xl font-serif text-4xl leading-[1.15] tracking-tight text-[#1a1a1a] sm:text-5xl md:text-6xl lg:text-7xl">
           Más que una fragancia,{" "}
-          <span className="block font-normal italic text-[#7ba7d1] sm:inline sm:text-[#6a9ecb]">
+          <span className="block font-normal italic text-[#1e3a5f] sm:inline">
             tu esencia
           </span>
         </h1>
@@ -78,7 +78,7 @@ export default function Hero(): React.JSX.Element {
           <a
             href="#catalogo"
             aria-label="Ver el catálogo de fragancias"
-            className="inline-flex min-h-[48px] w-full items-center justify-center gap-2 rounded-full bg-[#c40a0a] px-7 py-3.5 text-sm font-semibold text-white shadow-md transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#a30808] hover:shadow-lg sm:w-auto"
+            className="inline-flex min-h-[48px] w-full items-center justify-center gap-2 rounded-full bg-[#c40a0a] px-7 py-3.5 text-sm font-semibold text-[#fffff4] shadow-md transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#a30808] hover:shadow-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1e3a5f] focus-visible:ring-offset-2 focus-visible:ring-offset-[#fffff4] sm:w-auto"
           >
             <ArrowDown size={18} aria-hidden="true" />
             Ver catálogo
@@ -90,7 +90,7 @@ export default function Hero(): React.JSX.Element {
             target="_blank"
             rel="noopener noreferrer"
             aria-label="Consultar por WhatsApp"
-            className="inline-flex min-h-[48px] w-full items-center justify-center gap-2 rounded-full border border-[#a6caeb]/60 bg-white/90 px-7 py-3.5 text-sm font-semibold text-[#111827] transition-all duration-300 hover:-translate-y-0.5 hover:border-[#a6caeb] hover:bg-[#a6caeb]/15 sm:w-auto"
+            className="inline-flex min-h-[48px] w-full items-center justify-center gap-2 rounded-full border border-[#a6caeb]/60 bg-white/90 px-7 py-3.5 text-sm font-semibold text-[#111827] transition-all duration-300 hover:-translate-y-0.5 hover:border-[#a6caeb] hover:bg-[#a6caeb]/15 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1e3a5f] focus-visible:ring-offset-2 focus-visible:ring-offset-[#fffff4] sm:w-auto"
           >
             <MessageCircle size={18} aria-hidden="true" />
             Consultar por WhatsApp
@@ -108,7 +108,7 @@ export default function Hero(): React.JSX.Element {
                 <punto.icono
                   size={18}
                   aria-hidden="true"
-                  className="shrink-0 text-[#7bb4e3] group-hover:text-[#a6caeb]"
+                  className="shrink-0 text-[#1e3a5f] group-hover:text-[#c40a0a]"
                 />
                 <span className="text-xs font-medium text-[#1f2937] sm:text-sm">
                   {punto.texto}

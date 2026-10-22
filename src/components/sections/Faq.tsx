@@ -112,7 +112,7 @@ export default function Faq(): React.JSX.Element {
     >
       <div className="mx-auto w-full max-w-4xl px-4 sm:px-6 lg:px-8">
         {/* Encabezado centrado */}
-        <p className="text-center text-sm font-semibold uppercase tracking-widest text-[#a6caeb]">
+        <p className="text-center text-sm font-semibold uppercase tracking-widest text-[#1e3a5f]">
           Preguntas frecuentes
         </p>
         <h2 className="mt-2 text-center font-serif text-3xl text-[#141416] sm:text-4xl">
@@ -140,7 +140,7 @@ export default function Faq(): React.JSX.Element {
                     onClick={(): void => alternarPregunta(indice)}
                     aria-expanded={abierta}
                     aria-controls={`faq-respuesta-${indice}`}
-                    className="flex min-h-[44px] w-full items-center justify-between gap-4 px-5 py-4 text-left"
+                    className="flex min-h-[44px] w-full items-center justify-between gap-4 px-5 py-4 text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[#c40a0a]"
                   >
                     <span className="text-sm font-bold text-[#141416] sm:text-base">
                       {item.pregunta}

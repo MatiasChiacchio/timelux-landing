@@ -123,7 +123,7 @@ export default function CatalogoCompleto({
             ): void => actualizarBusqueda(evento.target.value)}
             placeholder="Buscar por nombre…"
             aria-label="Buscar perfumes por nombre"
-            className="min-h-[44px] w-full rounded-full border border-[#a6caeb]/40 bg-white/90 py-3 pl-11 pr-4 text-sm text-[#141416] placeholder:text-[#5e626e] focus:border-[#c40a0a]/50 focus:outline-none focus:ring-2 focus:ring-[#c40a0a]/20"
+            className="min-h-[44px] w-full rounded-full border border-[#a6caeb]/40 bg-white/90 py-3 pl-11 pr-4 text-sm text-[#141416] placeholder:text-[#5e626e] focus:border-[#c40a0a] focus:outline-none focus:ring-2 focus:ring-[#c40a0a]/60"
           />
         </div>
 
@@ -131,7 +131,7 @@ export default function CatalogoCompleto({
           <div
             role="tablist"
             aria-label="Filtrar perfumes por género"
-            className="flex flex-1 gap-2 overflow-x-auto pb-1"
+            className="flex flex-1 gap-2 overflow-x-auto px-1 py-1"
           >
             {filtrosGenero.map((filtro: FiltroGenero) => {
               const activo: boolean = genero === filtro.valor;
@@ -142,7 +142,7 @@ export default function CatalogoCompleto({
                   role="tab"
                   aria-selected={activo}
                   onClick={(): void => actualizarGenero(filtro.valor)}
-                  className={`min-h-[44px] whitespace-nowrap rounded-full px-4 py-2 text-sm font-medium transition-all duration-200 active:scale-95 ${
+                  className={`min-h-[44px] whitespace-nowrap rounded-full px-4 py-2 text-sm font-medium transition-all duration-200 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1e3a5f] focus-visible:ring-offset-2 focus-visible:ring-offset-[#fffff4] ${
                     activo
                       ? "bg-[#c40a0a] text-[#fffff4]"
                       : "border border-[#a6caeb]/40 bg-[#a6caeb]/20 text-[#141416] hover:bg-[#a6caeb]/40"
@@ -193,7 +193,7 @@ export default function CatalogoCompleto({
                   setVisibles(
                     (previo: number) => previo + TANDA_CARGA_CATALOGO,
                   )}
-                className="inline-flex min-h-[44px] items-center gap-2 rounded-full border border-[#c40a0a]/40 bg-white/90 px-8 py-3 text-sm font-medium text-[#c40a0a] transition-all duration-300 hover:bg-[#c40a0a] hover:text-white hover:shadow-lg"
+                className="inline-flex min-h-[44px] items-center gap-2 rounded-full border border-[#c40a0a]/40 bg-white/90 px-8 py-3 text-sm font-medium text-[#c40a0a] transition-all duration-300 hover:bg-[#c40a0a] hover:text-[#fffff4] hover:shadow-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1e3a5f] focus-visible:ring-offset-2 focus-visible:ring-offset-[#fffff4]"
               >
                 Cargar más fragancias
                 <span aria-hidden="true">&darr;</span>
@@ -204,7 +204,7 @@ export default function CatalogoCompleto({
       ) : (
         /* Estado vacío sin coincidencias */
         <div className="mt-8 flex flex-col items-center rounded-2xl border border-[#a6caeb]/30 bg-white/90 px-6 py-12 text-center">
-          <SearchX aria-hidden="true" className="h-10 w-10 text-[#a6caeb]" />
+          <SearchX aria-hidden="true" className="h-10 w-10 text-[#1e3a5f]" />
           <h3 className="mt-4 text-lg font-bold text-[#141416]">
             Sin coincidencias por ahora
           </h3>
@@ -215,7 +215,7 @@ export default function CatalogoCompleto({
           <button
             type="button"
             onClick={limpiarFiltros}
-            className="mt-6 min-h-[44px] rounded-full bg-[#c40a0a] px-5 py-2.5 text-sm font-medium text-[#fffff4] transition-colors hover:bg-[#a30808]"
+            className="mt-6 min-h-[44px] rounded-full bg-[#c40a0a] px-5 py-2.5 text-sm font-medium text-[#fffff4] transition-colors hover:bg-[#a30808] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1e3a5f] focus-visible:ring-offset-2 focus-visible:ring-offset-[#fffff4]"
           >
             Limpiar filtros
           </button>

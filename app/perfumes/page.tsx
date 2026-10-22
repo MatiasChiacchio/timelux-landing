@@ -69,14 +69,14 @@ export default async function PaginaPerfumes(): Promise<React.JSX.Element> {
         {/* Retorno a la portada */}
         <Link
           href="/"
-          className="inline-flex min-h-[44px] items-center gap-2 text-sm font-medium text-[#5e626e] transition-colors hover:text-[#c40a0a]"
+          className="inline-flex min-h-[44px] items-center gap-2 text-sm font-medium text-[#5e626e] transition-colors hover:text-[#c40a0a] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1e3a5f] focus-visible:ring-offset-2 focus-visible:ring-offset-[#fffff4]"
         >
           <span aria-hidden="true">&larr;</span>
           Volver al inicio
         </Link>
 
         {/* Encabezado editorial */}
-        <p className="mt-6 text-sm font-semibold uppercase tracking-widest text-[#a6caeb]">
+        <p className="mt-6 text-sm font-semibold uppercase tracking-widest text-[#1e3a5f]">
           Catálogo Timelux
         </p>
         <h1 className="mt-2 font-serif text-4xl text-[#141416] sm:text-5xl">

@@ -70,7 +70,7 @@ export default function About(): React.JSX.Element {
                 <li key={pilar.titulo}>
                   <p
                     aria-hidden="true"
-                    className="font-serif text-sm italic text-[#7bb4e3]"
+                    className="font-serif text-sm italic text-[#1e3a5f]"
                   >
                     {String(indice + 1).padStart(2, "0")}
                   </p>
@@ -92,7 +92,7 @@ export default function About(): React.JSX.Element {
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Solicitar una recomendación por WhatsApp"
-              className="mt-8 inline-flex min-h-[44px] items-center gap-2 rounded-full border border-[#c40a0a]/40 px-7 py-3 text-sm font-semibold text-[#c40a0a] transition-all duration-300 hover:bg-[#c40a0a] hover:text-white hover:shadow-md active:scale-95"
+              className="mt-8 inline-flex min-h-[44px] items-center gap-2 rounded-full border border-[#c40a0a]/40 px-7 py-3 text-sm font-semibold text-[#c40a0a] transition-all duration-300 hover:bg-[#c40a0a] hover:text-[#fffff4] hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1e3a5f] focus-visible:ring-offset-2 focus-visible:ring-offset-[#fffff4] active:scale-95"
             >
               <MessageCircle size={18} aria-hidden="true" />
               Solicitar recomendación

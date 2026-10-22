@@ -158,17 +158,17 @@ export default function ComboboxMarcas({
   // Clases de una opción según resaltado y selección.
   function clasesOpcion(indice: number, seleccionada: boolean): string {
     const base: string =
-      "flex min-h-[44px] w-full items-center justify-between gap-2 px-4 py-2.5 text-left text-sm transition-colors hover:bg-neutral-50 hover:text-[#c40a0a] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[#c40a0a]/30";
+      "flex min-h-[44px] w-full items-center justify-between gap-2 px-4 py-2.5 text-left text-sm transition-colors hover:bg-[#a6caeb]/10 hover:text-[#c40a0a] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[#c40a0a]";
 
     if (seleccionada) {
       return `${base} bg-[#c40a0a]/5 font-semibold text-[#c40a0a]`;
     }
 
     if (indice === indiceActivo) {
-      return `${base} bg-neutral-50 text-[#c40a0a]`;
+      return `${base} bg-[#a6caeb]/15 text-[#c40a0a]`;
     }
 
-    return `${base} text-neutral-800`;
+    return `${base} text-[#141416]`;
   }
 
   return (
@@ -183,13 +183,13 @@ export default function ComboboxMarcas({
         aria-expanded={abierto}
         aria-controls="lista-marcas"
         aria-label="Filtrar perfumes por marca"
-        className="flex min-h-[44px] w-full min-w-[200px] items-center justify-between gap-3 rounded-xl border border-neutral-200 bg-white px-4 py-2.5 text-sm font-medium text-neutral-800 shadow-sm transition-colors hover:border-neutral-300 focus:border-[#c40a0a]/50 focus:outline-none focus:ring-2 focus:ring-[#c40a0a]/20"
+        className="flex min-h-[44px] w-full min-w-[200px] items-center justify-between gap-3 rounded-xl border border-[#a6caeb]/40 bg-white/90 px-4 py-2.5 text-sm font-medium text-[#141416] shadow-sm transition-colors hover:border-[#a6caeb] focus:border-[#c40a0a] focus:outline-none focus:ring-2 focus:ring-[#c40a0a]"
       >
         <span className="truncate">{etiquetaSeleccionada}</span>
         <ChevronDown
           aria-hidden="true"
           size={18}
-          className={`shrink-0 text-neutral-500 transition-transform duration-300 ${
+          className={`shrink-0 text-[#5e626e] transition-transform duration-300 ${
             abierto ? "rotate-180" : ""
           }`}
         />
@@ -201,7 +201,7 @@ export default function ComboboxMarcas({
         role="listbox"
         aria-label="Marcas disponibles"
         onKeyDown={manejarTeclaLista}
-        className={`desplegable-marcas absolute left-0 z-50 mt-2 max-h-64 w-full overflow-y-auto rounded-xl border border-neutral-100 bg-white py-1.5 shadow-xl transition-all duration-200 ease-out ${
+        className={`desplegable-marcas absolute left-0 z-50 mt-2 max-h-64 w-full overflow-y-auto rounded-xl border border-[#a6caeb]/30 bg-white py-1.5 shadow-xl transition-all duration-200 ease-out ${
           abierto
             ? "translate-y-0 scale-100 opacity-100"
             : "pointer-events-none invisible -translate-y-2 scale-[0.98] opacity-0"

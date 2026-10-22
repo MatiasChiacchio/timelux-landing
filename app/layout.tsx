@@ -3,7 +3,6 @@ import { Geist, Geist_Mono } from "next/font/google";
 import Navbar from "@/src/components/layout/Navbar";
 import WhatsAppFloatingButton from "@/src/components/common/WhatsAppFloatingButton";
 import JsonLd from "@/src/components/seo/JsonLd";
-import Preloader from "@/src/components/ui/Preloader";
 import { baseUrl } from "@/src/config/site";
 import {
   crearGrafo,
@@ -94,7 +93,6 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
-        <Preloader />
         <Navbar />
         {children}
         <WhatsAppFloatingButton />

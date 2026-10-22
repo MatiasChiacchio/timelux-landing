@@ -7,6 +7,7 @@ import { useMemo, useState } from "react";
 import Link from "next/link";
 import { Search, SearchX } from "lucide-react";
 import TarjetaPerfume from "@/src/components/perfumes/TarjetaPerfume";
+import { SIZES_TARJETA_DESTACADOS } from "@/src/config/catalogo";
 import type { CategoriaPerfume, Perfume } from "@/src/types/perfume";
 
 // Propiedades del catálogo: lista inicial y modo de destacados.
@@ -162,7 +163,10 @@ export default function Catalog({
           <ul className="mt-8 grid grid-cols-1 gap-6 sm:grid-cols-2 md:gap-8 lg:grid-cols-3">
             {fraganciasFiltradas.map((perfume: Perfume) => (
               <li key={perfume.id} className="h-full">
-                <TarjetaPerfume perfume={perfume} />
+                <TarjetaPerfume
+                  perfume={perfume}
+                  sizes={SIZES_TARJETA_DESTACADOS}
+                />
               </li>
             ))}
           </ul>

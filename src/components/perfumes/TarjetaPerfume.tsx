@@ -12,14 +12,18 @@ import {
 } from "@/src/lib/perfumes";
 import type { Perfume } from "@/src/types/perfume";
 
-// Propiedades de la tarjeta: una fragancia del catálogo.
+// Propiedades de la tarjeta: una fragancia y el tamaño real según su grid.
 interface PropiedadesTarjetaPerfume {
   perfume: Perfume;
+  sizes: string;
+  prioridad?: boolean;
 }
 
 // Tarjeta con foto, insignias, notas y consulta directa por WhatsApp.
 export default function TarjetaPerfume({
   perfume,
+  sizes,
+  prioridad = false,
 }: PropiedadesTarjetaPerfume): React.JSX.Element {
   return (
     <article
@@ -31,6 +35,8 @@ export default function TarjetaPerfume({
         <ImagenPerfume
           src={perfume.imagenUrl}
           alt={`Frasco de ${perfume.nombre} de ${perfume.marca}`}
+          sizes={sizes}
+          prioridad={prioridad}
         />
 
         {/* Insignias de categoría, género y bestseller */}

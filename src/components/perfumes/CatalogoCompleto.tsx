@@ -7,7 +7,10 @@ import { useMemo, useState } from "react";
 import { Search, SearchX } from "lucide-react";
 import ComboboxMarcas from "@/src/components/perfumes/ComboboxMarcas";
 import TarjetaPerfume from "@/src/components/perfumes/TarjetaPerfume";
-import { TANDA_CARGA_CATALOGO } from "@/src/config/catalogo";
+import {
+  SIZES_TARJETA_CATALOGO,
+  TANDA_CARGA_CATALOGO,
+} from "@/src/config/catalogo";
 import type { GeneroPerfume, Perfume } from "@/src/types/perfume";
 
 // Propiedades: lista completa provista por el Server Component.
@@ -168,9 +171,15 @@ export default function CatalogoCompleto({
       {fraganciasFiltradas.length > 0 ? (
         <>
           <ul className="mt-8 grid grid-cols-2 gap-4 sm:gap-6 md:grid-cols-3 lg:grid-cols-4">
-            {fraganciasVisibles.map((perfume: Perfume) => (
+            {fraganciasVisibles.map((perfume: Perfume, indice: number) => (
               <li key={perfume.id} className="h-full">
-                <TarjetaPerfume perfume={perfume} />
+                {/* La primera imagen está above the fold y suele ser el LCP
+                    de /perfumes: se precarga solo esa, no toda la grilla. */}
+                <TarjetaPerfume
+                  perfume={perfume}
+                  sizes={SIZES_TARJETA_CATALOGO}
+                  prioridad={indice === 0}
+                />
               </li>
             ))}
           </ul>

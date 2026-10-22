@@ -1,18 +1,18 @@
 import type { NextConfig } from "next";
 
 // Optimización de imágenes externas para la vitrina de Timelux.
-// Se autoriza cualquier origen HTTPS genérico (carga directa desde
-// hojas de cálculo o bancos de imágenes) más CDNs habituales.
+// La hoja de cálculo puede incorporar hosts nuevos sin requerir un deploy,
+// por eso se mantiene el comodín HTTPS. La lista de hosts observados es:
+// cdn.parfumerie.com.ar, imgs.search.brave.com, www.lattafa-usa.com,
+// encrypted-tbn0.gstatic.com, armaf.com, afnan.com,
+// rougeb2car.vtexassets.com, images.unsplash.com y cdn.batitienda.com.
 const nextConfig: NextConfig = {
   images: {
-    remotePatterns: [
-      { protocol: "https", hostname: "**" },
-      { protocol: "https", hostname: "images.unsplash.com" },
-      { protocol: "https", hostname: "drive.google.com" },
-      { protocol: "https", hostname: "lh3.googleusercontent.com" },
-      { protocol: "https", hostname: "i.imgur.com" },
-      { protocol: "https", hostname: "res.cloudinary.com" },
-    ],
+    // AVIF primero y WebP como respaldo para navegadores sin soporte.
+    formats: ["image/avif", "image/webp"],
+    // Las fotos de producto cambian poco: se cachean una semana.
+    minimumCacheTTL: 604800,
+    remotePatterns: [{ protocol: "https", hostname: "**" }],
   },
 };
 

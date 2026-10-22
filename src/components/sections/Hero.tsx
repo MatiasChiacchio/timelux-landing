@@ -3,7 +3,6 @@
 
 import { ArrowDown, BadgeCheck, HeartHandshake, MessageCircle, Truck } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
-import { FadeIn } from "@/src/components/ui/FadeIn";
 import { getWhatsAppLink } from "@/src/config/site";
 
 // Micro-beneficio con icono minimalista.
@@ -52,16 +51,13 @@ export default function Hero(): React.JSX.Element {
         {/* Badge editorial */}
         <p
           className="animacion-hero mt-4 rounded-full border border-[#a6caeb]/60 bg-white/80 px-4 py-1.5 text-xs font-semibold uppercase tracking-widest text-[#1e3a5f]"
-          style={{ animationDelay: "120ms" }}
+          style={{ animationDelay: "40ms" }}
         >
           Perfumería árabe &amp; diseñador
         </p>
 
         {/* Encabezado de lujo */}
-        <h1
-          className="animacion-hero mb-6 mt-6 max-w-3xl font-serif text-4xl leading-[1.15] tracking-tight text-[#1a1a1a] sm:text-5xl md:text-6xl lg:text-7xl"
-          style={{ animationDelay: "240ms" }}
-        >
+        <h1 className="mb-6 mt-6 max-w-3xl font-serif text-4xl leading-[1.15] tracking-tight text-[#1a1a1a] sm:text-5xl md:text-6xl lg:text-7xl">
           Más que una fragancia,{" "}
           <span className="block font-normal italic text-[#7ba7d1] sm:inline sm:text-[#6a9ecb]">
             tu esencia
@@ -69,10 +65,7 @@ export default function Hero(): React.JSX.Element {
         </h1>
 
         {/* Subtítulo persuasivo */}
-        <p
-          className="animacion-hero mt-5 max-w-2xl text-lg leading-relaxed text-[#4b5563] sm:text-xl"
-          style={{ animationDelay: "360ms" }}
-        >
+        <p className="mt-5 max-w-2xl text-lg leading-relaxed text-[#4b5563] sm:text-xl">
           Fragancias árabes y de diseñador 100% originales, con fijación
           duradera y notas seleccionadas para cada ocasión.
         </p>
@@ -80,7 +73,7 @@ export default function Hero(): React.JSX.Element {
         {/* Acciones principales */}
         <div
           className="animacion-hero mt-8 flex w-full flex-col items-center justify-center gap-3 sm:w-auto sm:flex-row"
-          style={{ animationDelay: "480ms" }}
+          style={{ animationDelay: "160ms" }}
         >
           <a
             href="#catalogo"
@@ -104,17 +97,14 @@ export default function Hero(): React.JSX.Element {
           </a>
         </div>
 
-        {/* Bloque de confianza con entrada escalonada al hacer scroll */}
+        {/* Bloque de confianza visible desde el primer render */}
         <ul className="mt-12 grid w-full max-w-3xl grid-cols-1 gap-3 sm:grid-cols-3">
-          {puntosConfianza.map((punto: PuntoConfianza, indice: number) => (
+          {puntosConfianza.map((punto: PuntoConfianza) => (
             <li
               key={punto.texto}
               className="group rounded-2xl border border-[#a6caeb]/60 bg-white/70 px-4 py-3 shadow-sm backdrop-blur-sm"
             >
-              <FadeIn
-                delay={indice * 90}
-                className="flex items-center justify-center gap-2.5"
-              >
+              <div className="flex items-center justify-center gap-2.5">
                 <punto.icono
                   size={18}
                   aria-hidden="true"
@@ -123,7 +113,7 @@ export default function Hero(): React.JSX.Element {
                 <span className="text-xs font-medium text-[#1f2937] sm:text-sm">
                   {punto.texto}
                 </span>
-              </FadeIn>
+              </div>
             </li>
           ))}
         </ul>

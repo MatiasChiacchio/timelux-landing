@@ -86,7 +86,7 @@ Experiencia de usuario:
 | Lenguaje | TypeScript 5 (modo estricto) | Prohibido `any`; contratos en `src/types` |
 | Estilos | Tailwind CSS 4 | Enfoque Mobile-First, tokens de paleta institucional |
 | Iconografía | `lucide-react` | Icono de Instagram como SVG propio (`IconoInstagram`) por compatibilidad |
-| Imágenes | `next/image` | Dimensiones y `alt` definidos; `unoptimized` con respaldo local |
+| Imágenes | `next/image` | Optimización WebP/AVIF, `sizes` por grid y respaldo local |
 | Animaciones y accesibilidad | CSS nativo + ARIA | Microinteracciones, roles `listbox`/`option`/`status`, `prefers-reduced-motion` |
 | Datos | Google Sheets → CSV | Fetch en servidor con ISR (`revalidate: 3600`) |
 | Compilador | Turbopack | Compilación y empaquetado de Next.js |
@@ -123,7 +123,7 @@ timelux-landing/
 │   │   ├── sections/               # Hero.tsx, Catalog.tsx, About.tsx, Faq.tsx
 │   │   ├── perfumes/               # TarjetaPerfume.tsx, CatalogoCompleto.tsx, ComboboxMarcas.tsx
 │   │   ├── common/                 # WhatsAppFloatingButton.tsx
-│   │   └── ui/                     # FadeIn.tsx, ImagenPerfume.tsx, Preloader.tsx, IconoInstagram.tsx
+│   │   └── ui/                     # FadeIn.tsx, ImagenPerfume.tsx, IconoInstagram.tsx
 │   ├── config/
 │   │   └── site.ts                 # Número de WhatsApp, enlaces de navegación, redes
 │   ├── data/

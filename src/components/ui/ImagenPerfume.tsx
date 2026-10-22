@@ -1,6 +1,6 @@
 'use client';
 
-// Imagen del frasco con carga directa y respaldo local.
+// Imagen del frasco optimizada por Next.js con respaldo local.
 // Client Component porque gestiona el fallback ante errores de carga.
 
 import { useState } from "react";
@@ -9,17 +9,21 @@ import Image from "next/image";
 // Placeholder local cuando la URL externa falla o no existe.
 const IMAGEN_RESPALDO: string = "/logo.png";
 
-// Propiedades: origen remoto y texto alternativo del perfume.
+// Propiedades: origen remoto, texto alternativo y tamaño responsivo real.
 interface PropiedadesImagenPerfume {
   src: string;
   alt: string;
+  sizes: string;
+  prioridad?: boolean;
 }
 
-// Frasco sin pasar por el optimizador del servidor (unoptimized) para
-// evitar bloqueos de host, con conmutación a placeholder local ante 404/403.
+// Frasco optimizado por el servidor (WebP/AVIF y srcset responsivo), con
+// conmutación a placeholder local ante errores del origen o del optimizador.
 export default function ImagenPerfume({
   src,
   alt,
+  sizes,
+  prioridad = false,
 }: PropiedadesImagenPerfume): React.JSX.Element {
   // Origen actual: remoto primero, respaldo local si falla la carga.
   const [origen, setOrigen] = useState<string>(src);
@@ -37,8 +41,8 @@ export default function ImagenPerfume({
         src={origen}
         alt={alt}
         fill
-        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-        unoptimized
+        sizes={sizes}
+        priority={prioridad}
         onError={usarRespaldo}
         className="object-contain p-2 transition-transform duration-500 ease-out group-hover:scale-105"
       />

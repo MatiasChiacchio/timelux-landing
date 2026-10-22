@@ -21,20 +21,19 @@ html {
   scroll-behavior: smooth;
 }
 
-/* Entrada suave del Hero (fade-in con elevación sutil). */
+/* Entrada suave del Hero solo con transform: el texto visible desde el
+   primer frame evita retrasar el LCP con una opacidad inicial. */
 @keyframes hero-entrada {
   from {
-    opacity: 0;
-    transform: translateY(16px);
+    transform: translateY(12px);
   }
   to {
-    opacity: 1;
     transform: translateY(0);
   }
 }
 
 .animacion-hero {
-  animation: hero-entrada 0.8s ease-out both;
+  animation: hero-entrada 0.55s ease-out both;
 }
 
 /* Respeta a usuarios con movimiento reducido. */

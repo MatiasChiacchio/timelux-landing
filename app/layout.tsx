@@ -2,7 +2,14 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import Navbar from "@/src/components/layout/Navbar";
 import WhatsAppFloatingButton from "@/src/components/common/WhatsAppFloatingButton";
+import JsonLd from "@/src/components/seo/JsonLd";
 import Preloader from "@/src/components/ui/Preloader";
+import { baseUrl } from "@/src/config/site";
+import {
+  crearGrafo,
+  crearOrganizationSchema,
+  crearWebSiteSchema,
+} from "@/src/lib/schema";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -15,15 +22,11 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-// URL base saneada: recorta espacios, garantiza protocolo https
-// y evita barras finales duplicadas al concatenar rutas.
-const siteUrl: string = (
-  process.env.NEXT_PUBLIC_SITE_URL?.trim() ||
-  "https://timelux-perfumes.vercel.app"
-).replace(/\/+$/, "");
-const baseUrl: string = siteUrl.startsWith("http")
-  ? siteUrl
-  : `https://${siteUrl}`;
+// Datos estructurados institucionales compartidos por todas las rutas.
+const datosEstructurales = crearGrafo([
+  crearOrganizationSchema(),
+  crearWebSiteSchema(),
+]);
 
 export const metadata: Metadata = {
   metadataBase: new URL(baseUrl),
@@ -47,6 +50,9 @@ export const metadata: Metadata = {
   ],
   authors: [{ name: "Timelux Perfumes" }],
   creator: "Timelux",
+  alternates: {
+    canonical: "/",
+  },
   verification: {
     google: "qGfM7SnqQXd5gn86wZJdQywMKQerXBTElA_lk37N6Vg", 
   },
@@ -61,8 +67,8 @@ export const metadata: Metadata = {
     images: [
       {
         url: "/logo.png",
-        width: 480,
-        height: 480,
+        width: 500,
+        height: 500,
         alt: "Timelux Perfumería - El arte de dejar una huella inolvidable",
       },
     ],
@@ -92,6 +98,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         <Navbar />
         {children}
         <WhatsAppFloatingButton />
+        <JsonLd datos={datosEstructurales} />
       </body>
     </html>
   );

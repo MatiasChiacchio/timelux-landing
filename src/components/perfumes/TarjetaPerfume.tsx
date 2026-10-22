@@ -4,6 +4,7 @@
 import { MessageCircle } from "lucide-react";
 import ImagenPerfume from "@/src/components/ui/ImagenPerfume";
 import {
+  anclaPerfume,
   enlaceWhatsAppPerfume,
   etiquetaGenero,
   etiquetaTipo,
@@ -21,7 +22,10 @@ export default function TarjetaPerfume({
   perfume,
 }: PropiedadesTarjetaPerfume): React.JSX.Element {
   return (
-    <article className="group flex h-full flex-col justify-between rounded-2xl border border-[#a6caeb]/30 bg-white/90 p-5 shadow-sm transition-all duration-300 hover:border-[#c40a0a]/40 hover:shadow-xl">
+    <article
+      id={anclaPerfume(perfume)}
+      className="group flex h-full scroll-mt-24 flex-col justify-between rounded-2xl border border-[#a6caeb]/30 bg-white/90 p-5 shadow-sm transition-all duration-300 hover:border-[#c40a0a]/40 hover:shadow-xl"
+    >
       <div>
         {/* Frasco con dimensiones propias y respaldo local */}
         <ImagenPerfume

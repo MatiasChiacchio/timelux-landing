@@ -29,6 +29,12 @@ export function etiquetaGenero(genero: GeneroPerfume): string {
   return "Unisex";
 }
 
+// Identificador de ancla estable para enlazar una tarjeta del catálogo.
+// Se reutiliza en la URL de los datos estructurados y en el atributo id.
+export function anclaPerfume(perfume: Perfume): string {
+  return `perfume-${encodeURIComponent(perfume.id)}`;
+}
+
 // Enlace de WhatsApp con el mensaje predeterminado para un perfume específico.
 export function enlaceWhatsAppPerfume(perfume: Perfume): string {
   return getWhatsAppLink(

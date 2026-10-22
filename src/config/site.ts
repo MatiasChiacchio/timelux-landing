@@ -4,6 +4,21 @@
 // Nombre oficial de la marca.
 export const name: string = "Timelux";
 
+// URL base canónica del sitio: recorta espacios, garantiza protocolo https
+// y evita barras finales duplicadas al concatenar rutas.
+export const siteUrl: string = (
+  process.env.NEXT_PUBLIC_SITE_URL?.trim() ||
+  "https://timelux-perfumes.vercel.app"
+).replace(/\/+$/, "");
+
+export const baseUrl: string = siteUrl.startsWith("http")
+  ? siteUrl
+  : `https://${siteUrl}`;
+
+// Perfil oficial de Instagram, reutilizado en el pie y en los datos estructurados.
+export const instagramHandle: string = "@timelux.perfumes";
+export const instagramUrl: string = "https://www.instagram.com/timelux.perfumes/";
+
 // Número de WhatsApp saneado, listo para la API de wa.me (sin espacios ni signos).
 export const whatsappNumber: string = "5493704772001";
 

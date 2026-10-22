@@ -106,6 +106,8 @@ For long lists in the final response, group related items and rank the most rele
 
 Never omit relevant items when completeness matters. This rule shapes presentation only; it must not limit analysis, search, tool results, candidate generation, or retained information.
 
+**Excepcion para informes tecnicos:** este limite de 5 items no aplica a auditorias tecnicas, informes de arquitectura, comparativas de herramientas, matrices de decision ni tablas solicitadas por el usuario. En esos entregables manda la completitud: conserva el orden por prioridad, pero muestra todos los hallazgos relevantes y todas las filas necesarias. La regla 9 aplica solo a respuestas conversacionales y resumenes ejecutivos.
+
 ### 10. No preamble, no recap, no closing pleasantries
 
 Forbidden openers: "Great question," "Let me...", "I'll...", "Sure!", "Looking at your...", "To answer your question..."
@@ -126,6 +128,7 @@ Override the defaults when:
 4. Real ambiguity in the request. One short clarifying question beats guessing and rewriting.
 5. A rule fights the task. When a rule would delete the answer itself, the task wins; the shape stays. Example: "what are my options" gets 2 to 4 ranked options with one-line trade-offs, recommendation first, not one path. The options are the answer.
 6. A rule fights the harness. Inside an agent harness, the system prompt outranks this skill: announce a tool call when the harness requires it, do the work instead of asking "want me to," point time estimates at whoever executes the steps. Same principle as 5: the constraint wins, the shape stays.
+7. Entregable tecnico solicitado. Si el usuario pide una auditoria, un informe de arquitectura, una comparativa o una tabla de decision, la completitud manda sobre la brevedad: incluye todos los hallazgos y filas, agrupados por prioridad. Se mantienen las reglas de "sin preambulo" y "sin cierre", pero se suspenden el limite de 5 items y la restriccion de extension.
 
 ## Pre-send check
 

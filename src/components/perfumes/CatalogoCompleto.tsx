@@ -7,6 +7,7 @@ import { useMemo, useState } from "react";
 import { Search, SearchX } from "lucide-react";
 import ComboboxMarcas from "@/src/components/perfumes/ComboboxMarcas";
 import TarjetaPerfume from "@/src/components/perfumes/TarjetaPerfume";
+import { TANDA_CARGA_CATALOGO } from "@/src/config/catalogo";
 import type { GeneroPerfume, Perfume } from "@/src/types/perfume";
 
 // Propiedades: lista completa provista por el Server Component.
@@ -28,9 +29,6 @@ const filtrosGenero: FiltroGenero[] = [
   { valor: "unisex", etiqueta: "Unisex" },
 ];
 
-// Cantidad de tarjetas que se suman con cada tanda.
-const TANDA_CARGA: number = 20;
-
 // Catálogo completo con buscador reactivo, filtros y botón de carga progresiva.
 export default function CatalogoCompleto({
   perfumesIniciales,
@@ -40,7 +38,7 @@ export default function CatalogoCompleto({
   const [busqueda, setBusqueda] = useState<string>("");
   const [genero, setGenero] = useState<GeneroPerfume | "todos">("todos");
   const [marca, setMarca] = useState<string>("todas");
-  const [visibles, setVisibles] = useState<number>(TANDA_CARGA);
+  const [visibles, setVisibles] = useState<number>(TANDA_CARGA_CATALOGO);
 
   // Marcas únicas ordenadas alfabéticamente para el selector.
   const marcas: string[] = useMemo(() => {
@@ -84,17 +82,17 @@ export default function CatalogoCompleto({
   // Actualiza un filtro y reinicia la carga progresiva.
   function actualizarBusqueda(valor: string): void {
     setBusqueda(valor);
-    setVisibles(TANDA_CARGA);
+    setVisibles(TANDA_CARGA_CATALOGO);
   }
 
   function actualizarGenero(valor: GeneroPerfume | "todos"): void {
     setGenero(valor);
-    setVisibles(TANDA_CARGA);
+    setVisibles(TANDA_CARGA_CATALOGO);
   }
 
   function actualizarMarca(valor: string): void {
     setMarca(valor);
-    setVisibles(TANDA_CARGA);
+    setVisibles(TANDA_CARGA_CATALOGO);
   }
 
   // Restablece todos los filtros al estado inicial.
@@ -102,7 +100,7 @@ export default function CatalogoCompleto({
     setBusqueda("");
     setGenero("todos");
     setMarca("todas");
-    setVisibles(TANDA_CARGA);
+    setVisibles(TANDA_CARGA_CATALOGO);
   }
 
   return (
@@ -184,7 +182,7 @@ export default function CatalogoCompleto({
                 type="button"
                 onClick={(): void =>
                   setVisibles(
-                    (previo: number) => previo + TANDA_CARGA,
+                    (previo: number) => previo + TANDA_CARGA_CATALOGO,
                   )}
                 className="inline-flex min-h-[44px] items-center gap-2 rounded-full border border-[#c40a0a]/40 bg-white/90 px-8 py-3 text-sm font-medium text-[#c40a0a] transition-all duration-300 hover:bg-[#c40a0a] hover:text-white hover:shadow-lg"
               >

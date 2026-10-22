@@ -40,5 +40,11 @@ Todo commit generado debe seguir esta estructura:
 
 Antes de escribir código o proponer cambios, consulta y respeta las pautas definidas en el directorio `.agents/skills/`:
 - **`nextjs-app-router-patterns`**: Seguir la estructura estricta de carpetas de Next.js App Router, división de Server/Client Components y renderizado con `next/image`.
-- **`tailwind-design-system` / `tailwind-4-docs`**: Aplicar convenciones de Tailwind CSS con enfoque Mobile-First estricto y touch targets adecuados para celulares.
+- **`vercel-react-best-practices`**: Aplicar las reglas de rendimiento de Vercel para React/Next (waterfalls, bundle, serialización RSC, imágenes).
+- **`tailwind-design-system`**: Aplicar convenciones de Tailwind CSS 4 con enfoque Mobile-First estricto y touch targets adecuados para celulares.
+- **`core-web-vitals`**: Medir y optimizar LCP, INP y CLS con evidencia de laboratorio y de campo.
+- **`schema`**: Implementar datos estructurados JSON-LD (`Product`, `Offer`, `BreadcrumbList`, `Organization`) validados con Rich Results Test.
+- **`luxury-ui-styling`**: Respetar la estética Dark Luxury, la paleta oficial y las recetas de componentes.
+- **`whatsapp-conversion`**: Generar los enlaces de conversión con `getWhatsAppLink()` de `src/config/site.ts`.
 - **Directrices de marca**: Respetar siempre la paleta oficial de Timelux (marfil `#fffff4`, rojo vívido `#c40a0a`, celeste pastel `#a6caeb`).
+- **Precedencia**: Ante conflicto entre skills, prevalece la skill específica de marca (`luxury-ui-styling`) sobre las genéricas de framework o diseño.

@@ -1,14 +1,5 @@
 import type { MetadataRoute } from "next";
-
-// URL base canónica saneada (igual que en robots.ts y layout):
-// recorta espacios, garantiza protocolo https y evita barras finales duplicadas.
-const siteUrl: string = (
-  process.env.NEXT_PUBLIC_SITE_URL?.trim() ||
-  "https://timelux-perfumes.vercel.app"
-).replace(/\/+$/, "");
-const baseUrl: string = siteUrl.startsWith("http")
-  ? siteUrl
-  : `https://${siteUrl}`;
+import { baseUrl } from "@/src/config/site";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const ultimaModificacion: Date = new Date();

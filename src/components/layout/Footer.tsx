@@ -12,6 +12,8 @@ import {
 import IconoInstagram from "@/src/components/ui/IconoInstagram";
 import {
   getWhatsAppLink,
+  instagramHandle,
+  instagramUrl,
   mensajePredeterminadoWhatsApp,
   name,
   navLinks,
@@ -97,14 +99,14 @@ export default function Footer(): React.JSX.Element {
               </li>
               <li>
                 <a
-                  href="https://www.instagram.com/timelux.perfumes/"
+                  href={instagramUrl}
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="Timelux en Instagram"
                   className="inline-flex min-h-[44px] items-center gap-3 leading-snug text-white/90 transition-opacity hover:opacity-75"
                 >
                   <IconoInstagram size={16} className="shrink-0" />
-                  @timelux.perfumes
+                  {instagramHandle}
                 </a>
               </li>
               <li className="flex items-start gap-3 leading-snug text-white/90">

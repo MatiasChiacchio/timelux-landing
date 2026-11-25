@@ -34,24 +34,47 @@ const pilares: PilarConfianza[] = [
 const IMAGEN_EDITORIAL: string =
   "https://images.unsplash.com/photo-1592945403244-b3fbafd7f539?w=800&auto=format&fit=crop&q=80";
 
+// Propiedades opcionales: permite ocultar el encabezado cuando vive bajo CabeceraSeccion.
+interface PropiedadesAbout {
+  mostrarEncabezado?: boolean;
+}
+
 // Historia de marca en dos columnas: narrativa refinada y fotografía vertical.
-export default function About(): React.JSX.Element {
+export default function About({
+  mostrarEncabezado = true,
+}: PropiedadesAbout): React.JSX.Element {
   return (
     <section
       id="nosotros"
-      className="scroll-mt-20 border-t border-[#a6caeb]/30 bg-white/45 md:scroll-mt-24"
+      className={`scroll-mt-20 md:scroll-mt-24 ${
+        mostrarEncabezado
+          ? "border-t border-[#a6caeb]/30 bg-white/45"
+          : "bg-[#fffff4]"
+      }`}
     >
-      <div className="mx-auto grid max-w-7xl grid-cols-1 items-center gap-10 px-4 py-16 sm:px-6 md:py-24 lg:grid-cols-12 lg:gap-16 lg:px-8">
+      <div
+        className={`mx-auto grid max-w-7xl grid-cols-1 items-center gap-10 px-4 sm:px-6 lg:grid-cols-12 lg:gap-16 lg:px-8 ${
+          mostrarEncabezado ? "py-16 md:py-24" : "py-12 md:py-16"
+        }`}
+      >
         {/* Columna izquierda: narrativa de marca */}
         <FadeIn className="lg:col-span-7">
           <div>
-            <p className="text-xs font-semibold uppercase tracking-[0.22em] text-[#1e3a5f]">
-              Nosotros · Timelux
-            </p>
-            <h2 className="mt-3 font-serif text-3xl font-semibold leading-tight text-[#141416] sm:text-4xl lg:text-5xl">
-              El arte de encontrar tu{" "}
-              <span className="italic text-[#1e3a5f]">firma olfativa</span>
-            </h2>
+            {mostrarEncabezado ? (
+              <>
+                <p className="text-xs font-semibold uppercase tracking-[0.22em] text-[#1e3a5f]">
+                  Nosotros · Timelux
+                </p>
+                <h2 className="mt-3 font-serif text-3xl font-semibold leading-tight text-[#141416] sm:text-4xl lg:text-5xl">
+                  El arte de encontrar tu{" "}
+                  <span className="italic text-[#1e3a5f]">firma olfativa</span>
+                </h2>
+              </>
+            ) : (
+              <h2 className="font-serif text-3xl font-semibold leading-tight text-[#141416] sm:text-4xl">
+                Una curaduría pensada para durar
+              </h2>
+            )}
             <p className="mt-5 text-sm leading-relaxed text-[#5e626e] sm:text-base">
               En Timelux concebimos cada fragancia como una extensión de la
               identidad. Seleccionamos cuidadosamente las creaciones más

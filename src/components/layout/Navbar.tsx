@@ -97,7 +97,9 @@ export default function Navbar(): React.JSX.Element {
           <ul className="flex items-center gap-6 text-sm font-medium tracking-wide text-[#fffff4] lg:gap-8">
             {navLinks.map((enlace) => {
               const esRutaActiva: boolean =
-                enlace.href === "/perfumes" && rutaActual === "/perfumes";
+                enlace.href === "/"
+                  ? rutaActual === "/"
+                  : rutaActual === enlace.href;
 
               return (
                 <li key={enlace.href}>
@@ -162,7 +164,9 @@ export default function Navbar(): React.JSX.Element {
           <ul className="space-y-1 px-4 pb-5 pt-3">
             {navLinks.map((enlace) => {
               const esRutaActiva: boolean =
-                enlace.href === "/perfumes" && rutaActual === "/perfumes";
+                enlace.href === "/"
+                  ? rutaActual === "/"
+                  : rutaActual === enlace.href;
 
               return (
                 <li key={enlace.href}>

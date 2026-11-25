@@ -91,8 +91,15 @@ const preguntas: PreguntaFrecuente[] = [
   },
 ];
 
+// Propiedades opcionales: permite ocultar el encabezado dentro de /preguntas.
+interface PropiedadesFaq {
+  mostrarEncabezado?: boolean;
+}
+
 // Acordeón de preguntas frecuentes con transición suave y cierre hacia WhatsApp.
-export default function Faq(): React.JSX.Element {
+export default function Faq({
+  mostrarEncabezado = true,
+}: PropiedadesFaq): React.JSX.Element {
   // Índices de las preguntas actualmente abiertas (inicia con todas cerradas).
   const [abiertas, setAbiertas] = useState<number[]>([]);
 
@@ -108,23 +115,31 @@ export default function Faq(): React.JSX.Element {
   return (
     <section
       id="faq"
-      className="scroll-mt-20 border-t border-[#a6caeb]/30 bg-[#fffff4] py-16 md:scroll-mt-24 md:py-24"
+      className={`scroll-mt-20 bg-[#fffff4] md:scroll-mt-24 ${
+        mostrarEncabezado
+          ? "border-t border-[#a6caeb]/30 py-16 md:py-24"
+          : "py-10 md:py-14"
+      }`}
     >
       <div className="mx-auto w-full max-w-4xl px-4 sm:px-6 lg:px-8">
-        {/* Encabezado centrado */}
-        <p className="text-center text-xs font-semibold uppercase tracking-[0.22em] text-[#1e3a5f]">
-          Preguntas frecuentes
-        </p>
-        <h2 className="mt-2 text-center font-serif text-3xl font-semibold text-[#141416] sm:text-4xl lg:text-5xl">
-          Todo lo que querés saber
-        </h2>
-        <p className="mx-auto mt-3 max-w-2xl text-center text-sm leading-relaxed text-[#5e626e] sm:text-base">
-          Resolvemos las dudas más comunes sobre pedidos, pagos y envíos. Si te
-          queda alguna consulta, escribinos directo por WhatsApp.
-        </p>
+        {/* Encabezado centrado opcional */}
+        {mostrarEncabezado ? (
+          <>
+            <p className="text-center text-xs font-semibold uppercase tracking-[0.22em] text-[#1e3a5f]">
+              Preguntas frecuentes
+            </p>
+            <h2 className="mt-2 text-center font-serif text-3xl font-semibold text-[#141416] sm:text-4xl lg:text-5xl">
+              Todo lo que querés saber
+            </h2>
+            <p className="mx-auto mt-3 max-w-2xl text-center text-sm leading-relaxed text-[#5e626e] sm:text-base">
+              Resolvemos las dudas más comunes sobre pedidos, pagos y envíos. Si
+              te queda alguna consulta, escribinos directo por WhatsApp.
+            </p>
+          </>
+        ) : null}
 
         {/* Acordeón de preguntas con animación fluida CSS Grid */}
-        <div className="mt-10 space-y-4">
+        <div className={mostrarEncabezado ? "mt-10 space-y-4" : "space-y-4"}>
           {preguntas.map((item: PreguntaFrecuente, indice: number) => {
             const abierta: boolean = abiertas.includes(indice);
             return (

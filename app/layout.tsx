@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Cormorant_Garamond, Plus_Jakarta_Sans } from "next/font/google";
+import Footer from "@/src/components/layout/Footer";
 import Navbar from "@/src/components/layout/Navbar";
 import WhatsAppFloatingButton from "@/src/components/common/WhatsAppFloatingButton";
 import JsonLd from "@/src/components/seo/JsonLd";
@@ -93,6 +94,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       <body className="min-h-full flex flex-col bg-[#fffff4] font-sans text-[#141416] selection:bg-[#a6caeb]/40 selection:text-[#141416]">
         <Navbar />
         {children}
+        <Footer />
         <WhatsAppFloatingButton />
         <JsonLd datos={datosEstructurales} />
       </body>

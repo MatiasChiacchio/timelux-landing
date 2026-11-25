@@ -2,8 +2,9 @@
 // Server Component: combina narrativa Warm Ivory con escaparate visual de perfumería.
 
 import Image from "next/image";
+import Link from "next/link";
 import {
-  ArrowDown,
+  ArrowRight,
   BadgeCheck,
   HeartHandshake,
   MessageCircle,
@@ -91,14 +92,14 @@ export default function Hero({
               className="animacion-hero mt-8 flex w-full flex-col items-center justify-center gap-3.5 sm:w-auto sm:flex-row lg:justify-start"
               style={{ animationDelay: "100ms" }}
             >
-              <a
-                href="#catalogo"
-                aria-label="Ver el catálogo de fragancias"
+              <Link
+                href="/perfumes"
+                aria-label="Explorar el catálogo completo de fragancias"
                 className="inline-flex min-h-[48px] w-full items-center justify-center gap-2 rounded-full bg-[#c40a0a] px-7 py-3.5 text-sm font-semibold text-[#fffff4] shadow-md shadow-[#c40a0a]/15 transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#a30808] hover:shadow-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1e3a5f] focus-visible:ring-offset-2 focus-visible:ring-offset-[#fffff4] active:scale-95 sm:w-auto"
               >
-                <ArrowDown size={17} aria-hidden="true" />
                 Explorar catálogo
-              </a>
+                <ArrowRight size={17} aria-hidden="true" />
+              </Link>
               <a
                 href={getWhatsAppLink(
                   "¡Hola Timelux! Quiero conocer sus fragancias disponibles y recibir asesoramiento.",

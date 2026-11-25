@@ -5,9 +5,13 @@
 
 import { Suspense, useDeferredValue, useEffect, useMemo, useState } from "react";
 import { useSearchParams } from "next/navigation";
-import { ArrowUpDown, ChevronDown, Search, SearchX, SlidersHorizontal, X } from "lucide-react";
+import { Search, SearchX, SlidersHorizontal, X } from "lucide-react";
 import ComboboxMarcas from "@/src/components/perfumes/ComboboxMarcas";
 import ModalDetallePerfume from "@/src/components/perfumes/ModalDetallePerfume";
+import SelectorOrden, {
+  type OpcionOrden,
+  type OrdenCatalogo,
+} from "@/src/components/perfumes/SelectorOrden";
 import TarjetaPerfume from "@/src/components/perfumes/TarjetaPerfume";
 import {
   SIZES_TARJETA_CATALOGO,
@@ -20,13 +24,6 @@ import type { CategoriaPerfume, GeneroPerfume, Perfume } from "@/src/types/perfu
 interface PropiedadesCatalogoCompleto {
   perfumesIniciales: Perfume[];
 }
-
-// Criterios disponibles para ordenar el catálogo.
-type OrdenCatalogo =
-  | "destacados"
-  | "precio-asc"
-  | "precio-desc"
-  | "nombre-asc";
 
 // Filtros leídos opcionalmente desde la query de la URL.
 interface FiltrosDesdeUrl {
@@ -51,7 +48,7 @@ const filtrosGenero: Array<{ valor: GeneroPerfume | "todos"; etiqueta: string }>
   { valor: "unisex", etiqueta: "Unisex" },
 ];
 
-const opcionesOrden: Array<{ valor: OrdenCatalogo; etiqueta: string }> = [
+const opcionesOrden: OpcionOrden[] = [
   { valor: "destacados", etiqueta: "Destacados primero" },
   { valor: "precio-asc", etiqueta: "Menor precio" },
   { valor: "precio-desc", etiqueta: "Mayor precio" },
@@ -334,30 +331,11 @@ export default function CatalogoCompleto({
             />
           </div>
 
-          <div className="relative lg:col-span-3">
-            <ArrowUpDown
-              aria-hidden="true"
-              size={16}
-              className="pointer-events-none absolute left-3.5 top-1/2 -translate-y-1/2 text-[#5e626e]"
-            />
-            <select
-              value={orden}
-              onChange={(
-                evento: React.ChangeEvent<HTMLSelectElement>,
-              ): void => actualizarOrden(evento.target.value as OrdenCatalogo)}
-              aria-label="Ordenar fragancias"
-              className="min-h-[44px] w-full cursor-pointer appearance-none rounded-xl border border-[#a6caeb]/45 bg-white bg-none py-2.5 pl-10 pr-10 text-sm font-medium text-[#141416] shadow-sm transition-colors hover:border-[#a6caeb] focus:border-[#c40a0a] focus:outline-none focus:ring-2 focus:ring-[#c40a0a]/60"
-            >
-              {opcionesOrden.map((opcion) => (
-                <option key={opcion.valor} value={opcion.valor}>
-                  {opcion.etiqueta}
-                </option>
-              ))}
-            </select>
-            <ChevronDown
-              aria-hidden="true"
-              size={17}
-              className="pointer-events-none absolute right-3.5 top-1/2 -translate-y-1/2 text-[#5e626e]"
+          <div className="lg:col-span-3">
+            <SelectorOrden
+              opciones={opcionesOrden}
+              ordenSeleccionado={orden}
+              alCambiarOrden={actualizarOrden}
             />
           </div>
         </div>

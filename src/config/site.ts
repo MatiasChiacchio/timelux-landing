@@ -28,14 +28,13 @@ export interface EnlaceNavegacion {
   href: string;
 }
 
-// Lista de navegación principal: combina la ruta del catálogo completo
-// con anclas absolutas para funcionar desde la Home y desde /perfumes.
+// Lista de navegación principal con apartados dedicados en Next.js App Router.
 export const navLinks: EnlaceNavegacion[] = [
-  { label: "Inicio", href: "/#hero" },
+  { label: "Inicio", href: "/" },
   { label: "Perfumes", href: "/perfumes" },
-  { label: "Nosotros", href: "/#nosotros" },
-  { label: "Preguntas", href: "/#faq" },
-  { label: "Contacto", href: "/#contacto" },
+  { label: "Nosotros", href: "/nosotros" },
+  { label: "Preguntas", href: "/preguntas" },
+  { label: "Contacto", href: "/contacto" },
 ];
 
 // Mensaje genérico de asesoramiento para el CTA principal.

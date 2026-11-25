@@ -1,17 +1,14 @@
 // Página principal de Timelux.
-// Server Component: compone el Hero editorial y las secciones de la landing Warm Ivory.
+// Server Component: portada editorial liviana centrada en colecciones, 6 destacados y conserjería.
 
 import Hero from "@/src/components/sections/Hero";
 import MundosOlfativos from "@/src/components/sections/MundosOlfativos";
 import Catalog from "@/src/components/sections/Catalog";
 import ConserjeriaOlfativa from "@/src/components/sections/ConserjeriaOlfativa";
-import About from "@/src/components/sections/About";
-import Faq from "@/src/components/sections/Faq";
-import Footer from "@/src/components/layout/Footer";
 import { obtenerPerfumes } from "@/src/services/perfumes";
 import type { Perfume } from "@/src/types/perfume";
 
-// Portada con Hero, mundos olfativos, catálogo destacado, conserjería, nosotros, preguntas y contacto.
+// Portada con Hero, mundos olfativos, 6 bestsellers curados y conserjería olfativa.
 export default async function Home(): Promise<React.JSX.Element> {
   // Catálogo remoto con respaldo estático ante fallos de red.
   const perfumes: Perfume[] = await obtenerPerfumes();
@@ -25,8 +22,16 @@ export default async function Home(): Promise<React.JSX.Element> {
     (p: Perfume) => p.bestseller === true,
   ).length;
 
+  // Solo se serializan los 6 destacados hacia el componente cliente de la portada.
+  const destacados: Perfume[] = [...perfumes]
+    .sort(
+      (a: Perfume, b: Perfume) =>
+        Number(b.bestseller === true) - Number(a.bestseller === true),
+    )
+    .slice(0, 6);
+
   return (
-    <main className="bg-[#fffff4]">
+    <main className="flex-1 bg-[#fffff4]">
       {/* Portada principal en composición Split editorial */}
       <Hero totalPerfumes={perfumes.length} />
 
@@ -37,20 +42,16 @@ export default async function Home(): Promise<React.JSX.Element> {
         totalBestsellers={totalBestsellers}
       />
 
-      {/* Selección de destacados con enlace al catálogo completo */}
-      <Catalog perfumesIniciales={perfumes} limite={12} mostrarEnlaceCatalogo />
+      {/* Vitrina curada de 6 bestsellers con Vista Rápida y enlace al catálogo */}
+      <Catalog
+        perfumesIniciales={destacados}
+        totalCatalogo={perfumes.length}
+        mostrarBuscador={false}
+        mostrarEnlaceCatalogo
+      />
 
       {/* Conserjería olfativa y gestión de perfumes por encargo */}
       <ConserjeriaOlfativa />
-
-      {/* Historia y propuesta de valor */}
-      <About />
-
-      {/* Preguntas frecuentes */}
-      <Faq />
-
-      {/* Pie de página con contacto */}
-      <Footer />
     </main>
   );
 }

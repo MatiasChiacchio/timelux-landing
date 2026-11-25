@@ -2,9 +2,7 @@
 // Server Component: obtiene los perfumes y delega la exploración interactiva.
 
 import type { Metadata } from "next";
-import Link from "next/link";
-import { ChevronRight } from "lucide-react";
-import Footer from "@/src/components/layout/Footer";
+import CabeceraSeccion from "@/src/components/layout/CabeceraSeccion";
 import CatalogoCompleto from "@/src/components/perfumes/CatalogoCompleto";
 import JsonLd from "@/src/components/seo/JsonLd";
 import { TANDA_CARGA_CATALOGO } from "@/src/config/catalogo";
@@ -72,92 +70,46 @@ export default async function PaginaPerfumes(): Promise<React.JSX.Element> {
   ]);
 
   return (
-    <main className="bg-[#fffff4]">
-      {/* Cabecera editorial del catálogo */}
-      <section className="relative overflow-hidden border-b border-[#a6caeb]/35 bg-white/60">
-        <div
-          aria-hidden="true"
-          className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_rgba(166,202,235,0.32),_transparent_62%)]"
-        />
-
-        <div className="relative mx-auto max-w-7xl px-4 pb-10 pt-8 sm:px-6 md:pb-12 md:pt-12 lg:px-8">
-          {/* Migas de pan accesibles sincronizadas con BreadcrumbList */}
-          <nav aria-label="Migas de pan">
-            <ol className="flex items-center gap-1.5 text-xs font-medium text-[#5e626e] sm:text-sm">
-              <li>
-                <Link
-                  href="/"
-                  className="inline-flex min-h-[44px] items-center rounded-md px-1 transition-colors hover:text-[#c40a0a] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1e3a5f] focus-visible:ring-offset-2 focus-visible:ring-offset-[#fffff4]"
-                >
-                  Inicio
-                </Link>
-              </li>
-              <li aria-hidden="true" className="text-[#5e626e]/70">
-                <ChevronRight size={14} />
-              </li>
-              <li
-                aria-current="page"
-                className="font-semibold text-[#1e3a5f]"
-              >
-                Catálogo Exclusivo
-              </li>
-            </ol>
-          </nav>
-
-          {/* Encabezado editorial */}
-          <div className="mt-4 flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
-            <div>
-              <p className="text-xs font-semibold uppercase tracking-[0.22em] text-[#1e3a5f]">
-                Vitrina Timelux
-              </p>
-              <h1 className="mt-2 font-serif text-4xl font-semibold leading-tight text-[#141416] sm:text-5xl lg:text-6xl">
-                Catálogo Exclusivo
-              </h1>
-              <p className="mt-3 max-w-2xl text-sm leading-relaxed text-[#5e626e] sm:text-base">
-                Explorá nuestra selección de fragancias árabes y de diseñador
-                100% originales. Tocá cualquier perfume para ver sus notas
-                completas o consultá disponibilidad por WhatsApp.
-              </p>
-            </div>
-
-            {/* Indicadores rápidos de variedad */}
-            <ul className="flex flex-wrap gap-2.5">
-              <li className="rounded-xl border border-[#a6caeb]/40 bg-white/90 px-4 py-2.5 shadow-xs">
-                <p className="font-serif text-2xl font-semibold leading-none text-[#141416]">
-                  {perfumes.length}
-                </p>
-                <p className="mt-1 text-[11px] font-semibold uppercase tracking-wider text-[#1e3a5f]">
-                  Fragancias
-                </p>
-              </li>
-              <li className="rounded-xl border border-[#a6caeb]/40 bg-white/90 px-4 py-2.5 shadow-xs">
-                <p className="font-serif text-2xl font-semibold leading-none text-[#141416]">
-                  {totalMarcas}
-                </p>
-                <p className="mt-1 text-[11px] font-semibold uppercase tracking-wider text-[#1e3a5f]">
-                  Casas
-                </p>
-              </li>
-              <li className="rounded-xl border border-[#a6caeb]/40 bg-white/90 px-4 py-2.5 shadow-xs">
-                <p className="font-serif text-2xl font-semibold leading-none text-[#141416]">
-                  {totalArabes} / {totalDisenador}
-                </p>
-                <p className="mt-1 text-[11px] font-semibold uppercase tracking-wider text-[#1e3a5f]">
-                  Árabes · Diseñador
-                </p>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </section>
+    <main className="flex-1 bg-[#fffff4]">
+      {/* Cabecera editorial compartida con indicadores del catálogo */}
+      <CabeceraSeccion
+        etiquetaBreadcrumb="Catálogo Exclusivo"
+        eyebrow="Vitrina Timelux"
+        titulo="Catálogo Exclusivo"
+        descripcion="Explorá nuestra selección de fragancias árabes y de diseñador 100% originales. Tocá cualquier perfume para ver sus notas completas o consultá disponibilidad por WhatsApp."
+      >
+        <ul className="flex flex-wrap gap-2.5">
+          <li className="rounded-xl border border-[#a6caeb]/40 bg-white/90 px-4 py-2.5 shadow-xs">
+            <p className="font-serif text-2xl font-semibold leading-none text-[#141416]">
+              {perfumes.length}
+            </p>
+            <p className="mt-1 text-[11px] font-semibold uppercase tracking-wider text-[#1e3a5f]">
+              Fragancias
+            </p>
+          </li>
+          <li className="rounded-xl border border-[#a6caeb]/40 bg-white/90 px-4 py-2.5 shadow-xs">
+            <p className="font-serif text-2xl font-semibold leading-none text-[#141416]">
+              {totalMarcas}
+            </p>
+            <p className="mt-1 text-[11px] font-semibold uppercase tracking-wider text-[#1e3a5f]">
+              Casas
+            </p>
+          </li>
+          <li className="rounded-xl border border-[#a6caeb]/40 bg-white/90 px-4 py-2.5 shadow-xs">
+            <p className="font-serif text-2xl font-semibold leading-none text-[#141416]">
+              {totalArabes} / {totalDisenador}
+            </p>
+            <p className="mt-1 text-[11px] font-semibold uppercase tracking-wider text-[#1e3a5f]">
+              Árabes · Diseñador
+            </p>
+          </li>
+        </ul>
+      </CabeceraSeccion>
 
       {/* Explorador interactivo del catálogo */}
       <section className="mx-auto max-w-7xl px-4 pb-16 pt-8 sm:px-6 md:pb-24 md:pt-10 lg:px-8">
         <CatalogoCompleto perfumesIniciales={perfumes} />
       </section>
-
-      {/* Pie de página con contacto */}
-      <Footer />
 
       {/* Datos estructurados del catálogo */}
       <JsonLd datos={datosEstructurales} />

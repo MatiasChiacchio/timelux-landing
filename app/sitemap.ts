@@ -4,8 +4,7 @@ import { baseUrl } from "@/src/config/site";
 export default function sitemap(): MetadataRoute.Sitemap {
   const ultimaModificacion: Date = new Date();
 
-  // Solo rutas navegables: los fragmentos (#) no son URLs válidas
-  // en un sitemap y los motores de búsqueda los ignoran.
+  // Rutas indexables de Timelux (sin fragmentos #).
   return [
     {
       url: `${baseUrl}/`,
@@ -18,6 +17,24 @@ export default function sitemap(): MetadataRoute.Sitemap {
       lastModified: ultimaModificacion,
       changeFrequency: "daily",
       priority: 0.9,
+    },
+    {
+      url: `${baseUrl}/nosotros`,
+      lastModified: ultimaModificacion,
+      changeFrequency: "monthly",
+      priority: 0.7,
+    },
+    {
+      url: `${baseUrl}/preguntas`,
+      lastModified: ultimaModificacion,
+      changeFrequency: "monthly",
+      priority: 0.7,
+    },
+    {
+      url: `${baseUrl}/contacto`,
+      lastModified: ultimaModificacion,
+      changeFrequency: "monthly",
+      priority: 0.7,
     },
   ];
 }

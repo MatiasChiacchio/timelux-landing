@@ -31,7 +31,7 @@ export default function Footer(): React.JSX.Element {
           {/* Columna 1: marca con logotipo blanco limpio */}
           <div>
             <Link
-              href="/#hero"
+              href="/"
               aria-label={`${name} - Volver al inicio`}
               className="inline-flex min-h-[44px] items-center rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#fffff4] focus-visible:ring-offset-2 focus-visible:ring-offset-[#c40a0a]"
             >
@@ -58,18 +58,16 @@ export default function Footer(): React.JSX.Element {
               Explorar
             </p>
             <ul className="mt-4 space-y-1">
-              {navLinks
-                .filter((enlace) => enlace.href !== "/#contacto")
-                .map((enlace) => (
-                  <li key={enlace.href}>
-                    <Link
-                      href={enlace.href}
-                      className="inline-flex min-h-[44px] items-center rounded-md px-1 text-sm text-[#fffff4] transition-opacity duration-200 hover:opacity-80 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#fffff4] focus-visible:ring-offset-2 focus-visible:ring-offset-[#c40a0a]"
-                    >
-                      {enlace.label}
-                    </Link>
-                  </li>
-                ))}
+              {navLinks.map((enlace) => (
+                <li key={enlace.href}>
+                  <Link
+                    href={enlace.href}
+                    className="inline-flex min-h-[44px] items-center rounded-md px-1 text-sm text-[#fffff4] transition-opacity duration-200 hover:opacity-80 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#fffff4] focus-visible:ring-offset-2 focus-visible:ring-offset-[#c40a0a]"
+                  >
+                    {enlace.label}
+                  </Link>
+                </li>
+              ))}
             </ul>
           </nav>
 

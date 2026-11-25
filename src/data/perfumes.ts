@@ -21,7 +21,7 @@ export const perfumes: Perfume[] = [
       corazon: ["dátiles", "praliné", "nardo"],
       fondo: ["vainilla", "haba tonka", "mirra"],
     },
-    imagenUrl: "/perfumes/khamrah-lattafa.png",
+    imagenUrl: "/placeholder-perfume.svg",
   },
   {
     id: "club-de-nuit-intense-armaf",
@@ -39,7 +39,7 @@ export const perfumes: Perfume[] = [
       corazon: ["abedul", "jazmín", "rosa"],
       fondo: ["almizcle", "vainilla", "ámbar gris"],
     },
-    imagenUrl: "/perfumes/club-de-nuit-intense-armaf.png",
+    imagenUrl: "/placeholder-perfume.svg",
   },
   {
     id: "9pm-afnan",
@@ -56,7 +56,7 @@ export const perfumes: Perfume[] = [
       corazon: ["flor de azahar", "lirio"],
       fondo: ["vainilla", "haba tonka", "pachulí"],
     },
-    imagenUrl: "/perfumes/9pm-afnan.png",
+    imagenUrl: "/placeholder-perfume.svg",
   },
   {
     id: "sauvage-dior",
@@ -74,7 +74,7 @@ export const perfumes: Perfume[] = [
       corazon: ["lavanda", "geranio", "pimienta de Sichuán"],
       fondo: ["ambroxan", "cedro", "ládano"],
     },
-    imagenUrl: "/perfumes/sauvage-dior.png",
+    imagenUrl: "/placeholder-perfume.svg",
   },
   {
     id: "tobacco-vanille-tom-ford",
@@ -91,7 +91,7 @@ export const perfumes: Perfume[] = [
       corazon: ["vainilla", "haba tonka", "flor de tabaco"],
       fondo: ["maderas secas", "cuero"],
     },
-    imagenUrl: "/perfumes/tobacco-vanille-tom-ford.png",
+    imagenUrl: "/placeholder-perfume.svg",
   },
   {
     id: "bleu-de-chanel",
@@ -108,6 +108,6 @@ export const perfumes: Perfume[] = [
       corazon: ["jengibre", "nuez moscada", "jazmín"],
       fondo: ["incienso", "cedro", "sándalo"],
     },
-    imagenUrl: "/perfumes/bleu-de-chanel.png",
+    imagenUrl: "/placeholder-perfume.svg",
   },
 ];

@@ -40,7 +40,7 @@ export function FadeIn({
           observador.unobserve(entrada.target);
         }
       },
-      { threshold: 0.1 },
+      { threshold: 0.01, rootMargin: "0px 0px -20px 0px" },
     );
 
     observador.observe(actual);
@@ -54,8 +54,8 @@ export function FadeIn({
     <div
       ref={referencia}
       style={{ transitionDelay: `${delay}ms` }}
-      className={`transform transition-all duration-700 ease-out motion-reduce:translate-y-0 motion-reduce:opacity-100 motion-reduce:transition-none ${
-        visible ? "translate-y-0 opacity-100" : "translate-y-6 opacity-0"
+      className={`transform transition-all duration-500 ease-out motion-reduce:translate-y-0 motion-reduce:opacity-100 motion-reduce:transition-none ${
+        visible ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0"
       } ${className}`}
     >
       {children}

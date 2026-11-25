@@ -172,7 +172,7 @@ export default function ComboboxMarcas({
   }
 
   return (
-    <div ref={contenedorRef} className="relative sm:w-60 sm:shrink-0">
+    <div ref={contenedorRef} className="relative w-full">
       {/* Botón disparador con la marca activa */}
       <button
         ref={botonRef}
@@ -183,7 +183,7 @@ export default function ComboboxMarcas({
         aria-expanded={abierto}
         aria-controls="lista-marcas"
         aria-label="Filtrar perfumes por marca"
-        className="flex min-h-[44px] w-full min-w-[200px] items-center justify-between gap-3 rounded-xl border border-[#a6caeb]/40 bg-white/90 px-4 py-2.5 text-sm font-medium text-[#141416] shadow-sm transition-colors hover:border-[#a6caeb] focus:border-[#c40a0a] focus:outline-none focus:ring-2 focus:ring-[#c40a0a]"
+        className="flex min-h-[44px] w-full cursor-pointer items-center justify-between gap-3 rounded-xl border border-[#a6caeb]/45 bg-white px-4 py-2.5 text-sm font-medium text-[#141416] shadow-sm transition-colors hover:border-[#a6caeb] focus:border-[#c40a0a] focus:outline-none focus:ring-2 focus:ring-[#c40a0a]/60"
       >
         <span className="truncate">{etiquetaSeleccionada}</span>
         <ChevronDown

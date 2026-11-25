@@ -9,8 +9,8 @@ import type { GeneroPerfume, NotasOlfativas, Perfume } from "@/src/types/perfume
 const URL_CSV_RESPALDO: string =
   "https://docs.google.com/spreadsheets/d/e/2PACX-1vTDnpBnoWRHFMRPuWzx_6PAkQHsaQ5C84mGPFIrV41Zj6IjVMHIaDTECMpApBIcQRIPPDcTin9T7vps/pub?output=csv";
 
-// Imagen de respaldo cuando la fila no trae URL.
-const IMAGEN_REPALDO: string = "/logo.png";
+// Imagen editorial de respaldo cuando la fila no trae URL.
+const IMAGEN_RESPALDO: string = "/placeholder-perfume.svg";
 
 // Limpia espacios y comillas residuales de una celda del CSV.
 function limpiarCelda(valor: string): string {
@@ -215,7 +215,7 @@ function mapearCsvAPerfumes(contenido: string): Perfume[] {
       bestseller: (fila["bestseller"] ?? "").toUpperCase() === "TRUE",
       descripcionCorta: leerColumna(fila, "descripcion", "descripcioncorta"),
       notas: resolverNotas(fila),
-      imagenUrl: leerColumna(fila, "imagenurl", "imagen", "imagen_url") || IMAGEN_REPALDO,
+      imagenUrl: leerColumna(fila, "imagenurl", "imagen", "imagen_url") || IMAGEN_RESPALDO,
     });
   }
 

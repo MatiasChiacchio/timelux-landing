@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Cormorant_Garamond, Plus_Jakarta_Sans } from "next/font/google";
 import Navbar from "@/src/components/layout/Navbar";
 import WhatsAppFloatingButton from "@/src/components/common/WhatsAppFloatingButton";
 import JsonLd from "@/src/components/seo/JsonLd";
@@ -11,14 +11,21 @@ import {
 } from "@/src/lib/schema";
 import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+// Tipografía serif editorial de alta perfumería (armoniza con el trazo del logo).
+const cormorantGaramond = Cormorant_Garamond({
+  variable: "--font-cormorant-garamond",
   subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+  style: ["normal", "italic"],
+  display: "swap",
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+// Tipografía sans limpia y contemporánea para cuerpo, precios e interfaz.
+const plusJakartaSans = Plus_Jakarta_Sans({
+  variable: "--font-plus-jakarta",
   subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+  display: "swap",
 });
 
 // Datos estructurados institucionales compartidos por todas las rutas.
@@ -53,7 +60,7 @@ export const metadata: Metadata = {
     canonical: "/",
   },
   verification: {
-    google: "qGfM7SnqQXd5gn86wZJdQywMKQerXBTElA_lk37N6Vg", 
+    google: "qGfM7SnqQXd5gn86wZJdQywMKQerXBTElA_lk37N6Vg",
   },
   openGraph: {
     type: "website",
@@ -63,21 +70,12 @@ export const metadata: Metadata = {
     title: "Timelux | Perfumería Árabe & Diseñador",
     description:
       "Fragancias árabes y de diseñador 100% originales. Fijación duradera y asesoría personalizada para encontrar tu firma olfativa.",
-    images: [
-      {
-        url: "/logo.png",
-        width: 500,
-        height: 500,
-        alt: "Timelux Perfumería - El arte de dejar una huella inolvidable",
-      },
-    ],
   },
   twitter: {
     card: "summary_large_image",
     title: "Timelux | Perfumería Árabe & Diseñador",
     description:
       "Fragancias árabes y de diseñador 100% originales con fijación duradera y envíos a todo el país.",
-    images: ["/logo.png"],
   },
   robots: {
     index: true,
@@ -90,9 +88,9 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     <html
       lang="es"
       suppressHydrationWarning
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      className={`${plusJakartaSans.variable} ${cormorantGaramond.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col">
+      <body className="min-h-full flex flex-col bg-[#fffff4] font-sans text-[#141416] selection:bg-[#a6caeb]/40 selection:text-[#141416]">
         <Navbar />
         {children}
         <WhatsAppFloatingButton />

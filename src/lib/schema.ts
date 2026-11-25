@@ -52,10 +52,11 @@ export function serializarJsonLd(grafo: JsonLdGrafo): string {
 }
 
 // Convierte una ruta o URL en absoluta para cumplir con schema.org.
+// Si la imagen es vacía o SVG de placeholder, usa el PNG institucional para Rich Results.
 function urlAbsoluta(ruta: string): string {
   const limpia: string = ruta.trim();
 
-  if (!limpia) {
+  if (!limpia || limpia.toLowerCase().endsWith(".svg")) {
     return `${baseUrl}/logo.png`;
   }
 

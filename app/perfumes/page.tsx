@@ -3,6 +3,7 @@
 
 import type { Metadata } from "next";
 import Link from "next/link";
+import { ChevronRight } from "lucide-react";
 import Footer from "@/src/components/layout/Footer";
 import CatalogoCompleto from "@/src/components/perfumes/CatalogoCompleto";
 import JsonLd from "@/src/components/seo/JsonLd";
@@ -33,22 +34,29 @@ export const metadata: Metadata = {
   },
 };
 
-// Catálogo completo con búsqueda, filtros por género y marca, y carga progresiva.
+// Catálogo completo con cabecera boutique, búsqueda, filtros y carga progresiva.
 export default async function PaginaPerfumes(): Promise<React.JSX.Element> {
   // Catálogo remoto con respaldo estático ante fallos de red.
   const perfumes: Perfume[] = await obtenerPerfumes();
 
+  // Conteos reales para enriquecer la cabecera editorial sin sobrecargar al cliente.
+  const totalArabes: number = perfumes.filter(
+    (p: Perfume) => p.tipo === "arabe",
+  ).length;
+  const totalDisenador: number = perfumes.length - totalArabes;
+  const totalMarcas: number = new Set(
+    perfumes.map((p: Perfume) => p.marca.trim()).filter(Boolean),
+  ).size;
+
   // Solo se declaran los productos de la primera tanda renderizada: el schema
   // debe coincidir con el contenido visible y no inflar el HTML del listado.
-  // Para cubrir el catálogo completo hacen falta rutas /perfumes/[id].
   const perfumesEstructurados: Perfume[] = perfumes.slice(
     0,
     TANDA_CARGA_CATALOGO,
   );
 
   // Grafo de la página: migas, lista del catálogo y un Product con Offer
-  // por cada fragancia de la tanda visible. Los ListItem referencian
-  // a esos mismos Product mediante su @id.
+  // por cada fragancia de la tanda visible.
   const datosEstructurales = crearGrafo([
     crearBreadcrumbSchema(
       [
@@ -65,33 +73,87 @@ export default async function PaginaPerfumes(): Promise<React.JSX.Element> {
 
   return (
     <main className="bg-[#fffff4]">
-      <section className="mx-auto max-w-7xl px-4 pb-16 pt-10 sm:px-6 md:pt-14 lg:px-8">
-        {/* Retorno a la portada */}
-        <Link
-          href="/"
-          className="inline-flex min-h-[44px] items-center gap-2 text-sm font-medium text-[#5e626e] transition-colors hover:text-[#c40a0a] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1e3a5f] focus-visible:ring-offset-2 focus-visible:ring-offset-[#fffff4]"
-        >
-          <span aria-hidden="true">&larr;</span>
-          Volver al inicio
-        </Link>
+      {/* Cabecera editorial del catálogo */}
+      <section className="relative overflow-hidden border-b border-[#a6caeb]/35 bg-white/60">
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_rgba(166,202,235,0.32),_transparent_62%)]"
+        />
 
-        {/* Encabezado editorial */}
-        <p className="mt-6 text-sm font-semibold uppercase tracking-widest text-[#1e3a5f]">
-          Catálogo Timelux
-        </p>
-        <h1 className="mt-2 font-serif text-4xl text-[#141416] sm:text-5xl">
-          Catálogo Exclusivo
-        </h1>
-        <p className="mt-3 max-w-2xl text-sm text-[#5e626e] sm:text-base">
-          {perfumes.length}{" "}
-          {perfumes.length === 1 ? "fragancia" : "fragancias"} árabes y de
-          diseñador cuidadosamente seleccionadas.
-        </p>
+        <div className="relative mx-auto max-w-7xl px-4 pb-10 pt-8 sm:px-6 md:pb-12 md:pt-12 lg:px-8">
+          {/* Migas de pan accesibles sincronizadas con BreadcrumbList */}
+          <nav aria-label="Migas de pan">
+            <ol className="flex items-center gap-1.5 text-xs font-medium text-[#5e626e] sm:text-sm">
+              <li>
+                <Link
+                  href="/"
+                  className="inline-flex min-h-[44px] items-center rounded-md px-1 transition-colors hover:text-[#c40a0a] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1e3a5f] focus-visible:ring-offset-2 focus-visible:ring-offset-[#fffff4]"
+                >
+                  Inicio
+                </Link>
+              </li>
+              <li aria-hidden="true" className="text-[#5e626e]/70">
+                <ChevronRight size={14} />
+              </li>
+              <li
+                aria-current="page"
+                className="font-semibold text-[#1e3a5f]"
+              >
+                Catálogo Exclusivo
+              </li>
+            </ol>
+          </nav>
 
-        {/* Explorador interactivo del catálogo */}
-        <div className="mt-8">
-          <CatalogoCompleto perfumesIniciales={perfumes} />
+          {/* Encabezado editorial */}
+          <div className="mt-4 flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
+            <div>
+              <p className="text-xs font-semibold uppercase tracking-[0.22em] text-[#1e3a5f]">
+                Vitrina Timelux
+              </p>
+              <h1 className="mt-2 font-serif text-4xl font-semibold leading-tight text-[#141416] sm:text-5xl lg:text-6xl">
+                Catálogo Exclusivo
+              </h1>
+              <p className="mt-3 max-w-2xl text-sm leading-relaxed text-[#5e626e] sm:text-base">
+                Explorá nuestra selección de fragancias árabes y de diseñador
+                100% originales. Tocá cualquier perfume para ver sus notas
+                completas o consultá disponibilidad por WhatsApp.
+              </p>
+            </div>
+
+            {/* Indicadores rápidos de variedad */}
+            <ul className="flex flex-wrap gap-2.5">
+              <li className="rounded-xl border border-[#a6caeb]/40 bg-white/90 px-4 py-2.5 shadow-xs">
+                <p className="font-serif text-2xl font-semibold leading-none text-[#141416]">
+                  {perfumes.length}
+                </p>
+                <p className="mt-1 text-[11px] font-semibold uppercase tracking-wider text-[#1e3a5f]">
+                  Fragancias
+                </p>
+              </li>
+              <li className="rounded-xl border border-[#a6caeb]/40 bg-white/90 px-4 py-2.5 shadow-xs">
+                <p className="font-serif text-2xl font-semibold leading-none text-[#141416]">
+                  {totalMarcas}
+                </p>
+                <p className="mt-1 text-[11px] font-semibold uppercase tracking-wider text-[#1e3a5f]">
+                  Casas
+                </p>
+              </li>
+              <li className="rounded-xl border border-[#a6caeb]/40 bg-white/90 px-4 py-2.5 shadow-xs">
+                <p className="font-serif text-2xl font-semibold leading-none text-[#141416]">
+                  {totalArabes} / {totalDisenador}
+                </p>
+                <p className="mt-1 text-[11px] font-semibold uppercase tracking-wider text-[#1e3a5f]">
+                  Árabes · Diseñador
+                </p>
+              </li>
+            </ul>
+          </div>
         </div>
+      </section>
+
+      {/* Explorador interactivo del catálogo */}
+      <section className="mx-auto max-w-7xl px-4 pb-16 pt-8 sm:px-6 md:pb-24 md:pt-10 lg:px-8">
+        <CatalogoCompleto perfumesIniciales={perfumes} />
       </section>
 
       {/* Pie de página con contacto */}

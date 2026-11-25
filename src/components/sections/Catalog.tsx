@@ -1,11 +1,12 @@
 'use client';
 
 // Sección de fragancias destacadas de Timelux para la portada.
-// Client Component porque gestiona búsqueda y filtros por categoría.
+// Client Component porque gestiona búsqueda, filtros por categoría y Vista Rápida.
 
-import { useMemo, useState } from "react";
+import { useDeferredValue, useMemo, useState } from "react";
 import Link from "next/link";
-import { Search, SearchX } from "lucide-react";
+import { ArrowRight, Search, SearchX, X } from "lucide-react";
+import ModalDetallePerfume from "@/src/components/perfumes/ModalDetallePerfume";
 import TarjetaPerfume from "@/src/components/perfumes/TarjetaPerfume";
 import { SIZES_TARJETA_DESTACADOS } from "@/src/config/catalogo";
 import type { CategoriaPerfume, Perfume } from "@/src/types/perfume";
@@ -23,28 +24,37 @@ interface PestanaCategoria {
   etiqueta: string;
 }
 
-// Pestañas disponibles del catálogo.
+// Pestañas disponibles del catálogo de portada.
 const pestanas: PestanaCategoria[] = [
   { valor: "todos", etiqueta: "Todos" },
   { valor: "arabe", etiqueta: "Árabes" },
   { valor: "disenador", etiqueta: "Diseñador" },
 ];
 
-// Catálogo con buscador reactivo, filtros y enlace al catálogo completo.
+// Normaliza texto eliminando diacríticos para búsquedas sin fricción.
+function normalizarTexto(texto: string): string {
+  return texto
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "");
+}
+
+// Catálogo destacado con buscador reactivo, consola glassmorphism y Vista Rápida.
 export default function Catalog({
   perfumesIniciales,
   limite,
   mostrarEnlaceCatalogo = false,
 }: PropiedadesCatalogo): React.JSX.Element {
-  // Lista base provista por el servidor y controles de filtrado.
   const [perfumes] = useState<Perfume[]>(perfumesIniciales);
   const [categoria, setCategoria] = useState<CategoriaPerfume>("todos");
   const [busqueda, setBusqueda] = useState<string>("");
+  const [perfumeDetalle, setPerfumeDetalle] = useState<Perfume | null>(null);
 
-  // Fragancias filtradas por categoría y búsqueda (nombre, marca o notas).
-  // En modo destacados, los bestsellers van primero y se aplica el límite.
-  const fraganciasFiltradas: Perfume[] = useMemo(() => {
-    const texto: string = busqueda.toLowerCase().trim();
+  const busquedaDiferida: string = useDeferredValue(busqueda);
+
+  // Calcula coincidencias totales y aplica orden por bestseller + límite de portada.
+  const { visibles: fraganciasFiltradas, totalCoincidencias } = useMemo(() => {
+    const texto: string = normalizarTexto(busquedaDiferida.trim());
 
     const filtradas: Perfume[] = perfumes.filter((perfume: Perfume) => {
       const coincideCategoria: boolean =
@@ -58,23 +68,27 @@ export default function Catalog({
         return true;
       }
 
-      const notasUnidas: string = [
-        ...perfume.notas.salida,
-        ...perfume.notas.corazon,
-        ...perfume.notas.fondo,
-      ]
-        .join(" ")
-        .toLowerCase();
+      const notasUnidas: string = normalizarTexto(
+        [
+          ...perfume.notas.salida,
+          ...perfume.notas.corazon,
+          ...perfume.notas.fondo,
+        ].join(" "),
+      );
 
       return (
-        perfume.nombre.toLowerCase().includes(texto) ||
-        perfume.marca.toLowerCase().includes(texto) ||
+        normalizarTexto(perfume.nombre).includes(texto) ||
+        normalizarTexto(perfume.marca).includes(texto) ||
+        normalizarTexto(perfume.descripcionCorta).includes(texto) ||
         notasUnidas.includes(texto)
       );
     });
 
     if (limite === undefined) {
-      return filtradas;
+      return {
+        visibles: filtradas,
+        totalCoincidencias: filtradas.length,
+      };
     }
 
     const ordenadas: Perfume[] = [...filtradas].sort(
@@ -82,8 +96,29 @@ export default function Catalog({
         Number(b.bestseller === true) - Number(a.bestseller === true),
     );
 
-    return ordenadas.slice(0, limite);
-  }, [perfumes, categoria, busqueda, limite]);
+    return {
+      visibles: ordenadas.slice(0, limite),
+      totalCoincidencias: filtradas.length,
+    };
+  }, [perfumes, categoria, busquedaDiferida, limite]);
+
+  const hayFiltroActivo: boolean =
+    categoria !== "todos" || busqueda.trim().length > 0;
+  const hayMasCoincidencias: boolean =
+    totalCoincidencias > fraganciasFiltradas.length;
+
+  // Construye enlace directo al catálogo completo conservando la consulta actual.
+  const enlaceCatalogoConFiltro: string = useMemo(() => {
+    const params = new URLSearchParams();
+    if (categoria !== "todos") {
+      params.set("tipo", categoria);
+    }
+    if (busqueda.trim().length > 0) {
+      params.set("q", busqueda.trim());
+    }
+    const query: string = params.toString();
+    return query ? `/perfumes?${query}` : "/perfumes";
+  }, [categoria, busqueda]);
 
   // Restablece búsqueda y categoría al estado inicial.
   function limpiarFiltros(): void {
@@ -92,73 +127,119 @@ export default function Catalog({
   }
 
   return (
-    <section id="catalogo" className="scroll-mt-20 bg-[#fffff4] md:scroll-mt-24">
+    <section
+      id="catalogo"
+      className="scroll-mt-20 bg-[#fffff4] md:scroll-mt-24"
+    >
       <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 md:py-24 lg:px-8">
-        {/* Encabezado editorial */}
-        <p className="text-sm font-semibold uppercase tracking-widest text-[#1e3a5f]">
-          Catálogo Timelux
-        </p>
-        <h2 className="mt-2 font-serif text-3xl text-[#141416] sm:text-4xl">
-          Fragancias que dejan huella
-        </h2>
-        <p className="mt-3 max-w-2xl text-sm text-[#5e626e] sm:text-base">
-          Explorá nuestra selección de perfumería árabe y de diseñador.
-          Filtrá por categoría o buscá por nombre, marca o nota olfativa.
-        </p>
-
-        {/* Barra de controles: buscador y filtros */}
-        <div className="mt-8 flex flex-col gap-4">
-          <div className="relative">
-            <Search
-              aria-hidden="true"
-              className="absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-[#5e626e]"
-            />
-            <input
-              type="search"
-              value={busqueda}
-              onChange={(
-                evento: React.ChangeEvent<HTMLInputElement>,
-              ): void => setBusqueda(evento.target.value)
-              }
-              placeholder="Buscar por nombre, marca o nota…"
-              aria-label="Buscar perfumes por nombre, marca o nota olfativa"
-              className="min-h-[44px] w-full rounded-full border border-[#a6caeb]/40 bg-white/90 py-3 pl-11 pr-4 text-sm text-[#141416] placeholder:text-[#5e626e] focus:border-[#c40a0a] focus:outline-none focus:ring-2 focus:ring-[#c40a0a]/60"
-            />
+        {/* Encabezado editorial con enlace secundario en escritorio */}
+        <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+          <div>
+            <p className="text-xs font-semibold uppercase tracking-[0.22em] text-[#1e3a5f]">
+              Selección Destacada
+            </p>
+            <h2 className="mt-2 font-serif text-3xl font-semibold text-[#141416] sm:text-4xl lg:text-5xl">
+              Fragancias que dejan huella
+            </h2>
+            <p className="mt-3 max-w-2xl text-sm leading-relaxed text-[#5e626e] sm:text-base">
+              Explorá nuestras creaciones árabes y de diseñador más elegidas.
+              Filtrá por categoría, buscá por nota olfativa o abrí cada ficha
+              para conocer sus acordes.
+            </p>
           </div>
 
-          <div
-            role="tablist"
-            aria-label="Filtrar perfumes por categoría"
-            className="flex gap-2 overflow-x-auto px-1 pb-2 pt-1"
-          >
-            {pestanas.map((pestana: PestanaCategoria) => {
-              const activa: boolean = categoria === pestana.valor;
-              return (
-                <button
-                  key={pestana.valor}
-                  type="button"
-                  role="tab"
-                  aria-selected={activa}
-                  onClick={(): void => setCategoria(pestana.valor)}
-                  className={`min-h-[44px] whitespace-nowrap rounded-full px-4 py-2 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1e3a5f] focus-visible:ring-offset-2 focus-visible:ring-offset-[#fffff4] ${
-                    activa
-                      ? "bg-[#c40a0a] text-[#fffff4]"
-                      : "border border-[#a6caeb]/40 bg-[#a6caeb]/20 text-[#141416] hover:bg-[#a6caeb]/40"
-                  }`}
-                >
-                  {pestana.etiqueta}
-                </button>
-              );
-            })}
-          </div>
-
-          <p aria-live="polite" className="text-sm text-[#5e626e]">
-            Mostrando {fraganciasFiltradas.length} de {perfumes.length}{" "}
-            {perfumes.length === 1 ? "fragancia" : "fragancias"}
-          </p>
+          {mostrarEnlaceCatalogo ? (
+            <Link
+              href="/perfumes"
+              className="inline-flex min-h-[44px] shrink-0 items-center gap-1.5 text-sm font-semibold text-[#1e3a5f] transition-colors hover:text-[#c40a0a] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1e3a5f] focus-visible:ring-offset-2 focus-visible:ring-offset-[#fffff4]"
+            >
+              Ver las {perfumes.length} fragancias
+              <ArrowRight size={16} aria-hidden="true" />
+            </Link>
+          ) : null}
         </div>
 
-        {/* Grilla de tarjetas */}
+        {/* Consola de controles en cristal */}
+        <div className="mt-8 rounded-2xl border border-[#a6caeb]/40 bg-white/85 p-4 shadow-sm backdrop-blur-md sm:p-5">
+          <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
+            <div className="relative flex-1">
+              <Search
+                aria-hidden="true"
+                className="pointer-events-none absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-[#5e626e]"
+              />
+              <input
+                type="search"
+                value={busqueda}
+                onChange={(
+                  evento: React.ChangeEvent<HTMLInputElement>,
+                ): void => setBusqueda(evento.target.value)}
+                placeholder="Buscar por nombre, marca o nota olfativa…"
+                aria-label="Buscar perfumes por nombre, marca o nota olfativa"
+                className="min-h-[44px] w-full rounded-full border border-[#a6caeb]/45 bg-white py-2.5 pl-11 pr-11 text-sm text-[#141416] placeholder:text-[#5e626e] focus:border-[#c40a0a] focus:outline-none focus:ring-2 focus:ring-[#c40a0a]/60"
+              />
+              {busqueda.length > 0 ? (
+                <button
+                  type="button"
+                  onClick={(): void => setBusqueda("")}
+                  aria-label="Limpiar búsqueda"
+                  className="absolute right-1.5 top-1/2 inline-flex min-h-[44px] min-w-[44px] -translate-y-1/2 cursor-pointer items-center justify-center rounded-full text-[#5e626e] transition-colors hover:text-[#c40a0a] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1e3a5f]"
+                >
+                  <X size={16} aria-hidden="true" />
+                </button>
+              ) : null}
+            </div>
+
+            <div
+              role="tablist"
+              aria-label="Filtrar perfumes por categoría"
+              className="flex shrink-0 gap-2 overflow-x-auto pb-0.5 pt-0.5"
+            >
+              {pestanas.map((pestana: PestanaCategoria) => {
+                const activa: boolean = categoria === pestana.valor;
+                return (
+                  <button
+                    key={pestana.valor}
+                    type="button"
+                    role="tab"
+                    aria-selected={activa}
+                    onClick={(): void => setCategoria(pestana.valor)}
+                    className={`min-h-[44px] cursor-pointer whitespace-nowrap rounded-full px-4 py-2 text-sm font-semibold transition-all duration-200 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1e3a5f] focus-visible:ring-offset-2 focus-visible:ring-offset-white ${
+                      activa
+                        ? "bg-[#c40a0a] text-[#fffff4] shadow-sm"
+                        : "border border-[#a6caeb]/45 bg-[#a6caeb]/15 text-[#141416] hover:bg-[#a6caeb]/35"
+                    }`}
+                  >
+                    {pestana.etiqueta}
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+
+          <div className="mt-3 flex flex-wrap items-center justify-between gap-2 border-t border-[#a6caeb]/20 pt-3">
+            <p aria-live="polite" className="text-xs font-medium text-[#5e626e] sm:text-sm">
+              {hayFiltroActivo
+                ? `Mostrando ${fraganciasFiltradas.length} de ${totalCoincidencias} ${
+                    totalCoincidencias === 1 ? "coincidencia" : "coincidencias"
+                  }`
+                : `Mostrando ${fraganciasFiltradas.length} destacados de ${perfumes.length} ${
+                    perfumes.length === 1 ? "fragancia" : "fragancias"
+                  }`}
+            </p>
+
+            {hayFiltroActivo && hayMasCoincidencias ? (
+              <Link
+                href={enlaceCatalogoConFiltro}
+                className="inline-flex items-center gap-1 text-xs font-semibold text-[#c40a0a] hover:text-[#a30808] hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1e3a5f]"
+              >
+                Ver las {totalCoincidencias} coincidencias en el catálogo completo
+                <span aria-hidden="true">&rarr;</span>
+              </Link>
+            ) : null}
+          </div>
+        </div>
+
+        {/* Grilla de tarjetas destacadas */}
         {fraganciasFiltradas.length > 0 ? (
           <ul className="mt-8 grid grid-cols-1 gap-6 sm:grid-cols-2 md:gap-8 lg:grid-cols-3">
             {fraganciasFiltradas.map((perfume: Perfume) => (
@@ -166,29 +247,29 @@ export default function Catalog({
                 <TarjetaPerfume
                   perfume={perfume}
                   sizes={SIZES_TARJETA_DESTACADOS}
+                  alAbrirDetalle={setPerfumeDetalle}
                 />
               </li>
             ))}
           </ul>
         ) : (
           /* Estado vacío sin coincidencias */
-          <div className="mt-8 flex flex-col items-center rounded-2xl border border-[#a6caeb]/30 bg-white/90 px-6 py-12 text-center">
+          <div className="mt-8 flex flex-col items-center rounded-2xl border border-[#a6caeb]/35 bg-white/90 px-6 py-14 text-center shadow-sm">
             <SearchX
               aria-hidden="true"
               className="h-10 w-10 text-[#1e3a5f]"
             />
-            <h3 className="mt-4 text-lg font-bold text-[#141416]">
+            <h3 className="mt-4 font-serif text-2xl font-semibold text-[#141416]">
               Sin coincidencias por ahora
             </h3>
-            <p className="mt-2 max-w-md text-sm text-[#5e626e]">
+            <p className="mt-2 max-w-md text-sm leading-relaxed text-[#5e626e]">
               No encontramos fragancias con esos filtros. Probá con otro
-              nombre, marca o nota, o limpiá la búsqueda para ver todo el
-              catálogo.
+              nombre, marca o nota, o limpiá la búsqueda para ver los destacados.
             </p>
             <button
               type="button"
               onClick={limpiarFiltros}
-              className="mt-6 min-h-[44px] rounded-full bg-[#c40a0a] px-5 py-2.5 text-sm font-medium text-[#fffff4] transition-colors hover:bg-[#a30808] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1e3a5f] focus-visible:ring-offset-2 focus-visible:ring-offset-[#fffff4]"
+              className="mt-6 min-h-[44px] cursor-pointer rounded-full bg-[#c40a0a] px-6 py-2.5 text-sm font-semibold text-[#fffff4] transition-colors hover:bg-[#a30808] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1e3a5f] focus-visible:ring-offset-2 focus-visible:ring-offset-[#fffff4]"
             >
               Limpiar filtros
             </button>
@@ -196,18 +277,24 @@ export default function Catalog({
         )}
 
         {/* Enlace destacado al catálogo completo */}
-        {mostrarEnlaceCatalogo && (
-          <div className="mt-10 flex justify-center">
+        {mostrarEnlaceCatalogo ? (
+          <div className="mt-12 flex justify-center">
             <Link
-              className="inline-flex min-h-[44px] items-center gap-2 rounded-full bg-[#c40a0a] px-8 py-3.5 font-medium text-[#fffff4] shadow-md transition-all duration-300 hover:bg-[#a30808] hover:shadow-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1e3a5f] focus-visible:ring-offset-2 focus-visible:ring-offset-[#fffff4]"
-              href="/perfumes"
+              className="inline-flex min-h-[48px] items-center gap-2 rounded-full bg-[#c40a0a] px-8 py-3.5 text-sm font-semibold text-[#fffff4] shadow-md shadow-[#c40a0a]/15 transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#a30808] hover:shadow-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1e3a5f] focus-visible:ring-offset-2 focus-visible:ring-offset-[#fffff4] active:scale-95"
+              href={enlaceCatalogoConFiltro}
             >
               Explorar catálogo completo ({perfumes.length} fragancias)
               <span aria-hidden="true">&rarr;</span>
             </Link>
           </div>
-        )}
+        ) : null}
       </div>
+
+      {/* Modal de Vista Rápida / Ficha Olfativa */}
+      <ModalDetallePerfume
+        perfume={perfumeDetalle}
+        alCerrar={(): void => setPerfumeDetalle(null)}
+      />
     </section>
   );
 }

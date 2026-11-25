@@ -164,9 +164,9 @@ export default function Catalog({
           ) : null}
         </div>
 
-        {/* Consola de controles en cristal (opcional) */}
+        {/* Consola de controles en superficie clara (opcional) */}
         {mostrarBuscador ? (
-          <div className="mt-8 rounded-2xl border border-[#a6caeb]/40 bg-white/85 p-4 shadow-sm backdrop-blur-md sm:p-5">
+          <div className="mt-8 rounded-2xl border border-[#a6caeb]/40 bg-white/95 p-4 shadow-sm sm:p-5">
             <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
               <div className="relative flex-1">
                 <Search

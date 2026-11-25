@@ -30,12 +30,7 @@ body {
   background-color: var(--color-timelux-bg);
   color: var(--color-timelux-dark);
   font-family: var(--font-sans);
-  min-height: 100vh;
-}
-
-/* Desplazamiento suave hacia las anclas (ej.: CTA "Ver catálogo"). */
-html {
-  scroll-behavior: smooth;
+  min-height: 100dvh;
 }
 
 /* Entrada suave del Hero solo con transform: el texto visible desde el
@@ -50,43 +45,12 @@ html {
 }
 
 .animacion-hero {
-  animation: hero-entrada 0.55s ease-out both;
-}
-
-/* Brillo sutil para el skeleton mientras cargan fotos remotas del catálogo. */
-@keyframes shimmer-suave {
-  0% {
-    transform: translateX(-100%);
-  }
-  100% {
-    transform: translateX(100%);
-  }
-}
-
-.shimmer-perfume::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    90deg,
-    transparent 0%,
-    rgba(255, 255, 255, 0.75) 50%,
-    transparent 100%
-  );
-  animation: shimmer-suave 1.6s ease-in-out infinite;
+  animation: hero-entrada 0.45s ease-out both;
 }
 
 /* Respeta a usuarios con movimiento reducido. */
 @media (prefers-reduced-motion: reduce) {
-  html {
-    scroll-behavior: auto;
-  }
-
   .animacion-hero {
-    animation: none;
-  }
-
-  .shimmer-perfume::after {
     animation: none;
   }
 }

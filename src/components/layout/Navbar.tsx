@@ -69,7 +69,7 @@ export default function Navbar(): React.JSX.Element {
   return (
     <header
       ref={encabezadoRef}
-      className="sticky top-0 z-50 w-full border-b border-[#a30808]/90 bg-[#c40a0a]/95 shadow-md backdrop-blur-md"
+      className="sticky top-0 z-50 w-full border-b border-[#a30808] bg-[#c40a0a] shadow-md"
     >
       <nav
         aria-label="Navegación principal"

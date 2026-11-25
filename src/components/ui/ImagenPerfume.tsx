@@ -1,7 +1,7 @@
 'use client';
 
 // Imagen del frasco optimizada por Next.js sobre fondo de estudio blanco.
-// Client Component porque gestiona skeleton de carga y fallback editorial SVG.
+// Client Component ligero: gestiona fallback editorial SVG sin animaciones infinitas.
 
 import { useState } from "react";
 import Image from "next/image";
@@ -18,7 +18,7 @@ interface PropiedadesImagenPerfume {
   classNameContenedor?: string;
 }
 
-// Frasco optimizado (WebP/AVIF y srcset responsivo), con shimmer inicial
+// Frasco optimizado (WebP/AVIF y srcset responsivo), con transición limpia
 // y conmutación automática al placeholder editorial ante errores de red.
 export default function ImagenPerfume({
   src,
@@ -43,19 +43,13 @@ export default function ImagenPerfume({
     <div
       className={`relative flex aspect-square w-full items-center justify-center overflow-hidden rounded-xl border border-[#a6caeb]/25 bg-white p-3 sm:p-4 ${classNameContenedor}`}
     >
-      {/* Brillo skeleton mientras llega la imagen remota */}
+      {/* Fondo cálido estático mientras llega la imagen (sin animación infinita) */}
       {!cargada ? (
         <div
           aria-hidden="true"
-          className="shimmer-perfume pointer-events-none absolute inset-0 overflow-hidden bg-[#fffff4]/70"
+          className="pointer-events-none absolute inset-0 bg-[#fffff4]/60"
         />
       ) : null}
-
-      {/* Halo radial muy tenue para dar profundidad de estudio */}
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_center,_rgba(166,202,235,0.10),_transparent_70%)]"
-      />
 
       <Image
         src={origen}
@@ -65,7 +59,7 @@ export default function ImagenPerfume({
         priority={prioridad}
         onLoad={(): void => setCargada(true)}
         onError={usarRespaldo}
-        className={`object-contain p-2.5 transition-all duration-500 ease-out group-hover:scale-105 sm:p-3 ${
+        className={`object-contain p-2.5 transition-[opacity,transform] duration-300 ease-out group-hover:scale-105 sm:p-3 ${
           cargada ? "opacity-100" : "opacity-0"
         }`}
       />

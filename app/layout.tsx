@@ -89,9 +89,9 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     <html
       lang="es"
       suppressHydrationWarning
-      className={`${plusJakartaSans.variable} ${cormorantGaramond.variable} h-full antialiased`}
+      className={`${plusJakartaSans.variable} ${cormorantGaramond.variable} antialiased`}
     >
-      <body className="min-h-full flex flex-col bg-[#fffff4] font-sans text-[#141416] selection:bg-[#a6caeb]/40 selection:text-[#141416]">
+      <body className="min-h-dvh flex flex-col bg-[#fffff4] font-sans text-[#141416] selection:bg-[#a6caeb]/40 selection:text-[#141416]">
         <Navbar />
         {children}
         <Footer />

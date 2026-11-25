@@ -1,7 +1,7 @@
 "use client";
 
 // Entrada suave al hacer scroll mediante IntersectionObserver.
-// Client Component ligero: revela el contenido una sola vez al entrar en vista.
+// Optimizado para no frenar ni provocar saltos visuales al deslizar rápido.
 
 import { useEffect, useRef, useState } from "react";
 import type { ReactNode } from "react";
@@ -13,21 +13,26 @@ interface PropiedadesFadeIn {
   delay?: number;
 }
 
-// Envoltorio reutilizable con fundido y desplazamiento vertical sutil.
+// Envoltorio reutilizable con fundido ligero pre-disparado antes de entrar al viewport.
 export function FadeIn({
   children,
   className = "",
   delay = 0,
 }: PropiedadesFadeIn): React.JSX.Element {
-  // Visibilidad del contenido según su intersección con la vista.
   const [visible, setVisible] = useState<boolean>(false);
   const referencia = useRef<HTMLDivElement>(null);
 
-  // Observa la entrada en vista y libera el observador al revelarse.
   useEffect(() => {
     const actual: HTMLDivElement | null = referencia.current;
 
     if (!actual) {
+      return;
+    }
+
+    // Si ya está visible o arriba del fold al hidratar, revelar de inmediato.
+    const rect: DOMRect = actual.getBoundingClientRect();
+    if (rect.top <= window.innerHeight + 80) {
+      setVisible(true);
       return;
     }
 
@@ -40,7 +45,7 @@ export function FadeIn({
           observador.unobserve(entrada.target);
         }
       },
-      { threshold: 0.01, rootMargin: "0px 0px -20px 0px" },
+      { threshold: 0, rootMargin: "100px 0px 80px 0px" },
     );
 
     observador.observe(actual);
@@ -53,9 +58,9 @@ export function FadeIn({
   return (
     <div
       ref={referencia}
-      style={{ transitionDelay: `${delay}ms` }}
-      className={`transform transition-all duration-500 ease-out motion-reduce:translate-y-0 motion-reduce:opacity-100 motion-reduce:transition-none ${
-        visible ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0"
+      style={delay > 0 ? { transitionDelay: `${delay}ms` } : undefined}
+      className={`transition-[opacity,transform] duration-300 ease-out motion-reduce:translate-y-0 motion-reduce:opacity-100 motion-reduce:transition-none ${
+        visible ? "translate-y-0 opacity-100" : "translate-y-2 opacity-0"
       } ${className}`}
     >
       {children}

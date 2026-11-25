@@ -148,18 +148,12 @@ export default function About({
                 className="absolute inset-0 bg-gradient-to-t from-[#141416]/45 via-[#141416]/10 to-transparent"
               />
 
-              {/* Badge flotante con glassmorphism */}
-              <div className="absolute bottom-5 left-5 right-5 flex items-center gap-3 rounded-2xl border border-white/50 bg-white/90 p-4 shadow-lg backdrop-blur-md">
-                <span className="relative flex h-3 w-3 shrink-0">
-                  <span
-                    aria-hidden="true"
-                    className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#c40a0a] opacity-60 motion-reduce:animate-none"
-                  />
-                  <span
-                    aria-hidden="true"
-                    className="relative inline-flex h-3 w-3 rounded-full bg-[#c40a0a]"
-                  />
-                </span>
+              {/* Badge flotante sobre fotografía */}
+              <div className="absolute bottom-5 left-5 right-5 flex items-center gap-3 rounded-2xl border border-white/60 bg-white/92 p-4 shadow-lg backdrop-blur-xs">
+                <span
+                  aria-hidden="true"
+                  className="inline-flex h-3 w-3 shrink-0 rounded-full bg-[#c40a0a] ring-4 ring-[#c40a0a]/15"
+                />
                 <p className="text-sm leading-snug text-[#141416]">
                   <strong className="font-semibold">
                     Piezas 100% Originales

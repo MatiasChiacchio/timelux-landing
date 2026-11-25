@@ -58,7 +58,7 @@ export default function TarjetaPerfume({
 
       {/* Insignia Bestseller flotante sobre el frasco para evitar ruido en el texto */}
       {perfume.bestseller === true ? (
-        <span className="pointer-events-none absolute left-2.5 top-2.5 inline-flex items-center gap-1 rounded-full border border-[#c40a0a]/20 bg-white/95 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wider text-[#c40a0a] shadow-sm backdrop-blur-sm sm:text-[11px]">
+        <span className="pointer-events-none absolute left-2.5 top-2.5 inline-flex items-center gap-1 rounded-full border border-[#c40a0a]/20 bg-white/95 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wider text-[#c40a0a] shadow-sm sm:text-[11px]">
           <Sparkles size={11} aria-hidden="true" className="shrink-0" />
           Bestseller
         </span>
@@ -68,7 +68,7 @@ export default function TarjetaPerfume({
       {alAbrirDetalle ? (
         <span
           aria-hidden="true"
-          className="pointer-events-none absolute bottom-2.5 left-1/2 hidden -translate-x-1/2 translate-y-1 items-center gap-1.5 whitespace-nowrap rounded-full border border-[#a6caeb]/50 bg-white/95 px-3 py-1 text-[11px] font-semibold text-[#1e3a5f] opacity-0 shadow-md backdrop-blur-sm transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100 sm:inline-flex"
+          className="pointer-events-none absolute bottom-2.5 left-1/2 hidden -translate-x-1/2 translate-y-1 items-center gap-1.5 whitespace-nowrap rounded-full border border-[#a6caeb]/50 bg-white/95 px-3 py-1 text-[11px] font-semibold text-[#1e3a5f] opacity-0 shadow-md transition-[opacity,transform] duration-200 group-hover:translate-y-0 group-hover:opacity-100 sm:inline-flex"
         >
           <Eye size={13} aria-hidden="true" />
           Ver ficha olfativa
@@ -80,7 +80,7 @@ export default function TarjetaPerfume({
   return (
     <article
       id={anclaPerfume(perfume)}
-      className="group flex h-full scroll-mt-24 flex-col justify-between rounded-2xl border border-[#a6caeb]/35 bg-white/90 p-3 shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:border-[#c40a0a]/40 hover:shadow-xl hover:shadow-[#1e3a5f]/10 sm:p-5"
+      className="group flex h-full scroll-mt-24 flex-col justify-between rounded-2xl border border-[#a6caeb]/35 bg-white/95 p-3 shadow-sm transition-[transform,box-shadow,border-color] duration-200 hover:-translate-y-0.5 hover:border-[#c40a0a]/40 hover:shadow-lg sm:p-5"
     >
       <div>
         {/* Foto clicable para Vista Rápida si está habilitada */}

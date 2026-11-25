@@ -292,8 +292,8 @@ export default function CatalogoCompleto({
         />
       </Suspense>
 
-      {/* Consola de controles en superficie glassmorphism */}
-      <div className="rounded-2xl border border-[#a6caeb]/40 bg-white/85 p-4 shadow-sm backdrop-blur-md sm:p-5">
+      {/* Consola de controles en superficie clara */}
+      <div className="rounded-2xl border border-[#a6caeb]/40 bg-white/95 p-4 shadow-sm sm:p-5">
         {/* Fila superior: buscador, marca y ordenamiento */}
         <div className="grid grid-cols-1 gap-3 lg:grid-cols-12">
           <div className="relative lg:col-span-6">

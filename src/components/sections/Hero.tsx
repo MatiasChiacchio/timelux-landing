@@ -57,7 +57,7 @@ export default function Hero({
           <div className="text-center lg:col-span-7 lg:text-left">
             {/* Cápsula editorial única */}
             <div
-              className="animacion-hero inline-flex items-center gap-2.5 rounded-full border border-[#a6caeb]/60 bg-white/85 px-4 py-1.5 shadow-sm backdrop-blur-sm"
+              className="animacion-hero inline-flex items-center gap-2.5 rounded-full border border-[#a6caeb]/60 bg-white/90 px-4 py-1.5 shadow-sm"
               style={{ animationDelay: "0ms" }}
             >
               <span
@@ -119,7 +119,7 @@ export default function Hero({
               {puntosConfianza.map((punto: PuntoConfianza) => (
                 <li
                   key={punto.texto}
-                  className="group flex items-center justify-center gap-2.5 rounded-xl border border-[#a6caeb]/35 bg-white/75 px-3.5 py-2.5 shadow-xs backdrop-blur-sm transition-colors duration-300 hover:border-[#a6caeb]/70 lg:justify-start"
+                  className="group flex items-center justify-center gap-2.5 rounded-xl border border-[#a6caeb]/35 bg-white/90 px-3.5 py-2.5 shadow-xs transition-colors duration-200 hover:border-[#a6caeb]/70 lg:justify-start"
                 >
                   <punto.icono
                     size={17}
@@ -159,7 +159,7 @@ export default function Hero({
               />
 
               {/* Badge flotante superior: acordes de firma */}
-              <div className="absolute left-4 top-4 flex items-center gap-2 rounded-full border border-[#a6caeb]/45 bg-white/90 px-3.5 py-2 shadow-md backdrop-blur-md">
+              <div className="absolute left-4 top-4 flex items-center gap-2 rounded-full border border-[#a6caeb]/45 bg-white/95 px-3.5 py-2 shadow-md">
                 <Sparkles
                   size={14}
                   aria-hidden="true"
@@ -171,7 +171,7 @@ export default function Hero({
               </div>
 
               {/* Tarjeta flotante inferior: garantía de origen */}
-              <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between gap-3 rounded-2xl border border-white/60 bg-white/90 px-4 py-3.5 shadow-lg backdrop-blur-md">
+              <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between gap-3 rounded-2xl border border-white/70 bg-white/92 px-4 py-3.5 shadow-lg backdrop-blur-xs">
                 <div>
                   <p className="font-serif text-lg font-semibold leading-tight text-[#141416]">
                     Curaduría de Alta Gama

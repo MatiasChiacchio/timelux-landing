@@ -23,10 +23,10 @@ export default function ConserjeriaOlfativa(): React.JSX.Element {
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <FadeIn>
           <div className="relative overflow-hidden rounded-3xl border border-[#a6caeb]/45 bg-white/90 p-6 shadow-md shadow-[#1e3a5f]/5 sm:p-10 lg:p-12">
-            {/* Resplandor luminoso sutil sobre la tarjeta */}
+            {/* Resplandor luminoso con gradiente puro (sin filter blur costoso) */}
             <div
               aria-hidden="true"
-              className="pointer-events-none absolute -right-24 -top-24 h-72 w-72 rounded-full bg-[#a6caeb]/25 blur-3xl"
+              className="pointer-events-none absolute -right-16 -top-16 h-80 w-80 rounded-full bg-[radial-gradient(circle,_rgba(166,202,235,0.34),_transparent_70%)]"
             />
             <div
               aria-hidden="true"

@@ -4,7 +4,7 @@ import { baseUrl } from "@/src/config/site";
 export default function sitemap(): MetadataRoute.Sitemap {
   const ultimaModificacion: Date = new Date();
 
-  // Rutas indexables de Timelux (sin fragmentos #).
+  // Rutas indexables de Timelux (4 apartados claros).
   return [
     {
       url: `${baseUrl}/`,
@@ -26,12 +26,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     },
     {
       url: `${baseUrl}/preguntas`,
-      lastModified: ultimaModificacion,
-      changeFrequency: "monthly",
-      priority: 0.7,
-    },
-    {
-      url: `${baseUrl}/contacto`,
       lastModified: ultimaModificacion,
       changeFrequency: "monthly",
       priority: 0.7,

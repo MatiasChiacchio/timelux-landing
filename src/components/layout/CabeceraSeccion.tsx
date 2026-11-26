@@ -1,5 +1,5 @@
 // Cabecera editorial reutilizable para los apartados dedicados de Timelux.
-// Server Component: renderiza migas de pan accesibles, titular serif y ranura lateral opcional.
+// Server Component compacto: migas de pan accesibles, titular serif y ranura lateral opcional.
 
 import Link from "next/link";
 import { ChevronRight } from "lucide-react";
@@ -15,7 +15,7 @@ interface PropiedadesCabeceraSeccion {
   children?: ReactNode;
 }
 
-// Encabezado luminoso Warm Ivory compartido por /perfumes, /nosotros, /preguntas y /contacto.
+// Encabezado luminoso y compacto compartido por /perfumes, /nosotros y /preguntas.
 export default function CabeceraSeccion({
   etiquetaBreadcrumb,
   eyebrow,
@@ -25,14 +25,8 @@ export default function CabeceraSeccion({
   children,
 }: PropiedadesCabeceraSeccion): React.JSX.Element {
   return (
-    <section className="relative overflow-hidden border-b border-[#a6caeb]/35 bg-white/60">
-      {/* Resplandor luminoso celeste sobre marfil */}
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_rgba(166,202,235,0.32),_transparent_62%)]"
-      />
-
-      <div className="relative mx-auto max-w-7xl px-4 pb-10 pt-8 sm:px-6 md:pb-12 md:pt-12 lg:px-8">
+    <section className="border-b border-[#a6caeb]/30 bg-white/50">
+      <div className="mx-auto max-w-7xl px-4 pb-7 pt-6 sm:px-6 sm:pb-8 sm:pt-8 md:pb-10 md:pt-10 lg:px-8">
         {/* Migas de pan accesibles sincronizadas con BreadcrumbList */}
         <nav aria-label="Migas de pan">
           <ol className="flex items-center gap-1.5 text-xs font-medium text-[#5e626e] sm:text-sm">
@@ -54,12 +48,12 @@ export default function CabeceraSeccion({
         </nav>
 
         {/* Encabezado editorial y bloque lateral opcional */}
-        <div className="mt-4 flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
+        <div className="mt-3 flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
           <div>
             <p className="text-xs font-semibold uppercase tracking-[0.22em] text-[#1e3a5f]">
               {eyebrow}
             </p>
-            <h1 className="mt-2 font-serif text-4xl font-semibold leading-tight text-[#141416] sm:text-5xl lg:text-6xl">
+            <h1 className="mt-2 font-serif text-3xl font-semibold leading-tight text-[#141416] sm:text-4xl lg:text-5xl">
               {titulo}
               {tituloCursiva ? (
                 <>
@@ -70,7 +64,7 @@ export default function CabeceraSeccion({
                 </>
               ) : null}
             </h1>
-            <p className="mt-3 max-w-2xl text-sm leading-relaxed text-[#5e626e] sm:text-base">
+            <p className="mt-2.5 max-w-2xl text-sm leading-relaxed text-[#5e626e] sm:text-base">
               {descripcion}
             </p>
           </div>

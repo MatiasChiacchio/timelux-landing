@@ -5,7 +5,6 @@
 
 import { useState } from "react";
 import { ChevronDown, MessageCircle } from "lucide-react";
-import { FadeIn } from "@/src/components/ui/FadeIn";
 import { getWhatsAppLink } from "@/src/config/site";
 
 // Punto destacado dentro de una respuesta (etiqueta con énfasis + descripción).
@@ -91,19 +90,19 @@ const preguntas: PreguntaFrecuente[] = [
   },
 ];
 
-// Propiedades opcionales: permite ocultar el encabezado dentro de /preguntas.
+// Propiedades opcionales: permite ocultar encabezado o cierre dentro de /preguntas.
 interface PropiedadesFaq {
   mostrarEncabezado?: boolean;
+  mostrarCierre?: boolean;
 }
 
-// Acordeón de preguntas frecuentes con transición suave y cierre hacia WhatsApp.
+// Acordeón de preguntas frecuentes visible de inmediato sin retrasos de animación.
 export default function Faq({
   mostrarEncabezado = true,
+  mostrarCierre = true,
 }: PropiedadesFaq): React.JSX.Element {
-  // Índices de las preguntas actualmente abiertas (inicia con todas cerradas).
   const [abiertas, setAbiertas] = useState<number[]>([]);
 
-  // Alterna la visibilidad de una respuesta sin cerrar las demás.
   function alternarPregunta(indice: number): void {
     setAbiertas((previas: number[]) =>
       previas.includes(indice)
@@ -118,7 +117,7 @@ export default function Faq({
       className={`scroll-mt-20 bg-[#fffff4] md:scroll-mt-24 ${
         mostrarEncabezado
           ? "border-t border-[#a6caeb]/30 py-16 md:py-24"
-          : "py-10 md:py-14"
+          : "pb-8 pt-10 md:pb-10 md:pt-12"
       }`}
     >
       <div className="mx-auto w-full max-w-4xl px-4 sm:px-6 lg:px-8">
@@ -138,121 +137,122 @@ export default function Faq({
           </>
         ) : null}
 
-        {/* Acordeón de preguntas con animación fluida CSS Grid */}
-        <div className={mostrarEncabezado ? "mt-10 space-y-4" : "space-y-4"}>
+        {/* Acordeón de preguntas */}
+        <div className={mostrarEncabezado ? "mt-10 space-y-3.5" : "space-y-3.5"}>
           {preguntas.map((item: PreguntaFrecuente, indice: number) => {
             const abierta: boolean = abiertas.includes(indice);
             return (
-              <FadeIn key={item.pregunta} delay={indice * 65}>
+              <div
+                key={item.pregunta}
+                className={`overflow-hidden rounded-2xl border transition-colors duration-200 ${
+                  abierta
+                    ? "border-[#c40a0a]/35 bg-white shadow-sm"
+                    : "border-[#a6caeb]/40 bg-white/85 hover:border-[#a6caeb]/80"
+                }`}
+              >
+                <h3>
+                  <button
+                    type="button"
+                    onClick={(): void => alternarPregunta(indice)}
+                    aria-expanded={abierta}
+                    aria-controls={`faq-respuesta-${indice}`}
+                    className="flex min-h-[56px] w-full cursor-pointer items-center justify-between gap-4 px-5 py-4 text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[#1e3a5f]"
+                  >
+                    <span className="text-sm font-semibold text-[#141416] sm:text-base">
+                      {item.pregunta}
+                    </span>
+                    <span
+                      aria-hidden="true"
+                      className={`inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full transition-colors duration-200 ${
+                        abierta
+                          ? "bg-[#c40a0a]/10 text-[#c40a0a]"
+                          : "bg-[#a6caeb]/20 text-[#1e3a5f]"
+                      }`}
+                    >
+                      <ChevronDown
+                        size={18}
+                        className={`transition-transform duration-200 motion-reduce:transition-none ${
+                          abierta ? "rotate-180" : "rotate-0"
+                        }`}
+                      />
+                    </span>
+                  </button>
+                </h3>
+
                 <div
-                  className={`overflow-hidden rounded-2xl border transition-all duration-300 ${
+                  id={`faq-respuesta-${indice}`}
+                  role="region"
+                  aria-hidden={!abierta}
+                  className={`grid transition-[grid-template-rows,opacity] duration-200 ease-out motion-reduce:transition-none ${
                     abierta
-                      ? "border-[#c40a0a]/35 bg-white shadow-md shadow-[#1e3a5f]/5"
-                      : "border-[#a6caeb]/40 bg-white/80 shadow-xs hover:border-[#a6caeb]/80"
+                      ? "grid-rows-[1fr] opacity-100"
+                      : "grid-rows-[0fr] opacity-0"
                   }`}
                 >
-                  <h3>
-                    <button
-                      type="button"
-                      onClick={(): void => alternarPregunta(indice)}
-                      aria-expanded={abierta}
-                      aria-controls={`faq-respuesta-${indice}`}
-                      className="flex min-h-[56px] w-full cursor-pointer items-center justify-between gap-4 px-5 py-4 text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[#1e3a5f]"
-                    >
-                      <span className="text-sm font-semibold text-[#141416] sm:text-base">
-                        {item.pregunta}
-                      </span>
-                      <span
-                        aria-hidden="true"
-                        className={`inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full transition-colors duration-300 ${
-                          abierta
-                            ? "bg-[#c40a0a]/10 text-[#c40a0a]"
-                            : "bg-[#a6caeb]/20 text-[#1e3a5f]"
-                        }`}
-                      >
-                        <ChevronDown
-                          size={18}
-                          className={`transition-transform duration-300 motion-reduce:transition-none ${
-                            abierta ? "rotate-180" : "rotate-0"
-                          }`}
-                        />
-                      </span>
-                    </button>
-                  </h3>
-
-                  <div
-                    id={`faq-respuesta-${indice}`}
-                    role="region"
-                    aria-hidden={!abierta}
-                    className={`grid transition-[grid-template-rows,opacity] duration-300 ease-out motion-reduce:transition-none ${
-                      abierta
-                        ? "grid-rows-[1fr] opacity-100"
-                        : "grid-rows-[0fr] opacity-0"
-                    }`}
-                  >
-                    <div className="overflow-hidden">
-                      <div className="border-t border-[#a6caeb]/25 px-5 pb-5 pt-4">
-                        <p className="text-sm leading-relaxed text-[#5e626e]">
-                          {item.introduccion}
+                  <div className="overflow-hidden">
+                    <div className="border-t border-[#a6caeb]/25 px-5 pb-5 pt-4">
+                      <p className="text-sm leading-relaxed text-[#5e626e]">
+                        {item.introduccion}
+                      </p>
+                      <ul className="mt-3 space-y-2">
+                        {item.puntos.map((punto: PuntoFaq) => (
+                          <li
+                            key={punto.titulo}
+                            className="flex gap-2.5 text-sm leading-relaxed text-[#5e626e]"
+                          >
+                            <span
+                              aria-hidden="true"
+                              className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-[#c40a0a]/75"
+                            />
+                            <span>
+                              <strong className="font-semibold text-[#141416]">
+                                {`${punto.titulo}: `}
+                              </strong>
+                              {punto.descripcion}
+                            </span>
+                          </li>
+                        ))}
+                      </ul>
+                      {item.aclaracion ? (
+                        <p className="mt-4 rounded-xl border border-[#c40a0a]/20 bg-[#c40a0a]/5 px-4 py-3 text-sm leading-relaxed text-[#5e626e]">
+                          <strong className="font-semibold text-[#c40a0a]">
+                            Importante:{" "}
+                          </strong>
+                          {item.aclaracion}
                         </p>
-                        <ul className="mt-3 space-y-2.5">
-                          {item.puntos.map((punto: PuntoFaq) => (
-                            <li
-                              key={punto.titulo}
-                              className="flex gap-2.5 text-sm leading-relaxed text-[#5e626e]"
-                            >
-                              <span
-                                aria-hidden="true"
-                                className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-[#c40a0a]/75"
-                              />
-                              <span>
-                                <strong className="font-semibold text-[#141416]">
-                                  {`${punto.titulo}: `}
-                                </strong>
-                                {punto.descripcion}
-                              </span>
-                            </li>
-                          ))}
-                        </ul>
-                        {item.aclaracion ? (
-                          <p className="mt-4 rounded-xl border border-[#c40a0a]/20 bg-[#c40a0a]/5 px-4 py-3 text-sm leading-relaxed text-[#5e626e]">
-                            <strong className="font-semibold text-[#c40a0a]">
-                              Importante:{" "}
-                            </strong>
-                            {item.aclaracion}
-                          </p>
-                        ) : null}
-                      </div>
+                      ) : null}
                     </div>
                   </div>
                 </div>
-              </FadeIn>
+              </div>
             );
           })}
         </div>
 
-        {/* Cierre de asistencia directa */}
-        <div className="mt-10 flex flex-col items-center justify-between gap-4 rounded-2xl border border-[#a6caeb]/35 bg-white/85 px-6 py-5 text-center shadow-xs sm:flex-row sm:text-left">
-          <div>
-            <p className="font-serif text-xl font-semibold text-[#141416]">
-              ¿Te quedó alguna otra pregunta?
-            </p>
-            <p className="mt-0.5 text-xs text-[#5e626e] sm:text-sm">
-              Respondemos personalmente de lunes a sábado, de 9 a 20 h.
-            </p>
+        {/* Cierre de asistencia directa opcional */}
+        {mostrarCierre ? (
+          <div className="mt-10 flex flex-col items-center justify-between gap-4 rounded-2xl border border-[#a6caeb]/35 bg-white/85 px-6 py-5 text-center shadow-xs sm:flex-row sm:text-left">
+            <div>
+              <p className="font-serif text-xl font-semibold text-[#141416]">
+                ¿Te quedó alguna otra pregunta?
+              </p>
+              <p className="mt-0.5 text-xs text-[#5e626e] sm:text-sm">
+                Respondemos personalmente de lunes a sábado, de 9 a 20 h.
+              </p>
+            </div>
+            <a
+              href={getWhatsAppLink(
+                "¡Hola Timelux! Tengo una consulta sobre pedidos y envíos.",
+              )}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex min-h-[44px] shrink-0 items-center gap-2 rounded-full bg-[#c40a0a] px-6 py-2.5 text-sm font-semibold text-[#fffff4] shadow-sm transition-colors duration-200 hover:bg-[#a30808] hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1e3a5f] focus-visible:ring-offset-2 focus-visible:ring-offset-white active:scale-95"
+            >
+              <MessageCircle size={16} aria-hidden="true" />
+              Escribir por WhatsApp
+            </a>
           </div>
-          <a
-            href={getWhatsAppLink(
-              "¡Hola Timelux! Tengo una consulta sobre pedidos y envíos.",
-            )}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex min-h-[44px] shrink-0 items-center gap-2 rounded-full bg-[#c40a0a] px-6 py-2.5 text-sm font-semibold text-[#fffff4] shadow-sm transition-all duration-300 hover:bg-[#a30808] hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1e3a5f] focus-visible:ring-offset-2 focus-visible:ring-offset-white active:scale-95"
-          >
-            <MessageCircle size={16} aria-hidden="true" />
-            Escribir por WhatsApp
-          </a>
-        </div>
+        ) : null}
       </div>
     </section>
   );

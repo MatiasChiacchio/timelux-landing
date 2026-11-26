@@ -14,6 +14,15 @@ const nextConfig: NextConfig = {
     minimumCacheTTL: 604800,
     remotePatterns: [{ protocol: "https", hostname: "**" }],
   },
+  async redirects() {
+    return [
+      {
+        source: "/contacto",
+        destination: "/preguntas",
+        permanent: true,
+      },
+    ];
+  },
 };
 
 export default nextConfig;

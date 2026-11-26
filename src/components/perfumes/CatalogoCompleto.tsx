@@ -5,7 +5,7 @@
 
 import { Suspense, useDeferredValue, useEffect, useMemo, useState } from "react";
 import { useSearchParams } from "next/navigation";
-import { Search, SearchX, SlidersHorizontal, X } from "lucide-react";
+import { Search, SearchX, X } from "lucide-react";
 import ComboboxMarcas from "@/src/components/perfumes/ComboboxMarcas";
 import ModalDetallePerfume from "@/src/components/perfumes/ModalDetallePerfume";
 import SelectorOrden, {
@@ -231,15 +231,6 @@ export default function CatalogoCompleto({
   // Porción visible según la carga progresiva.
   const fraganciasVisibles: Perfume[] = fraganciasFiltradas.slice(0, visibles);
   const hayMas: boolean = visibles < fraganciasFiltradas.length;
-  const porcentajeVisto: number =
-    fraganciasFiltradas.length > 0
-      ? Math.min(
-          100,
-          Math.round(
-            (fraganciasVisibles.length / fraganciasFiltradas.length) * 100,
-          ),
-        )
-      : 0;
 
   const tieneFiltrosActivos: boolean =
     busqueda.trim().length > 0 ||
@@ -340,71 +331,58 @@ export default function CatalogoCompleto({
           </div>
         </div>
 
-        {/* Fila intermedia: píldoras de Categoría (Origen) y Género */}
-        <div className="mt-4 flex flex-col gap-3.5 border-t border-[#a6caeb]/25 pt-4 md:flex-row md:items-center md:justify-between">
-          {/* Filtro por categoría: Árabes / Diseñador */}
-          <div className="flex flex-col items-start gap-2 sm:flex-row sm:items-center">
-            <span className="inline-flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider text-[#1e3a5f]">
-              <SlidersHorizontal size={13} aria-hidden="true" />
-              Tipo:
-            </span>
-            <div
-              role="tablist"
-              aria-label="Filtrar perfumes por categoría"
-              className="flex flex-wrap gap-1.5"
-            >
-              {filtrosCategoria.map((filtro) => {
-                const activo: boolean = categoria === filtro.valor;
-                return (
-                  <button
-                    key={filtro.valor}
-                    type="button"
-                    role="tab"
-                    aria-selected={activo}
-                    onClick={(): void => actualizarCategoria(filtro.valor)}
-                    className={`min-h-[44px] cursor-pointer whitespace-nowrap rounded-full px-3.5 py-2 text-xs font-semibold transition-all duration-200 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1e3a5f] focus-visible:ring-offset-2 focus-visible:ring-offset-white sm:px-4 sm:text-sm ${
-                      activo
-                        ? "bg-[#c40a0a] text-[#fffff4] shadow-sm"
-                        : "border border-[#a6caeb]/45 bg-[#a6caeb]/15 text-[#141416] hover:bg-[#a6caeb]/35"
-                    }`}
-                  >
-                    {filtro.etiqueta}
-                  </button>
-                );
-              })}
-            </div>
+        {/* Fila intermedia: píldoras limpias de Categoría y Género */}
+        <div className="mt-4 flex flex-wrap items-center justify-between gap-3 border-t border-[#a6caeb]/25 pt-4">
+          <div
+            role="tablist"
+            aria-label="Filtrar perfumes por categoría"
+            className="flex flex-wrap gap-1.5"
+          >
+            {filtrosCategoria.map((filtro) => {
+              const activo: boolean = categoria === filtro.valor;
+              return (
+                <button
+                  key={filtro.valor}
+                  type="button"
+                  role="tab"
+                  aria-selected={activo}
+                  onClick={(): void => actualizarCategoria(filtro.valor)}
+                  className={`min-h-[44px] cursor-pointer whitespace-nowrap rounded-full px-3.5 py-2 text-xs font-semibold transition-all duration-200 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1e3a5f] focus-visible:ring-offset-2 focus-visible:ring-offset-white sm:px-4 sm:text-sm ${
+                    activo
+                      ? "bg-[#c40a0a] text-[#fffff4] shadow-sm"
+                      : "border border-[#a6caeb]/45 bg-[#a6caeb]/15 text-[#141416] hover:bg-[#a6caeb]/35"
+                  }`}
+                >
+                  {filtro.etiqueta}
+                </button>
+              );
+            })}
           </div>
 
-          {/* Filtro por género */}
-          <div className="flex flex-col items-start gap-2 sm:flex-row sm:items-center">
-            <span className="text-xs font-semibold uppercase tracking-wider text-[#1e3a5f]">
-              Género:
-            </span>
-            <div
-              role="tablist"
-              aria-label="Filtrar perfumes por género"
-              className="flex flex-wrap gap-1.5"
-            >
-              {filtrosGenero.map((filtro) => {
-                const activo: boolean = genero === filtro.valor;
-                return (
-                  <button
-                    key={filtro.valor}
-                    type="button"
-                    role="tab"
-                    aria-selected={activo}
-                    onClick={(): void => actualizarGenero(filtro.valor)}
-                    className={`min-h-[44px] cursor-pointer whitespace-nowrap rounded-full px-3.5 py-2 text-xs font-semibold transition-all duration-200 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1e3a5f] focus-visible:ring-offset-2 focus-visible:ring-offset-white sm:px-4 sm:text-sm ${
-                      activo
-                        ? "bg-[#c40a0a] text-[#fffff4] shadow-sm"
-                        : "border border-[#a6caeb]/45 bg-[#a6caeb]/15 text-[#141416] hover:bg-[#a6caeb]/35"
-                    }`}
-                  >
-                    {filtro.etiqueta}
-                  </button>
-                );
-              })}
-            </div>
+          <div
+            role="tablist"
+            aria-label="Filtrar perfumes por género"
+            className="flex flex-wrap gap-1.5"
+          >
+            {filtrosGenero.map((filtro) => {
+              const activo: boolean = genero === filtro.valor;
+              return (
+                <button
+                  key={filtro.valor}
+                  type="button"
+                  role="tab"
+                  aria-selected={activo}
+                  onClick={(): void => actualizarGenero(filtro.valor)}
+                  className={`min-h-[44px] cursor-pointer whitespace-nowrap rounded-full px-3.5 py-2 text-xs font-semibold transition-all duration-200 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1e3a5f] focus-visible:ring-offset-2 focus-visible:ring-offset-white sm:px-4 sm:text-sm ${
+                    activo
+                      ? "bg-[#c40a0a] text-[#fffff4] shadow-sm"
+                      : "border border-[#a6caeb]/45 bg-[#a6caeb]/15 text-[#141416] hover:bg-[#a6caeb]/35"
+                  }`}
+                >
+                  {filtro.etiqueta}
+                </button>
+              );
+            })}
           </div>
         </div>
 
@@ -498,24 +476,13 @@ export default function CatalogoCompleto({
             ))}
           </ul>
 
-          {/* Progreso y carga progresiva por tandas */}
+          {/* Carga progresiva por tandas */}
           {hayMas ? (
-            <div className="mt-12 flex flex-col items-center gap-4">
-              <div className="flex flex-col items-center gap-2">
-                <p className="text-xs font-medium text-[#5e626e]">
-                  Viste {fraganciasVisibles.length} de{" "}
-                  {fraganciasFiltradas.length} fragancias ({porcentajeVisto}%)
-                </p>
-                <div
-                  aria-hidden="true"
-                  className="h-1.5 w-48 overflow-hidden rounded-full bg-[#a6caeb]/30"
-                >
-                  <div
-                    className="h-full rounded-full bg-[#1e3a5f] transition-all duration-300"
-                    style={{ width: `${porcentajeVisto}%` }}
-                  />
-                </div>
-              </div>
+            <div className="mt-10 flex flex-col items-center gap-3">
+              <p className="text-xs font-medium text-[#5e626e]">
+                Mostrando {fraganciasVisibles.length} de{" "}
+                {fraganciasFiltradas.length}
+              </p>
 
               <button
                 type="button"

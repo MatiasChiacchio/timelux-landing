@@ -7,21 +7,19 @@ import { useEffect, useRef, useState, type MouseEvent } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Menu, MessageCircle, X } from "lucide-react";
-import { getWhatsAppLink, navLinks } from "@/src/config/site";
+import { Menu, X } from "lucide-react";
+import { navLinks } from "@/src/config/site";
 
-// Navegación principal persistente con microinteracciones sutiles y foco accesible.
+// Navegación principal limpia con los 4 apartados del sitio.
 export default function Navbar(): React.JSX.Element {
   const rutaActual: string = usePathname();
   const [menuAbierto, setMenuAbierto] = useState<boolean>(false);
   const encabezadoRef = useRef<HTMLElement>(null);
 
-  // Alterna la visibilidad del menú en celulares.
   function alternarMenu(): void {
     setMenuAbierto((previo: boolean) => !previo);
   }
 
-  // Cierra el menú al navegar hacia una sección.
   function cerrarMenu(): void {
     setMenuAbierto(false);
   }
@@ -75,7 +73,7 @@ export default function Navbar(): React.JSX.Element {
         aria-label="Navegación principal"
         className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:h-20 sm:px-6 lg:px-8"
       >
-        {/* Logotipo recortado a su proporción real (261×107) para evitar desborde */}
+        {/* Logotipo recortado a su proporción real (261×107) */}
         <Link
           href="/"
           onClick={manejarClicLogo}
@@ -92,48 +90,33 @@ export default function Navbar(): React.JSX.Element {
           />
         </Link>
 
-        {/* Navegación horizontal para escritorio con subrayado animado */}
-        <div className="hidden items-center gap-7 md:flex lg:gap-9">
-          <ul className="flex items-center gap-6 text-sm font-medium tracking-wide text-[#fffff4] lg:gap-8">
-            {navLinks.map((enlace) => {
-              const esRutaActiva: boolean =
-                enlace.href === "/"
-                  ? rutaActual === "/"
-                  : rutaActual === enlace.href;
+        {/* Navegación horizontal para escritorio */}
+        <ul className="hidden items-center gap-7 text-sm font-medium tracking-wide text-[#fffff4] md:flex lg:gap-9">
+          {navLinks.map((enlace) => {
+            const esRutaActiva: boolean =
+              enlace.href === "/"
+                ? rutaActual === "/"
+                : rutaActual === enlace.href;
 
-              return (
-                <li key={enlace.href}>
-                  <Link
-                    href={enlace.href}
-                    aria-current={esRutaActiva ? "page" : undefined}
-                    className={`relative inline-flex min-h-[44px] items-center px-1 transition-opacity duration-200 after:absolute after:bottom-2.5 after:left-0 after:h-[1.5px] after:w-full after:origin-center after:bg-[#fffff4] after:transition-transform after:duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#fffff4] focus-visible:ring-offset-2 focus-visible:ring-offset-[#c40a0a] rounded-md ${
-                      esRutaActiva
-                        ? "font-semibold after:scale-x-100"
-                        : "text-[#fffff4]/90 hover:text-[#fffff4] after:scale-x-0 hover:after:scale-x-100"
-                    }`}
-                  >
-                    {enlace.label}
-                  </Link>
-                </li>
-              );
-            })}
-          </ul>
+            return (
+              <li key={enlace.href}>
+                <Link
+                  href={enlace.href}
+                  aria-current={esRutaActiva ? "page" : undefined}
+                  className={`relative inline-flex min-h-[44px] items-center rounded-md px-1 transition-opacity duration-200 after:absolute after:bottom-2.5 after:left-0 after:h-[1.5px] after:w-full after:origin-center after:bg-[#fffff4] after:transition-transform after:duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#fffff4] focus-visible:ring-offset-2 focus-visible:ring-offset-[#c40a0a] ${
+                    esRutaActiva
+                      ? "font-semibold after:scale-x-100"
+                      : "text-[#fffff4]/90 hover:text-[#fffff4] after:scale-x-0 hover:after:scale-x-100"
+                  }`}
+                >
+                  {enlace.label}
+                </Link>
+              </li>
+            );
+          })}
+        </ul>
 
-          {/* Acceso directo de asesoría en escritorio */}
-          <a
-            href={getWhatsAppLink(
-              "¡Hola Timelux! Quiero asesoramiento para elegir una fragancia.",
-            )}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex min-h-[44px] items-center gap-2 rounded-full border border-[#fffff4]/35 bg-[#fffff4]/10 px-4 py-2 text-xs font-semibold uppercase tracking-wider text-[#fffff4] transition-all duration-300 hover:border-[#fffff4] hover:bg-[#fffff4] hover:text-[#c40a0a] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#fffff4] focus-visible:ring-offset-2 focus-visible:ring-offset-[#c40a0a]"
-          >
-            <MessageCircle size={15} aria-hidden="true" />
-            Asesoría
-          </a>
-        </div>
-
-        {/* Botón hamburguesa para celulares con objetivo táctil accesible */}
+        {/* Botón hamburguesa para celulares */}
         <button
           type="button"
           onClick={alternarMenu}
@@ -150,14 +133,14 @@ export default function Navbar(): React.JSX.Element {
         </button>
       </nav>
 
-      {/* Menú desplegable móvil con transición fluida CSS Grid */}
+      {/* Menú desplegable móvil */}
       <div
         id="menu-movil-navegacion"
         aria-hidden={!menuAbierto}
         className={`grid transition-[grid-template-rows,opacity] duration-300 ease-out motion-reduce:transition-none md:hidden ${
           menuAbierto
-            ? "grid-rows-[1fr] opacity-100 border-t border-[#a30808]"
-            : "grid-rows-[0fr] opacity-0 pointer-events-none"
+            ? "grid-rows-[1fr] border-t border-[#a30808] opacity-100"
+            : "pointer-events-none grid-rows-[0fr] opacity-0"
         }`}
       >
         <div className="overflow-hidden bg-[#c40a0a]">
@@ -186,21 +169,6 @@ export default function Navbar(): React.JSX.Element {
                 </li>
               );
             })}
-            <li className="pt-2">
-              <a
-                href={getWhatsAppLink(
-                  "¡Hola Timelux! Quiero asesoramiento para elegir una fragancia.",
-                )}
-                target="_blank"
-                rel="noopener noreferrer"
-                tabIndex={menuAbierto ? 0 : -1}
-                onClick={cerrarMenu}
-                className="flex min-h-[44px] items-center justify-center gap-2 rounded-full bg-[#fffff4] px-4 py-2.5 text-sm font-semibold text-[#c40a0a] shadow-sm transition-colors duration-200 hover:bg-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#fffff4] focus-visible:ring-offset-2 focus-visible:ring-offset-[#c40a0a]"
-              >
-                <MessageCircle size={16} aria-hidden="true" />
-                Asesoría por WhatsApp
-              </a>
-            </li>
           </ul>
         </div>
       </div>

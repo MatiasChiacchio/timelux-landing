@@ -28,13 +28,12 @@ export interface EnlaceNavegacion {
   href: string;
 }
 
-// Lista de navegación principal con apartados dedicados en Next.js App Router.
+// Lista de navegación principal con 4 apartados claros en Next.js App Router.
 export const navLinks: EnlaceNavegacion[] = [
   { label: "Inicio", href: "/" },
   { label: "Perfumes", href: "/perfumes" },
   { label: "Nosotros", href: "/nosotros" },
   { label: "Preguntas", href: "/preguntas" },
-  { label: "Contacto", href: "/contacto" },
 ];
 
 // Mensaje genérico de asesoramiento para el CTA principal.

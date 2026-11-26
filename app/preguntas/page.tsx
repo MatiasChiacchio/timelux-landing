@@ -1,133 +1,143 @@
-// Apartado "Preguntas Frecuentes" de Timelux.
-// Server Component estático con guía rápida, acordeón completo y enlace a Contacto.
+// Apartado unificado "Preguntas y Contacto" de Timelux.
+// Server Component estático: acordeón claro + bloque directo con los medios de contacto.
 
 import type { Metadata } from "next";
-import Link from "next/link";
-import { ArrowRight, CalendarCheck, CreditCard, Truck } from "lucide-react";
-import type { LucideIcon } from "lucide-react";
+import { Clock, MessageCircle } from "lucide-react";
 import CabeceraSeccion from "@/src/components/layout/CabeceraSeccion";
-import ConserjeriaOlfativa from "@/src/components/sections/ConserjeriaOlfativa";
 import Faq from "@/src/components/sections/Faq";
 import JsonLd from "@/src/components/seo/JsonLd";
-import { baseUrl } from "@/src/config/site";
+import IconoInstagram from "@/src/components/ui/IconoInstagram";
+import {
+  baseUrl,
+  getWhatsAppLink,
+  instagramHandle,
+  instagramUrl,
+  mensajePredeterminadoWhatsApp,
+} from "@/src/config/site";
 import { crearBreadcrumbSchema, crearGrafo } from "@/src/lib/schema";
+
+// Teléfono visible institucional.
+const telefonoVisible: string = "+54 370 4772001";
 
 // Metadatos SEO propios para /preguntas.
 export const metadata: Metadata = {
-  title: "Preguntas Frecuentes",
+  title: "Preguntas y Contacto",
   description:
-    "Resolvé tus dudas sobre pedidos por WhatsApp, medios de pago en pesos o USDT, modalidad con seña en Formosa y envíos a todo el país por Correo Argentino.",
+    "Resolvé tus dudas sobre pedidos, medios de pago y envíos por Correo Argentino. Si te queda alguna consulta, contactanos por WhatsApp o Instagram.",
   alternates: {
     canonical: "/preguntas",
   },
   openGraph: {
     url: "/preguntas",
-    title: "Preguntas Frecuentes | Timelux",
+    title: "Preguntas y Contacto | Timelux",
     description:
-      "Información clara sobre pedidos, formas de pago, encargos especiales y envíos protegidos a toda la Argentina.",
+      "Información clara sobre pedidos, formas de pago, envíos y canales directos de contacto por WhatsApp e Instagram.",
   },
 };
-
-// Tarjeta resumen de consulta rápida.
-interface TarjetaResumenFaq {
-  titulo: string;
-  detalle: string;
-  icono: LucideIcon;
-}
-
-const resumenRapido: TarjetaResumenFaq[] = [
-  {
-    titulo: "Medios de pago",
-    detalle:
-      "Aceptamos pesos argentinos y USDT mediante transferencia, Mercado Pago o efectivo.",
-    icono: CreditCard,
-  },
-  {
-    titulo: "Modalidades de pedido",
-    detalle:
-      "Pago total anticipado (100%) o seña del 70% al encargar y 30% al llegar (exclusivo Formosa).",
-    icono: CalendarCheck,
-  },
-  {
-    titulo: "Envíos a todo el país",
-    detalle:
-      "Despachos con empaque protegido vía Correo Argentino con demora estimada de 1 a 2 semanas.",
-    icono: Truck,
-  },
-];
 
 // Grafo de migas de pan de /preguntas (sin FAQPage para evitar rich results retirados).
 const datosEstructurales = crearGrafo([
   crearBreadcrumbSchema(
     [
       { nombre: "Inicio", url: baseUrl },
-      { nombre: "Preguntas Frecuentes", url: `${baseUrl}/preguntas` },
+      { nombre: "Preguntas y Contacto", url: `${baseUrl}/preguntas` },
     ],
     `${baseUrl}/preguntas#breadcrumb`,
   ),
 ]);
 
-// Página dedicada de ayuda, pagos y envíos.
+// Página unificada de preguntas frecuentes y medios de contacto.
 export default function PaginaPreguntas(): React.JSX.Element {
   return (
     <main className="flex-1 bg-[#fffff4]">
       <CabeceraSeccion
-        etiquetaBreadcrumb="Preguntas Frecuentes"
-        eyebrow="Ayuda & Envíos"
-        titulo="Todo lo que"
-        tituloCursiva="querés saber"
-        descripcion="Información transparente sobre cómo encargar tu fragancia, las opciones de pago disponibles y los tiempos de envío a todo el país."
+        etiquetaBreadcrumb="Preguntas"
+        eyebrow="Ayuda & Contacto"
+        titulo="Preguntas frecuentes"
+        descripcion="Todo sobre pedidos, pagos y envíos. Si te queda alguna duda, escribinos por cualquiera de nuestros medios."
       />
 
-      {/* Resumen visual rápido sobre pagos y envíos */}
+      {/* Acordeón limpio con las 4 preguntas frecuentes */}
+      <Faq mostrarEncabezado={false} mostrarCierre={false} />
+
+      {/* Bloque unificado de medios de contacto */}
       <section
-        aria-label="Resumen rápido de compra y envíos"
-        className="mx-auto max-w-7xl px-4 pt-10 sm:px-6 md:pt-14 lg:px-8"
+        aria-labelledby="titulo-medios-contacto"
+        className="mx-auto max-w-4xl px-4 pb-16 pt-2 sm:px-6 md:pb-20 lg:px-8"
       >
-        <ul className="grid grid-cols-1 gap-4 md:grid-cols-3 md:gap-6">
-          {resumenRapido.map((item: TarjetaResumenFaq) => (
-            <li
-              key={item.titulo}
-              className="rounded-2xl border border-[#a6caeb]/35 bg-white/90 p-5 shadow-xs"
-            >
-              <div className="flex items-center gap-3">
-                <span className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-[#a6caeb]/40 bg-[#a6caeb]/15 text-[#1e3a5f]">
-                  <item.icono size={18} aria-hidden="true" />
-                </span>
-                <h2 className="font-serif text-xl font-semibold text-[#141416]">
-                  {item.titulo}
-                </h2>
-              </div>
-              <p className="mt-3 text-sm leading-relaxed text-[#5e626e]">
-                {item.detalle}
-              </p>
-            </li>
-          ))}
-        </ul>
-      </section>
-
-      {/* Acordeón detallado de preguntas frecuentes */}
-      <Faq mostrarEncabezado={false} />
-
-      {/* Acceso directo al apartado de Contacto */}
-      <div className="mx-auto max-w-4xl px-4 pb-6 sm:px-6 lg:px-8">
-        <div className="flex flex-col items-center justify-between gap-3 rounded-2xl border border-[#a6caeb]/35 bg-white/75 px-6 py-4 text-center sm:flex-row sm:text-left">
-          <p className="text-sm text-[#5e626e]">
-            ¿Preferís ver todos nuestros canales de atención y armar tu consulta
-            guiada?
-          </p>
-          <Link
-            href="/contacto"
-            className="inline-flex min-h-[44px] shrink-0 items-center gap-1.5 rounded-full border border-[#a6caeb]/65 bg-white px-5 py-2 text-sm font-semibold text-[#1e3a5f] transition-colors duration-200 hover:border-[#a6caeb] hover:bg-[#a6caeb]/15 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1e3a5f] focus-visible:ring-offset-2 focus-visible:ring-offset-[#fffff4]"
+        <div className="rounded-2xl border border-[#a6caeb]/35 bg-white p-6 shadow-xs sm:p-8">
+          <h2
+            id="titulo-medios-contacto"
+            className="font-serif text-2xl font-semibold text-[#141416] sm:text-3xl"
           >
-            Ir a Contacto
-            <ArrowRight size={15} aria-hidden="true" />
-          </Link>
-        </div>
-      </div>
+            ¿Te quedó alguna duda?
+          </h2>
+          <p className="mt-1.5 text-sm leading-relaxed text-[#5e626e] sm:text-base">
+            Contactanos por el medio que te resulte más cómodo y te respondemos
+            a la brevedad.
+          </p>
 
-      {/* Bloque de conserjería y perfumes a pedido */}
-      <ConserjeriaOlfativa />
+          <div className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-3">
+            {/* WhatsApp directo */}
+            <a
+              href={getWhatsAppLink(mensajePredeterminadoWhatsApp)}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Contactar a Timelux por WhatsApp"
+              className="group flex min-h-[44px] flex-col justify-between rounded-xl border border-[#a6caeb]/35 bg-[#fffff4] p-4 transition-colors duration-200 hover:border-[#c40a0a]/45 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1e3a5f] focus-visible:ring-offset-2 focus-visible:ring-offset-white"
+            >
+              <div className="flex items-center gap-2.5 text-xs font-semibold uppercase tracking-wider text-[#1e3a5f]">
+                <MessageCircle
+                  size={16}
+                  aria-hidden="true"
+                  className="text-[#c40a0a]"
+                />
+                WhatsApp
+              </div>
+              <p className="mt-3 text-sm font-bold text-[#141416] transition-colors group-hover:text-[#c40a0a]">
+                {telefonoVisible}
+              </p>
+              <p className="mt-1 text-xs text-[#5e626e]">
+                Pedidos, stock y asesoramiento
+              </p>
+            </a>
+
+            {/* Instagram oficial */}
+            <a
+              href={instagramUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Seguir o escribir a Timelux en Instagram"
+              className="group flex min-h-[44px] flex-col justify-between rounded-xl border border-[#a6caeb]/35 bg-[#fffff4] p-4 transition-colors duration-200 hover:border-[#c40a0a]/45 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1e3a5f] focus-visible:ring-offset-2 focus-visible:ring-offset-white"
+            >
+              <div className="flex items-center gap-2.5 text-xs font-semibold uppercase tracking-wider text-[#1e3a5f]">
+                <IconoInstagram size={16} />
+                Instagram
+              </div>
+              <p className="mt-3 text-sm font-bold text-[#141416] transition-colors group-hover:text-[#c40a0a]">
+                {instagramHandle}
+              </p>
+              <p className="mt-1 text-xs text-[#5e626e]">
+                Novedades y consultas por mensaje
+              </p>
+            </a>
+
+            {/* Horario y cobertura */}
+            <div className="flex flex-col justify-between rounded-xl border border-[#a6caeb]/35 bg-[#fffff4] p-4">
+              <div className="flex items-center gap-2.5 text-xs font-semibold uppercase tracking-wider text-[#1e3a5f]">
+                <Clock size={16} aria-hidden="true" />
+                Horarios
+              </div>
+              <p className="mt-3 text-sm font-bold text-[#141416]">
+                Lun a sáb, 9 a 20 h
+              </p>
+              <p className="mt-1 text-xs text-[#5e626e]">
+                Envíos a todo el país
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
 
       {/* Datos estructurados BreadcrumbList */}
       <JsonLd datos={datosEstructurales} />

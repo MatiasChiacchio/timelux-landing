@@ -1,7 +1,7 @@
 'use client';
 
 // Sección de fragancias destacadas de Timelux para la portada.
-// Client Component porque gestiona búsqueda, filtros por categoría y Vista Rápida.
+// Client Component porque gestiona búsqueda opcional, filtros y Vista Rápida.
 
 import { useDeferredValue, useMemo, useState } from "react";
 import Link from "next/link";
@@ -17,6 +17,7 @@ interface PropiedadesCatalogo {
   limite?: number;
   totalCatalogo?: number;
   mostrarBuscador?: boolean;
+  mostrarAccesosTipo?: boolean;
   mostrarEnlaceCatalogo?: boolean;
 }
 
@@ -26,7 +27,7 @@ interface PestanaCategoria {
   etiqueta: string;
 }
 
-// Pestañas disponibles del catálogo de portada.
+// Pestañas disponibles cuando el buscador está activo.
 const pestanas: PestanaCategoria[] = [
   { valor: "todos", etiqueta: "Todos" },
   { valor: "arabe", etiqueta: "Árabes" },
@@ -41,12 +42,13 @@ function normalizarTexto(texto: string): string {
     .replace(/[\u0300-\u036f]/g, "");
 }
 
-// Catálogo destacado con buscador reactivo opcional, consola glassmorphism y Vista Rápida.
+// Catálogo destacado con accesos rápidos por colección y Vista Rápida.
 export default function Catalog({
   perfumesIniciales,
   limite,
   totalCatalogo,
   mostrarBuscador = true,
+  mostrarAccesosTipo = false,
   mostrarEnlaceCatalogo = false,
 }: PropiedadesCatalogo): React.JSX.Element {
   const [perfumes] = useState<Perfume[]>(perfumesIniciales);
@@ -57,7 +59,6 @@ export default function Catalog({
   const totalReferencias: number = totalCatalogo ?? perfumes.length;
   const busquedaDiferida: string = useDeferredValue(busqueda);
 
-  // Calcula coincidencias totales y aplica orden por bestseller + límite de portada.
   const { visibles: fraganciasFiltradas, totalCoincidencias } = useMemo(() => {
     const texto: string = normalizarTexto(busquedaDiferida.trim());
 
@@ -112,7 +113,6 @@ export default function Catalog({
   const hayMasCoincidencias: boolean =
     totalCoincidencias > fraganciasFiltradas.length;
 
-  // Construye enlace directo al catálogo completo conservando la consulta actual.
   const enlaceCatalogoConFiltro: string = useMemo(() => {
     const params = new URLSearchParams();
     if (categoria !== "todos") {
@@ -125,7 +125,6 @@ export default function Catalog({
     return query ? `/perfumes?${query}` : "/perfumes";
   }, [categoria, busqueda]);
 
-  // Restablece búsqueda y categoría al estado inicial.
   function limpiarFiltros(): void {
     setCategoria("todos");
     setBusqueda("");
@@ -134,37 +133,55 @@ export default function Catalog({
   return (
     <section
       id="catalogo"
-      className="scroll-mt-20 bg-[#fffff4] md:scroll-mt-24"
+      className="scroll-mt-20 border-t border-[#a6caeb]/30 bg-[#fffff4] md:scroll-mt-24"
     >
-      <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 md:py-24 lg:px-8">
-        {/* Encabezado editorial con enlace secundario en escritorio */}
-        <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+      <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6 md:py-20 lg:px-8">
+        {/* Encabezado editorial con accesos compactos a Árabes y Diseñador */}
+        <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
           <div>
             <p className="text-xs font-semibold uppercase tracking-[0.22em] text-[#1e3a5f]">
               Selección Destacada
             </p>
-            <h2 className="mt-2 font-serif text-3xl font-semibold text-[#141416] sm:text-4xl lg:text-5xl">
+            <h2 className="mt-2 font-serif text-3xl font-semibold text-[#141416] sm:text-4xl">
               Fragancias que dejan huella
             </h2>
-            <p className="mt-3 max-w-2xl text-sm leading-relaxed text-[#5e626e] sm:text-base">
-              {mostrarBuscador
-                ? "Explorá nuestras creaciones árabes y de diseñador más elegidas. Filtrá por categoría, buscá por nota olfativa o abrí cada ficha para conocer sus acordes."
-                : "Una curaduría de nuestras creaciones árabes y de diseñador más elegidas. Abrí cada ficha para descubrir sus notas olfativas o explorá el catálogo completo."}
+            <p className="mt-2 max-w-xl text-sm leading-relaxed text-[#5e626e] sm:text-base">
+              Tocá cualquier perfume para ver sus notas o explorá el catálogo
+              completo.
             </p>
           </div>
 
-          {mostrarEnlaceCatalogo ? (
-            <Link
-              href="/perfumes"
-              className="inline-flex min-h-[44px] shrink-0 items-center gap-1.5 text-sm font-semibold text-[#1e3a5f] transition-colors hover:text-[#c40a0a] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1e3a5f] focus-visible:ring-offset-2 focus-visible:ring-offset-[#fffff4]"
-            >
-              Ver las {totalReferencias} fragancias
-              <ArrowRight size={16} aria-hidden="true" />
-            </Link>
-          ) : null}
+          <div className="flex flex-wrap items-center gap-2.5">
+            {mostrarAccesosTipo ? (
+              <>
+                <Link
+                  href="/perfumes?tipo=arabe"
+                  className="inline-flex min-h-[44px] items-center rounded-full border border-[#a6caeb]/50 bg-white px-4 py-2 text-xs font-semibold text-[#141416] transition-colors hover:border-[#c40a0a]/45 hover:text-[#c40a0a] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1e3a5f] focus-visible:ring-offset-2 focus-visible:ring-offset-[#fffff4] sm:text-sm"
+                >
+                  Árabes
+                </Link>
+                <Link
+                  href="/perfumes?tipo=disenador"
+                  className="inline-flex min-h-[44px] items-center rounded-full border border-[#a6caeb]/50 bg-white px-4 py-2 text-xs font-semibold text-[#141416] transition-colors hover:border-[#c40a0a]/45 hover:text-[#c40a0a] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1e3a5f] focus-visible:ring-offset-2 focus-visible:ring-offset-[#fffff4] sm:text-sm"
+                >
+                  Diseñador
+                </Link>
+              </>
+            ) : null}
+
+            {mostrarEnlaceCatalogo ? (
+              <Link
+                href="/perfumes"
+                className="inline-flex min-h-[44px] shrink-0 items-center gap-1.5 rounded-md px-2 text-sm font-semibold text-[#1e3a5f] transition-colors hover:text-[#c40a0a] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1e3a5f] focus-visible:ring-offset-2 focus-visible:ring-offset-[#fffff4]"
+              >
+                Ver los {totalReferencias}
+                <ArrowRight size={16} aria-hidden="true" />
+              </Link>
+            ) : null}
+          </div>
         </div>
 
-        {/* Consola de controles en superficie clara (opcional) */}
+        {/* Consola de controles opcional */}
         {mostrarBuscador ? (
           <div className="mt-8 rounded-2xl border border-[#a6caeb]/40 bg-white/95 p-4 shadow-sm sm:p-5">
             <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
@@ -264,7 +281,6 @@ export default function Catalog({
             ))}
           </ul>
         ) : (
-          /* Estado vacío sin coincidencias */
           <div className="mt-8 flex flex-col items-center rounded-2xl border border-[#a6caeb]/35 bg-white/90 px-6 py-14 text-center shadow-sm">
             <SearchX
               aria-hidden="true"
@@ -274,8 +290,8 @@ export default function Catalog({
               Sin coincidencias por ahora
             </h3>
             <p className="mt-2 max-w-md text-sm leading-relaxed text-[#5e626e]">
-              No encontramos fragancias con esos filtros. Probá con otro
-              nombre, marca o nota, o limpiá la búsqueda para ver los destacados.
+              No encontramos fragancias con esos filtros. Probá con otro nombre,
+              marca o nota, o limpiá la búsqueda para ver los destacados.
             </p>
             <button
               type="button"
@@ -289,7 +305,7 @@ export default function Catalog({
 
         {/* Enlace destacado al catálogo completo */}
         {mostrarEnlaceCatalogo ? (
-          <div className="mt-12 flex justify-center">
+          <div className="mt-10 flex justify-center">
             <Link
               className="inline-flex min-h-[48px] items-center gap-2 rounded-full bg-[#c40a0a] px-8 py-3.5 text-sm font-semibold text-[#fffff4] shadow-md shadow-[#c40a0a]/15 transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#a30808] hover:shadow-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1e3a5f] focus-visible:ring-offset-2 focus-visible:ring-offset-[#fffff4] active:scale-95"
               href={enlaceCatalogoConFiltro}

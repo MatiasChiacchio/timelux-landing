@@ -32,16 +32,11 @@ export const metadata: Metadata = {
   },
 };
 
-// Catálogo completo con cabecera boutique, búsqueda, filtros y carga progresiva.
+// Catálogo completo con cabecera compacta, búsqueda, filtros y carga progresiva.
 export default async function PaginaPerfumes(): Promise<React.JSX.Element> {
   // Catálogo remoto con respaldo estático ante fallos de red.
   const perfumes: Perfume[] = await obtenerPerfumes();
 
-  // Conteos reales para enriquecer la cabecera editorial sin sobrecargar al cliente.
-  const totalArabes: number = perfumes.filter(
-    (p: Perfume) => p.tipo === "arabe",
-  ).length;
-  const totalDisenador: number = perfumes.length - totalArabes;
   const totalMarcas: number = new Set(
     perfumes.map((p: Perfume) => p.marca.trim()).filter(Boolean),
   ).size;
@@ -69,45 +64,23 @@ export default async function PaginaPerfumes(): Promise<React.JSX.Element> {
     ),
   ]);
 
+  const descripcionCabecera: string = `${perfumes.length} ${
+    perfumes.length === 1 ? "fragancia original" : "fragancias originales"
+  } de ${totalMarcas} ${
+    totalMarcas === 1 ? "casa" : "casas"
+  }. Tocá cualquier perfume para ver sus notas.`;
+
   return (
     <main className="flex-1 bg-[#fffff4]">
-      {/* Cabecera editorial compartida con indicadores del catálogo */}
       <CabeceraSeccion
-        etiquetaBreadcrumb="Catálogo Exclusivo"
-        eyebrow="Vitrina Timelux"
-        titulo="Catálogo Exclusivo"
-        descripcion="Explorá nuestra selección de fragancias árabes y de diseñador 100% originales. Tocá cualquier perfume para ver sus notas completas o consultá disponibilidad por WhatsApp."
-      >
-        <ul className="flex flex-wrap gap-2.5">
-          <li className="rounded-xl border border-[#a6caeb]/40 bg-white/90 px-4 py-2.5 shadow-xs">
-            <p className="font-serif text-2xl font-semibold leading-none text-[#141416]">
-              {perfumes.length}
-            </p>
-            <p className="mt-1 text-[11px] font-semibold uppercase tracking-wider text-[#1e3a5f]">
-              Fragancias
-            </p>
-          </li>
-          <li className="rounded-xl border border-[#a6caeb]/40 bg-white/90 px-4 py-2.5 shadow-xs">
-            <p className="font-serif text-2xl font-semibold leading-none text-[#141416]">
-              {totalMarcas}
-            </p>
-            <p className="mt-1 text-[11px] font-semibold uppercase tracking-wider text-[#1e3a5f]">
-              Casas
-            </p>
-          </li>
-          <li className="rounded-xl border border-[#a6caeb]/40 bg-white/90 px-4 py-2.5 shadow-xs">
-            <p className="font-serif text-2xl font-semibold leading-none text-[#141416]">
-              {totalArabes} / {totalDisenador}
-            </p>
-            <p className="mt-1 text-[11px] font-semibold uppercase tracking-wider text-[#1e3a5f]">
-              Árabes · Diseñador
-            </p>
-          </li>
-        </ul>
-      </CabeceraSeccion>
+        etiquetaBreadcrumb="Catálogo"
+        eyebrow="Catálogo"
+        titulo="Fragancias disponibles"
+        descripcion={descripcionCabecera}
+      />
 
       {/* Explorador interactivo del catálogo */}
-      <section className="mx-auto max-w-7xl px-4 pb-16 pt-8 sm:px-6 md:pb-24 md:pt-10 lg:px-8">
+      <section className="mx-auto max-w-7xl px-4 pb-16 pt-6 sm:px-6 md:pb-24 md:pt-8 lg:px-8">
         <CatalogoCompleto perfumesIniciales={perfumes} />
       </section>
 
